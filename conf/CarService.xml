@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="restCar" class="is.ru.app.CarCollector.cars.data.rest.RestCar"/>
+
+   <bean name="carDataGateway" class="is.ru.app.CarCollector.cars.data.gateway.CarData">
+       <property name="restQuery" ref="restCar"/>
+   </bean>
+
+    <bean name="carService" class="is.ru.app.CarCollector.cars.service.CarServiceData">
+        <constructor-arg index="0" ref="carDataGateway"/>
+    </bean>
+
+</beans>

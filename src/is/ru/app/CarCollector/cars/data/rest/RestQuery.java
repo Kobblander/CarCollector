@@ -15,7 +15,7 @@ public interface RestQuery {
 
     /**
      * Gets a car
-     * @param licencePlate
+     * @param registryNumber The licence plate in question.
      */
-    public Car getCar(String licencePlate);
+    public Car getCar(String registryNumber);
 }
