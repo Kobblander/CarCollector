@@ -26,5 +26,4 @@ proguard/
 *.log
 
 # IntelliJ Files
-.idea/
 CarCollector.iml
