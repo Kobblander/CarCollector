@@ -19,7 +19,7 @@ public class Car {
     String type;
     String subType;
     String color;
-    Date registeredAt;
+    String registeredAt;
 
     public Car() {
     }
@@ -74,11 +74,11 @@ public class Car {
         this.color = color;
     }
 
-    public Date getRegisteredAt() {
+    public String getRegisteredAt() {
         return registeredAt;
     }
 
-    public void setRegisteredAt(Date registeredAt) {
+    public void setRegisteredAt(String registeredAt) {
         this.registeredAt = registeredAt;
     }
 

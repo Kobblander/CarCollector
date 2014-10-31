@@ -2,6 +2,8 @@ package is.ru.app.CarCollector.cars.data.gateway;
 
 import is.ru.app.CarCollector.cars.data.dto.Car;
 
+import java.util.List;
+
 /**
  * <h1>CarDataGateway</h1>
  * <h2>is.ru.app.CarCollector.cars.data.database</h2>
@@ -13,7 +15,13 @@ import is.ru.app.CarCollector.cars.data.dto.Car;
  */
 public interface CarDataGateway {
 
-    public void addCar(String registryNumber);
+    public void addCar(Car car);
 
     public Car getCarByRegistryNumber(String registryNumber);
+
+    public List<Car> getCarsByType(String type, String limit);
+
+    public List<Car> getCarsBySubType(String subType, String limit);
+
+    public List<Car> getCars(String limit);
 }

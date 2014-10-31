@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "CAR_DB";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 7;
 
 
     public static final String TableCars = "cars";
@@ -31,12 +31,13 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String sqlCreateTableCars =
             "CREATE TABLE cars(" +
                     " _id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " registryNumber TEXT" +
-                    " number TEXT" +
-                    " factoryNumber TEXT" +
-                    " type TEXT" +
-                    " subType TEXT" +
-                    " registeredAt DATE" +
+                    " registryNumber TEXT," +
+                    " number TEXT," +
+                    " factoryNumber TEXT," +
+                    " type TEXT," +
+                    " subType TEXT," +
+                    " color TEXT," +
+                    " registeredAt TEXT" +
                     ");";
 
     private static final String sqlDropTableCars =

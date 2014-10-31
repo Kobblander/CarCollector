@@ -3,8 +3,11 @@ package is.ru.app.CarCollector.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import is.ru.app.CarCollector.cars.data.dto.Car;
+
 
 /**
  * <h1>CarAdapter</h1>
@@ -53,7 +56,7 @@ public class CarAdapter {
         contentValues.put( cols[4], car.getType());
         contentValues.put( cols[5], car.getSubType());
         contentValues.put( cols[6], car.getColor());
-        contentValues.put( cols[7], String.valueOf(car.getRegisteredAt()));
+        contentValues.put(cols[7], car.getRegisteredAt());
         openToWrite();
         long value = db.insert("cars", null, contentValues );
         close();
@@ -72,24 +75,47 @@ public class CarAdapter {
         contentValues.put( cols[4], car.getType());
         contentValues.put( cols[5], car.getSubType());
         contentValues.put( cols[6], car.getColor());
-        contentValues.put( cols[7], String.valueOf(car.getRegisteredAt()));
+        contentValues.put( cols[7], car.getRegisteredAt());
         openToWrite();
         long value = db.update("cars", contentValues, cols[1] + "=" + car.getRegistryNumber(), null);
         close();
         return value;
     }
 
-    public Cursor queryCars() {
+    /**
+     * Query the database for all cars.
+     * @param limit The limit of how many cars to get.
+     * @return A cursor which can be used to access the data.
+     */
+    public Cursor queryCars(String limit) {
         openToRead();
-        Cursor cursor = db.query( "cars",
-                cols, null, null, null, null, null);
+        Cursor cursor;
+        try {
+            cursor = db.query( "cars", cols, null, null, null, null, limit);
+        } catch(Exception e) {
+            String msg = "No cars were found in the database. Nested exception is: " + e.getMessage();
+            Log.i("CarAdapter - queryCars", msg);
+            throw new SQLException(msg);
+        }
         return cursor;
     }
 
+    /**
+     * Query the database by registry number.
+     * @param registryNumber The registry number of the car to receive.
+     * @return A cursor which can be used to access the data.
+     */
     public Cursor queryRegistryNumber(String registryNumber) {
         openToRead();
-        Cursor cursor = db.query( "cars",
-                cols, cols[1] + "=" + registryNumber, null, null, null, null, null);
+        Cursor cursor;
+        String query = "select * from cars where registryNumber =?";
+        try {
+            cursor = db.rawQuery(query, new String[] {registryNumber});
+        } catch(Exception e) {
+            String msg = "No cars found with registry number: '" + registryNumber + "' in the database. Nested exception is: " + e.getMessage();
+            Log.i("CarAdapter - queryRegistryNumber", msg);
+            throw new SQLException(msg);
+        }
         return cursor;
     }
 
@@ -101,8 +127,15 @@ public class CarAdapter {
      */
     public Cursor queryType(String type, String limit) {
         openToRead();
-        Cursor cursor = db.query( "cars",
-                cols, cols[4] + "=" + type, null, null, null, null, limit);
+        Cursor cursor;
+        String query = "select * from cars where type =?";
+        try {
+            cursor = db.rawQuery(query, new String[] {type});
+        } catch(Exception e) {
+            String msg = "No cars found of car type: '" + type + "' in the database. Nested exception is: " + e.getMessage();
+            Log.i("CarAdapterExceptionThrown", msg);
+            throw new SQLException(msg);
+        }
         return cursor;
     }
 
@@ -114,8 +147,15 @@ public class CarAdapter {
      */
     public Cursor querySubType(String subType, String limit) {
         openToRead();
-        Cursor cursor = db.query( "cars",
-                cols, cols[5] + "=" + subType, null, null, null, null, limit);
+        Cursor cursor;
+        String query = "select * from cars where subType =?";
+        try {
+            cursor = db.rawQuery(query, new String[] {subType});
+        } catch(Exception e) {
+            String msg = "No cars found of car subType: '" + subType + "' in the database. Nested exception is: " + e.getMessage();
+            Log.i("CarAdapterExceptionThrown", msg);
+            throw new SQLException(msg);
+        }
         return cursor;
     }
 }

@@ -1,14 +1,15 @@
 package is.ru.app.CarCollector.cars.service;
 
-import android.os.AsyncTask;
+import android.content.Context;
+import android.database.SQLException;
 import android.util.Log;
-import android.widget.Toast;
 import is.ru.app.CarCollector.cars.data.dto.Car;
+import is.ru.app.CarCollector.cars.data.gateway.CarData;
+import is.ru.app.CarCollector.cars.data.gateway.CarDataGateway;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQuery;
-import is.ru.app.CarCollector.utilities.LogToFile;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 /**
  * <h1>CarServiceData</h1>
@@ -21,33 +22,81 @@ import org.springframework.web.client.RestTemplate;
  */
 public class CarServiceData implements CarService {
 
-    private static CarService instance = null;
+    CarDataGateway carDataGateway;
 
-    private CarServiceData() {
+    public CarServiceData(Context ctx) {
+        this.carDataGateway = new CarData(ctx);
     }
 
-    public static CarService getInstance() {
-        if (instance == null) {
-            instance = new CarServiceData();
+    @Override
+    public void addCar(String registryNumber, RestCallback callback) throws CarExistsException, CarServiceException {
+        try {
+            if (carDataGateway.getCarByRegistryNumber(registryNumber) != null) {
+                String msg = "The car with registry number: " + registryNumber + ", already " +
+                        "exists in the database.";
+                Log.i("CarServiceData", msg);
+                throw new CarExistsException(msg);
+            }
+        } catch (SQLException e) {
+            String msg = "Car not in database. Everything is OK. Nested exception is: " + e.getClass() + ": " + e.getMessage();
+            Log.i("CarServiceData - addCar", msg);
         }
-        return instance;
-    }
-
-    @Override
-    public void addCar(String registryNumber, RestCallback callback) {
-        Log.i("MainActivity - CarService", "addCar");
         RestQuery.getInstance().getCar(registryNumber, callback);
-
     }
 
     @Override
-    public void addCarCallback(Car car) {
-        Log.i("MainActivity - CarService", car.toString());
+    public void addCarCallback(Car car) throws CarServiceException {
+        try {
+            carDataGateway.addCar(car);
+        } catch (SQLException e) {
+            String msg = "Fatal error in CarService. Nested exception is: " + e.getMessage();
+            Log.i("CarServiceData", msg);
+            throw new CarServiceException(msg);
+        }
     }
 
     @Override
-    public Car getCar(String registryNumber) {
-        return null;
+    public List<Car> getCars(String limit) throws CarServiceException {
+        try {
+            return carDataGateway.getCars(limit);
+        } catch (SQLException e) {
+            String msg = "Fatal error in CarService. Nested exception is: " + e.getMessage();
+            Log.i("CarServiceData", msg);
+            throw new CarServiceException(msg);
+        }
+    }
+
+    @Override
+    public Car getCarByRegistryNumber(String registryNumber) throws CarServiceException {
+        try {
+            return carDataGateway.getCarByRegistryNumber(registryNumber);
+        } catch (SQLException e) {
+            String msg = "Fatal error in CarService. Nested exception is: " + e.getMessage();
+            Log.i("CarServiceData", msg);
+            throw new CarServiceException(msg);
+        }
+    }
+
+    @Override
+    public List<Car> getCarsByType(String type, String limit) throws CarServiceException {
+        try {
+            return carDataGateway.getCarsByType(type, limit);
+        } catch (SQLException e) {
+            String msg = "Fatal error in CarService. Nested exception is: " + e.getMessage();
+            Log.i("CarServiceData", msg);
+            throw new CarServiceException(msg);
+        }
+    }
+
+    @Override
+    public List<Car> getCarsBySubType(String subType, String limit) throws CarServiceException {
+        try {
+            return carDataGateway.getCarsBySubType(subType, limit);
+        } catch (SQLException e) {
+            String msg = "Fatal error in CarService. Nested exception is: " + e.getMessage();
+            Log.i("CarServiceData", msg);
+            throw new CarServiceException(msg);
+        }
     }
 
 }
