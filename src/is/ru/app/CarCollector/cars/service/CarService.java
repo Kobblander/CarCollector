@@ -1,6 +1,7 @@
 package is.ru.app.CarCollector.cars.service;
 
 import is.ru.app.CarCollector.cars.data.dto.Car;
+import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 
 /**
  * <h1>CarService</h1>
@@ -14,10 +15,16 @@ import is.ru.app.CarCollector.cars.data.dto.Car;
 public interface CarService {
 
     /**
-     * This function adds a single car to the database given its licence plate.
-     * @param registryNumber The given licence plate number.
+     * This function adds a single car to the database given a registry number.
+     * @param registryNumber The given registryNumber.
      */
-    public void addCar(String registryNumber);
+    public void addCar(String registryNumber, RestCallback callback);
+
+    /**
+     * This function adds a single car to the database.
+     * @param car
+     */
+    public void addCarCallback(Car car);
 
     /**
      * This function returns a single car given its licence plate number.
@@ -25,4 +32,5 @@ public interface CarService {
      * @return
      */
     public Car getCar(String registryNumber);
+
 }

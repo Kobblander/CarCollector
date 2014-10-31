@@ -22,7 +22,7 @@ public class LogToFile {
 
         FileHandler fh = null;
         try {
-            fh = new FileHandler("log.xml",true);
+            fh = new FileHandler("home/jakob/IdeaProjects/APP/CarCollector/log.xml",true);
             logger.addHandler(fh);
             if (level.equals("severe")) {
                 logger.log(Level.SEVERE, msg, ex);
