@@ -26,5 +26,7 @@ proguard/
 *.log
 
 # IntelliJ Files
-CarCollector.iml
+.idea/workspace.xml
 
+*.iml
+*.eml
