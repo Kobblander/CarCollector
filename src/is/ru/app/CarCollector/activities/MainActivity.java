@@ -8,7 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
-
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.models.Car;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
@@ -35,25 +36,31 @@ public class MainActivity extends Activity implements RestCallback {
 
         setContentView(R.layout.main);
 
-        try {
-            carService.addCar("MF078", this);
+        // Set search
+        SearchView searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                getCar(query);
 
-            /*
-            List<Car> car1 = carService.getCarsBySubType("SUPERB", null);
-            List<Car> car2 = carService.getCarsByType("SKODA", null);
-            Car car3 = carService.getCarByRegistryNumber("MF078");
-            Log.i("TEST_1: ", car1.get(0).toString());
-            Log.i("TEST_2: ", car2.get(0).toString());
-            Log.i("TEST_3: ", car3.toString());
-            */
-        } catch (CarExistsException cee) {
-            isCollectable = false;
-            // TODO:
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String arg0) {
+                return false;
+            }
+        });
+    }
+
+    private void getCar(String query) {
+        try {
+            carService.addCar(query, this);
+        } catch (CarExistsException e) {
+            e.printStackTrace();
         } catch (Exception e) {
-            // TODO: Handle CarServiceException. Basically means something went wrong when receiving the data.
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -64,6 +71,7 @@ public class MainActivity extends Activity implements RestCallback {
     @Override
     public void postExecute(Car response) {
         Log.i("MainActivity - CarService", "addCar");
+
         try {
             carService.addCarCallback(response);
         } catch (Exception e) {
