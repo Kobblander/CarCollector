@@ -141,8 +141,8 @@ public class Car {
                 "\tregisteredAt=" + registeredAt + "\n" +
                 "\tstatus=" + status + "\n" +
                 "\tnextCheck=" + nextCheck + "\n" +
-                "\tgetPollution=" + pollution + "\n" +
-                "\tsetWeight=" + weight + "\n" +
+                "\tpollution=" + pollution + "\n" +
+                "\tweight=" + weight + "\n" +
                 '}';
     }
 

@@ -30,6 +30,7 @@ public class CarServiceData implements CarService {
 
     @Override
     public void addCar(String registryNumber, RestCallback callback) throws CarExistsException, CarServiceException {
+        // TODO: CHECK THE REGISTRY NUMBER STRING!!!
         try {
             if (carDataGateway.getCarByRegistryNumber(registryNumber) != null) {
                 String msg = "The car with registry number: " + registryNumber + ", already " +
