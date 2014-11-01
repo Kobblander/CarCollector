@@ -64,34 +64,34 @@ public class RestQuery {
 
             String jsonString = "";
             try {
-                car = restTemplate.getForObject(url, Car.class);
+				jsonString = restTemplate.getForObject(url, String.class);
             } catch (Exception e) {
                 Log.i("MainActivity - RestQuery", "Failed receiving json from: " + url + ". NestedException is: " + e.getMessage());
                 exit(0);
             }
 
-            /*
+
             JSONParser jsonParser = new JSONParser();
 
             try {
                 JSONObject jsonRoot = (JSONObject)jsonParser.parse(jsonString);
                 JSONArray jsonResults = (JSONArray)jsonRoot.get("results");
 
-                for(int i=0; i < jsonResults.size(); i++) {
-                    JSONObject jsonCar = (JSONObject)jsonResults.get(i);
-                    car.setNumber(jsonCar.get("number").toString());
-                    car.setFactoryNumber(jsonCar.get("factoryNumber").toString());
-                    //car.setRegisteredAt();
-                    car.setSubType(jsonCar.get("subType").toString());
-                    car.setType(jsonCar.get("type").toString());
-                    car.setColor(jsonCar.get("color").toString());
-                    car.setRegistryNumber(jsonCar.get("registryNumber").toString());
+				for (Object jsonResult : jsonResults) {
+					JSONObject jsonCar = (JSONObject) jsonResult;
+					car.setNumber(jsonCar.get("number").toString());
+					car.setFactoryNumber(jsonCar.get("factoryNumber").toString());
+					//car.setRegisteredAt();
+					car.setSubType(jsonCar.get("subType").toString());
+					car.setType(jsonCar.get("type").toString());
+					car.setColor(jsonCar.get("color").toString());
+					car.setRegistryNumber(jsonCar.get("registryNumber").toString());
 
-                }
+				}
             } catch (ParseException e) {
                 Log.i("MainActivity", "Parsing a car from the url: " + url + ". FAILED! :(");
             }
-            */
+
 
             return car;
         }
