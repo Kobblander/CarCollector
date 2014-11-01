@@ -12,17 +12,17 @@ import android.widget.FrameLayout;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.models.Car;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
+import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
 import is.ru.app.CarCollector.utilities.CameraPreview;
-
-import java.util.List;
 
 public class MainActivity extends Activity implements RestCallback {
 
     private Camera mCamera;
     private CameraPreview mPreview;
-    CarService carService = new CarServiceData(this);
+    private CarService carService = new CarServiceData(this);
+    private boolean isCollectable = true;
 
     /**
      * Called when the activity is first created.
@@ -37,12 +37,18 @@ public class MainActivity extends Activity implements RestCallback {
 
         try {
             carService.addCar("MF078", this);
+
+            /*
             List<Car> car1 = carService.getCarsBySubType("SUPERB", null);
             List<Car> car2 = carService.getCarsByType("SKODA", null);
             Car car3 = carService.getCarByRegistryNumber("MF078");
             Log.i("TEST_1: ", car1.get(0).toString());
             Log.i("TEST_2: ", car2.get(0).toString());
             Log.i("TEST_3: ", car3.toString());
+            */
+        } catch (CarExistsException cee) {
+            isCollectable = false;
+            // TODO:
         } catch (Exception e) {
             // TODO: Handle CarServiceException. Basically means something went wrong when receiving the data.
             e.printStackTrace();
@@ -100,6 +106,7 @@ public class MainActivity extends Activity implements RestCallback {
         }
         catch (Exception e){
             // Camera is not available (in use or does not exist)
+            e.printStackTrace();
         }
 
         return c; // returns null if camera is unavailable
