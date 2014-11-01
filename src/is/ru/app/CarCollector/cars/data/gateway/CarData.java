@@ -76,6 +76,10 @@ public class CarData implements CarDataGateway {
             car.setSubType(cursor.getString(5));
             car.setColor(cursor.getString(6));
             car.setRegisteredAt(cursor.getString(7));
+            car.setStatus(cursor.getString(8));
+            car.setNextCheck(cursor.getString(9));
+            car.setPollution(cursor.getString(10));
+            car.setWeight(cursor.getString(11));
             carList.add(car);
         }
 

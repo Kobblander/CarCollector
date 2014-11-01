@@ -1,29 +1,28 @@
 package is.ru.app.CarCollector.activities;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.models.Car;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
+import is.ru.app.CarCollector.cars.data.rest.RestQueryException;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
-import is.ru.app.CarCollector.utilities.CameraPreview;
 
 public class MainActivity extends Activity implements RestCallback {
-
-    private Camera mCamera;
-    private CameraPreview mPreview;
     private CarService carService = new CarServiceData(this);
     private boolean isCollectable = true;
+    private static ProgressDialog progressDialog;
 
     /**
      * Called when the activity is first created.
@@ -31,6 +30,8 @@ public class MainActivity extends Activity implements RestCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hide the action bar
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
 
@@ -56,8 +57,8 @@ public class MainActivity extends Activity implements RestCallback {
     private void getCar(String query) {
         try {
             carService.addCar(query, this);
-        } catch (CarExistsException e) {
-            e.printStackTrace();
+        } catch (CarExistsException cee) {
+            isCollectable = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,19 +66,23 @@ public class MainActivity extends Activity implements RestCallback {
 
     @Override
     public void preExecute() {
-
+        this.showProgressDialog("Retrieving the car.");
     }
 
     @Override
-    public void postExecute(Car response) {
+    public void postExecute(Car response, RestQueryException exception) {
         Log.i("MainActivity - CarService", "addCar");
 
-        try {
-            carService.addCarCallback(response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            // TODO: Handle this error, basically means something went wrong when adding to the database.
+        // If there is not an exception thrown.
+        if (exception == null) {
+            try {
+                carService.addCarCallback(response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
+        this.hideProgressDialog();
     }
 
     @Override
@@ -95,28 +100,53 @@ public class MainActivity extends Activity implements RestCallback {
         startActivity(myIntent);
     }
 
-    public void setCamera(View view) {
-        // Create an instance of Camera
-        mCamera = getCameraInstance();
+	/**
+	 * Shows a Progress Dialog with a Cancel Button
+	 *
+	 * @param msg
+	 */
+	public void showProgressDialog(String msg)
+	{
+		final RestCallback callback = this;
 
-        // Create our Preview view and set it as the content of our activity.
-        mPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.cameraFrame);
-        preview.addView(mPreview);
-    }
+		// check for existing progressDialog
+		if (progressDialog == null) {
+			// create a progress Dialog
+			progressDialog = new ProgressDialog(this);
 
-    /** A safe way to get an instance of the Camera object. */
-    public static Camera getCameraInstance(){
-        Camera c = null;
+			// remove the ability to hide it by tapping back button
+			progressDialog.setIndeterminate(true);
 
-        try {
-            c = Camera.open(0); // attempt to get a Camera instance
-        }
-        catch (Exception e){
-            // Camera is not available (in use or does not exist)
-            e.printStackTrace();
-        }
+			progressDialog.setCancelable(false);
 
-        return c; // returns null if camera is unavailable
-    }
+			progressDialog.setMessage(msg);
+
+			if (callback != null) {
+				progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel",
+					new Dialog.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// Cancel the Task when user hits Cancel Button
+							callback.cancelExecute();
+						}
+				});
+			}
+		}
+
+		// now display it.
+		progressDialog.show();
+	}
+
+
+	/**
+	 * Hides the Progress Dialog
+	 */
+	public void hideProgressDialog() {
+
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
+
+		progressDialog = null;
+	}
 }

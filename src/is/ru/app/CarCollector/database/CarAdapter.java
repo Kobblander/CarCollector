@@ -56,7 +56,11 @@ public class CarAdapter {
         contentValues.put( cols[4], car.getType());
         contentValues.put( cols[5], car.getSubType());
         contentValues.put( cols[6], car.getColor());
-        contentValues.put(cols[7], car.getRegisteredAt());
+        contentValues.put( cols[7], car.getRegisteredAt());
+        contentValues.put( cols[8], car.getStatus());
+        contentValues.put( cols[9], car.getNextCheck());
+        contentValues.put( cols[10], car.getPollution());
+        contentValues.put( cols[11], car.getWeight());
         openToWrite();
         long value = db.insert("cars", null, contentValues );
         close();
@@ -76,6 +80,10 @@ public class CarAdapter {
         contentValues.put( cols[5], car.getSubType());
         contentValues.put( cols[6], car.getColor());
         contentValues.put( cols[7], car.getRegisteredAt());
+        contentValues.put( cols[8], car.getStatus());
+        contentValues.put( cols[9], car.getNextCheck());
+        contentValues.put( cols[10], car.getPollution());
+        contentValues.put( cols[11], car.getWeight());
         openToWrite();
         long value = db.update("cars", contentValues, cols[1] + "=" + car.getRegistryNumber(), null);
         close();
