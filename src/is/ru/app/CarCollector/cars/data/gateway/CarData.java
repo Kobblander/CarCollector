@@ -3,7 +3,7 @@ package is.ru.app.CarCollector.cars.data.gateway;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-import is.ru.app.CarCollector.cars.data.dto.Car;
+import is.ru.app.CarCollector.cars.data.models.Car;
 import is.ru.app.CarCollector.database.CarAdapter;
 
 import java.util.ArrayList;

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import is.ru.app.CarCollector.cars.data.dto.Car;
+import is.ru.app.CarCollector.cars.data.models.Car;
 
 
 /**

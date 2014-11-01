@@ -1,6 +1,6 @@
 package is.ru.app.CarCollector.cars.service;
 
-import is.ru.app.CarCollector.cars.data.dto.Car;
+import is.ru.app.CarCollector.cars.data.models.Car;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 
 import java.util.List;

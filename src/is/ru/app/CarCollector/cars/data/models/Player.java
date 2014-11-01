@@ -1,4 +1,4 @@
-package is.ru.app.CarCollector.cars.data.dto;
+package is.ru.app.CarCollector.cars.data.models;
 
 /**
  * <h1>PlayerXp</h1>
@@ -11,6 +11,6 @@ package is.ru.app.CarCollector.cars.data.dto;
  */
 public class Player {
 
-    Player() {
-    }
+    private int level;
+
 }
