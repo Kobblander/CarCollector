@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements RestCallback {
         setContentView(R.layout.main);
 
         try {
-            carService.addCar("MF078", this);
+            carService.addCar("AD771", this);
 
             /*
             List<Car> car1 = carService.getCarsBySubType("SUPERB", null);

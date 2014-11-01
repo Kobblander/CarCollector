@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "CAR_DB";
-    public static final int DB_VERSION = 7;
+    public static final int DB_VERSION = 9;
 
 
     public static final String TableCars = "cars";
@@ -25,7 +25,8 @@ public class DbHelper extends SQLiteOpenHelper {
      * The cols are identical in the tables
      */
     public static final String[] TableCarsCols = { "_id", "registryNumber", "number", "factoryNumber",
-                                                     "type", "subType", "color", "registeredAt" };
+                                                   "type", "subType", "color", "registeredAt", "status",
+                                                   "nextCheck", "pollution", "weight" };
 
 
     private static final String sqlCreateTableCars =
@@ -37,7 +38,11 @@ public class DbHelper extends SQLiteOpenHelper {
                     " type TEXT," +
                     " subType TEXT," +
                     " color TEXT," +
-                    " registeredAt TEXT" +
+                    " registeredAt TEXT," +
+                    " status TEXT," +
+                    " nextCheck TEXT," +
+                    " pollution TEXT," +
+                    " weight TEXT" +
                     ");";
 
     private static final String sqlDropTableCars =

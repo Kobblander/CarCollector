@@ -3,14 +3,8 @@ package is.ru.app.CarCollector.cars.data.rest;
 import android.os.AsyncTask;
 import android.util.Log;
 import is.ru.app.CarCollector.cars.data.models.Car;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.ParseException;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-import org.json.simple.parser.JSONParser;
-
-import static java.lang.System.exit;
 
 /**
  * <h1>RestQuery</h1>
@@ -62,36 +56,11 @@ public class RestQuery {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-            String jsonString = "";
             try {
                 car = restTemplate.getForObject(url, Car.class);
             } catch (Exception e) {
                 Log.i("MainActivity - RestQuery", "Failed receiving json from: " + url + ". NestedException is: " + e.getMessage());
-                exit(0);
             }
-
-            /*
-            JSONParser jsonParser = new JSONParser();
-
-            try {
-                JSONObject jsonRoot = (JSONObject)jsonParser.parse(jsonString);
-                JSONArray jsonResults = (JSONArray)jsonRoot.get("results");
-
-                for(int i=0; i < jsonResults.size(); i++) {
-                    JSONObject jsonCar = (JSONObject)jsonResults.get(i);
-                    car.setNumber(jsonCar.get("number").toString());
-                    car.setFactoryNumber(jsonCar.get("factoryNumber").toString());
-                    //car.setRegisteredAt();
-                    car.setSubType(jsonCar.get("subType").toString());
-                    car.setType(jsonCar.get("type").toString());
-                    car.setColor(jsonCar.get("color").toString());
-                    car.setRegistryNumber(jsonCar.get("registryNumber").toString());
-
-                }
-            } catch (ParseException e) {
-                Log.i("MainActivity", "Parsing a car from the url: " + url + ". FAILED! :(");
-            }
-            */
 
             return car;
         }
