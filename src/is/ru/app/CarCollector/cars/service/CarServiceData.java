@@ -3,7 +3,7 @@ package is.ru.app.CarCollector.cars.service;
 import android.content.Context;
 import android.database.SQLException;
 import android.util.Log;
-import is.ru.app.CarCollector.cars.data.dto.Car;
+import is.ru.app.CarCollector.cars.data.models.Car;
 import is.ru.app.CarCollector.cars.data.gateway.CarData;
 import is.ru.app.CarCollector.cars.data.gateway.CarDataGateway;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
@@ -40,6 +40,7 @@ public class CarServiceData implements CarService {
         } catch (SQLException e) {
             String msg = "Car not in database. Everything is OK. Nested exception is: " + e.getClass() + ": " + e.getMessage();
             Log.i("CarServiceData - addCar", msg);
+            throw new CarServiceException(msg);
         }
         RestQuery.getInstance().getCar(registryNumber, callback);
     }

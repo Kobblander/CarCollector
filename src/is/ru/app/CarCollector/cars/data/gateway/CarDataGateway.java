@@ -1,6 +1,6 @@
 package is.ru.app.CarCollector.cars.data.gateway;
 
-import is.ru.app.CarCollector.cars.data.dto.Car;
+import is.ru.app.CarCollector.cars.data.models.Car;
 
 import java.util.List;
 

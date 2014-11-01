@@ -1,4 +1,4 @@
-package is.ru.app.CarCollector.cars.data.dto;
+package is.ru.app.CarCollector.cars.data.models;
 
 /**
  * <h1>TypeXp</h1>
@@ -11,6 +11,8 @@ package is.ru.app.CarCollector.cars.data.dto;
  */
 public class Type {
 
-    Type() {
-    }
+    private String type;
+    private int level;
+    private int totalCars;
+
 }

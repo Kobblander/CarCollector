@@ -1,6 +1,4 @@
-package is.ru.app.CarCollector.cars.data.dto;
-
-import java.util.Date;
+package is.ru.app.CarCollector.cars.data.models;
 
 /**
  * <h1>Car</h1>

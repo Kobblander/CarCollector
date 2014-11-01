@@ -3,15 +3,11 @@ package is.ru.app.CarCollector.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 import is.ru.app.CarCollector.R;
-import is.ru.app.CarCollector.cars.data.dto.Car;
+import is.ru.app.CarCollector.cars.data.models.Car;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
-import is.ru.app.CarCollector.cars.data.rest.RestQuery;
-import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
-import is.ru.app.CarCollector.cars.service.CarServiceException;
 
 import java.util.List;
 
@@ -28,7 +24,7 @@ public class MainActivity extends Activity implements RestCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         try {
-            //carService.addCar("MF078", this);
+            carService.addCar("MF078", this);
             List<Car> car1 = carService.getCarsBySubType("SUPERB", null);
             List<Car> car2 = carService.getCarsByType("SKODA", null);
             Car car3 = carService.getCarByRegistryNumber("MF078");

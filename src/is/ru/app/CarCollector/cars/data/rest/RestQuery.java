@@ -2,7 +2,7 @@ package is.ru.app.CarCollector.cars.data.rest;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import is.ru.app.CarCollector.cars.data.dto.Car;
+import is.ru.app.CarCollector.cars.data.models.Car;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
@@ -64,12 +64,13 @@ public class RestQuery {
 
             String jsonString = "";
             try {
-                jsonString = restTemplate.getForObject(url, String.class);
+                car = restTemplate.getForObject(url, Car.class);
             } catch (Exception e) {
                 Log.i("MainActivity - RestQuery", "Failed receiving json from: " + url + ". NestedException is: " + e.getMessage());
                 exit(0);
             }
 
+            /*
             JSONParser jsonParser = new JSONParser();
 
             try {
@@ -90,6 +91,7 @@ public class RestQuery {
             } catch (ParseException e) {
                 Log.i("MainActivity", "Parsing a car from the url: " + url + ". FAILED! :(");
             }
+            */
 
             return car;
         }
