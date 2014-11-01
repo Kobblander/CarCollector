@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CarCollector</string>
+    <string name="main_camera">Main Camera</string>
+    <string name="user_profile">User Profile</string>
 </resources>
