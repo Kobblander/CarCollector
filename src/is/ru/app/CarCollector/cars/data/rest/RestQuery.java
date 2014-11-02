@@ -9,6 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -71,6 +72,8 @@ public class RestQuery {
 
                 HttpEntity entity = new HttpEntity(requestHeaders);
 
+                requestHeaders.set("Connection", "Close");
+                restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 Log.i("CarTask", "Before Exchange.");
                 HttpEntity<String> response = restTemplate.exchange( url, HttpMethod.GET, entity, String.class );
