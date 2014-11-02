@@ -27,7 +27,7 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="180dp"
                     android:layout_height="5dp"
-                    android:id="@+id/bar"
+                    android:id="@+id/main"
                     android:layout_marginLeft="15dp" android:layout_marginRight="15dp" android:progress="60"
                     android:layout_gravity="center_vertical" android:max="100" android:indeterminate="false"
                     android:layout_row="0" android:layout_column="2"/>/>
@@ -84,8 +84,8 @@
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/main" android:layout_alignParentEnd="true" android:layout_below="@+id/topbar"
-            android:layout_above="@+id/bottombar" android:visibility="invisible">
+            android:id="@id/main" android:layout_alignParentEnd="true" android:layout_below="@+id/topbar"
+            android:layout_above="@+id/bottombar">
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="125dp" android:id="@+id/relativeLayout">
@@ -129,13 +129,13 @@
                     android:layout_alignParentLeft="true"/>
             <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:text="CO2 losun: "
                     android:id="@+id/pollution"
                     android:textSize="18dp"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/weight" android:layout_alignParentLeft="true"
-                    />
+                    android:layout_marginBottom="20dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -157,30 +157,6 @@
                       android:id="@+id/registered" android:textSize="18dp"
                       android:layout_below="@+id/subtype" android:layout_alignParentStart="true"
                       android:layout_marginTop="21dp" android:layout_marginBottom="20dp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/registerdAns"
-                    android:layout_toRightOf="@+id/registered"
-                    android:text="New Value"
-                    android:typeface="normal" android:textIsSelectable="false"
-                    android:layout_alignTop="@+id/registered" android:gravity="center_vertical"
-                    android:layout_alignBottom="@+id/registered"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/weightAns"
-                    android:layout_alignStart="@+id/registerdAns" android:text="New Value"
-                    android:layout_below="@+id/registered"
-                    android:gravity="center_vertical"
-                    android:layout_alignBottom="@+id/weight"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/pollutionAns"
-                    android:layout_alignStart="@+id/weightAns" android:text="New Value"
-                    android:layout_below="@+id/weight"
-                    android:gravity="center_vertical" android:layout_alignBottom="@+id/pollution"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
