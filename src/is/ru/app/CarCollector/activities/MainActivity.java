@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import is.ru.app.CarCollector.R;
+import is.ru.app.CarCollector.cars.data.rest.RestQuery;
 import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQueryException;
@@ -61,16 +62,6 @@ public class MainActivity extends Activity implements RestCallback {
         });
     }
 
-    private void getCar(String query) {
-        try {
-            carService.addCar(query, this);
-        } catch (CarExistsException cee) {
-            isCollectable = false;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void preExecute() {
         this.showProgressDialog("Retrieving the car.");
@@ -99,7 +90,7 @@ public class MainActivity extends Activity implements RestCallback {
 
     @Override
     public void cancelExecute() {
-
+        RestQuery.getInstance().cancelTask();
     }
 
     public void profile(View view){

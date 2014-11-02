@@ -104,7 +104,7 @@ public class RestQuery {
         }
     }
 
-    public void cancelTalk() {
+    public void cancelTask() {
         if (currentTask != null) {
             currentTask.cancel(true);
         }

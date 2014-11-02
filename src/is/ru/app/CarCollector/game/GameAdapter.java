@@ -147,6 +147,7 @@ public class GameAdapter {
         }
         return cursor;
     }
+
     /**
      * Query the database for CarTypes given the CarType name and PlayerId
      * @param carTypeName The given name of the carType.
@@ -202,6 +203,25 @@ public class GameAdapter {
             cursor = db.rawQuery(query, new String[] {String.valueOf(playerName)});
         } catch(Exception e) {
             String msg = "No carTypes found with playerName: '" + playerName + "' in the database. Nested exception is: " + e.getMessage();
+            Log.i("CarAdapterExceptionThrown", msg);
+            throw new SQLException(msg);
+        }
+        return cursor;
+    }
+
+    /**
+     * Query the database for CarTypes given the CarType name and PlayerId
+     * @return A cursor which can be used to store the data.
+     * @throws SQLException
+     */
+    public Cursor queryCarSubTypes() {
+        openToRead();
+        Cursor cursor;
+        String query = "select * from "+tableCarSubTypes;
+        try {
+            cursor = db.rawQuery(query, null);
+        } catch(Exception e) {
+            String msg = "No carSubTypes found in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
             throw new SQLException(msg);
         }
