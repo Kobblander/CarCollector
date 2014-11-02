@@ -27,7 +27,7 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="180dp"
                     android:layout_height="5dp"
-                    android:id="@+id/lvlbar"
+                    android:id="@+id/main"
                     android:layout_marginLeft="15dp" android:layout_marginRight="15dp" android:progress="60"
                     android:layout_gravity="center_vertical" android:max="100" android:indeterminate="false"
                     android:layout_row="0" android:layout_column="2"/>/>
@@ -81,10 +81,72 @@
                 android:background="#aaa">
         </LinearLayout>
     </RelativeLayout>
-    <FrameLayout
+    <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:layout_below="@+id/topbar"
-            android:layout_above="@+id/bottombar" android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true" android:id="@+id/cameraFrame">
-    </FrameLayout>
+            android:layout_height="fill_parent"
+            android:id="@id/main" android:layout_alignParentEnd="true" android:layout_below="@+id/topbar"
+            android:layout_above="@+id/bottombar">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="125dp" android:id="@+id/relativeLayout">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="125dp"
+                    android:id="@+id/carimage"
+                    android:layout_alignParentStart="true" android:layout_alignParentEnd="true"/>
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0.5dp"
+                          android:layout_above="@+id/bottombar" android:layout_centerHorizontal="true"
+                          android:background="#aaa" android:id="@+id/linearLayout2"
+                          android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp" android:layout_below="@+id/relativeLayout">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Type"
+                    android:id="@+id/type"
+                    android:textSize="42dp"
+                    android:layout_alignParentTop="true" android:layout_alignParentStart="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="SubType"
+                    android:id="@+id/subtype"
+                    android:layout_alignEnd="@+id/type"
+                    android:layout_below="@+id/type"
+                    android:layout_alignStart="@+id/type" android:textSize="21dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Plate Number"
+                    android:id="@+id/platenumber" android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@+id/subtype" android:textSize="16dp"
+                    android:layout_alignParentLeft="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pollution"
+                    android:id="@+id/pollution" android:layout_below="@+id/subtype"
+                    android:layout_alignParentEnd="true" android:layout_marginBottom="15dp" android:textSize="18dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weight"
+                    android:id="@+id/weight" android:layout_below="@+id/pollution"
+                    android:layout_alignStart="@+id/pollution" android:layout_marginBottom="15dp"
+                    android:textSize="18dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:id="@+id/status"
+                    android:layout_below="@+id/weight" android:layout_alignEnd="@+id/weight"
+                    android:layout_marginBottom="15dp" android:textSize="18dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

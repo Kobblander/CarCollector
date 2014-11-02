@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.TextView;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.models.Car;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
@@ -38,12 +40,24 @@ public class MainActivity extends Activity implements RestCallback {
         setContentView(R.layout.main);
 
         // Set search
-        SearchView searchView = (SearchView) findViewById(R.id.searchView);
+        final SearchView searchView = (SearchView) findViewById(R.id.searchView);
+
         searchView.setOnQueryTextListener(new OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getCar(query);
+                // Remove keyboard
+                searchView.setVisibility(View.INVISIBLE);
+                searchView.setVisibility(View.VISIBLE);
 
+                // Clear query
+                searchView.setQuery("", false);
+
+                // Remove focus, to icon
+                searchView.clearFocus();
+                searchView.setIconified(true);
+
+                // Get car
+                getCar(query);
                 return true;
             }
 
@@ -52,6 +66,12 @@ public class MainActivity extends Activity implements RestCallback {
                 return false;
             }
         });
+    }
+
+
+    public void profile(View view){
+        Intent myIntent = new Intent(this, ProfileActivity.class);
+        startActivity(myIntent);
     }
 
     private void getCar(String query) {
@@ -72,6 +92,7 @@ public class MainActivity extends Activity implements RestCallback {
     @Override
     public void postExecute(Car response, RestQueryException exception) {
         Log.i("MainActivity - CarService", "addCar");
+        displayCar(response);
 
         // If there is not an exception thrown.
         if (exception == null) {
@@ -95,9 +116,37 @@ public class MainActivity extends Activity implements RestCallback {
 
     }
 
-    public void profile(View view){
-        Intent myIntent = new Intent(this, ProfileActivity.class);
-        startActivity(myIntent);
+    /**
+     * Set car to view
+     * @param response the car gotten from the api
+     */
+    public void displayCar(Car response) {
+        ImageView carImage = (ImageView) findViewById(R.id.carimage);
+        // carImage.setImageBitmap(image);
+
+        // Set car type
+        TextView type = (TextView) findViewById(R.id.type);
+        type.setText(response.getType());
+
+        // Set car subtype
+        TextView subType = (TextView) findViewById(R.id.subtype);
+        subType.setText(response.getSubType());
+
+        // Set car numberplate
+        TextView plateNumber = (TextView) findViewById(R.id.platenumber);
+        plateNumber.setText(response.getNumber());
+
+        // Set Pollution
+        TextView pollution = (TextView) findViewById(R.id.pollution);
+        pollution.setText(response.getPollution());
+
+        // Set Weight
+        TextView weight = (TextView) findViewById(R.id.weight);
+        weight.setText(response.getWeight());
+
+        // Set Status
+        TextView status = (TextView) findViewById(R.id.status);
+        status.setText(response.getStatus());
     }
 
 	/**

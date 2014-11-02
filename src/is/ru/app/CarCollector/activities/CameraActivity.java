@@ -2,7 +2,9 @@ package is.ru.app.CarCollector.activities;
 
 import android.app.Activity;
 import android.hardware.Camera;
+import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.utilities.CameraPreview;
@@ -16,6 +18,20 @@ import is.ru.app.CarCollector.utilities.CameraPreview;
 public class CameraActivity extends Activity {
     private Camera mCamera;
     private CameraPreview mPreview;
+
+    /**
+     * Called when the activity is first created.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Hide the action bar
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        getActionBar().hide();
+
+        setContentView(R.layout.camera);
+    }
 
     public void setCamera(View view) {
         // Create an instance of Camera
