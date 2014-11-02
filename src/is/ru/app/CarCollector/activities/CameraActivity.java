@@ -1,13 +1,13 @@
 package is.ru.app.CarCollector.activities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.view.View;
+import android.provider.MediaStore;
 import android.view.Window;
-import android.widget.FrameLayout;
 import is.ru.app.CarCollector.R;
-import is.ru.app.CarCollector.utilities.CameraPreview;
 
 /**
  * Created with IntelliJ IDEA
@@ -16,8 +16,7 @@ import is.ru.app.CarCollector.utilities.CameraPreview;
  * Time : 19:51
  */
 public class CameraActivity extends Activity {
-    private Camera mCamera;
-    private CameraPreview mPreview;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     /**
      * Called when the activity is first created.
@@ -31,16 +30,25 @@ public class CameraActivity extends Activity {
         getActionBar().hide();
 
         setContentView(R.layout.camera);
+        dispatchTakePictureIntent();
     }
 
-    public void setCamera(View view) {
-        // Create an instance of Camera
-        mCamera = getCameraInstance();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-        // Create our Preview view and set it as the content of our activity.
-        mPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.cameraFrame);
-        preview.addView(mPreview);
+            Intent myIntent = new Intent(this, MainActivity.class);
+            startActivity(myIntent);
+        }
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
     /** A safe way to get an instance of the Camera object. */
