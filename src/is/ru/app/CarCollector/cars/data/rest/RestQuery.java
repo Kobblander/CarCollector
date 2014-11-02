@@ -85,7 +85,7 @@ public class RestQuery {
             } catch (Exception e) {
                 String msg = "Failed receiving json from: " + url + ". NestedException is: " + e.getMessage();
                 Log.i("MainActivity - RestQuery", msg);
-                exception = new RestQueryException(msg);
+                exception = new RestQueryException(msg, e);
             }
 
             return car;

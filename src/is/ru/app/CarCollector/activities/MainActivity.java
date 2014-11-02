@@ -23,6 +23,8 @@ import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
 
+import java.net.UnknownHostException;
+
 public class MainActivity extends Activity implements RestCallback {
     private CarService carService = new CarServiceData(this);
     private RestCallback restCallback = this;
@@ -94,19 +96,31 @@ public class MainActivity extends Activity implements RestCallback {
     }
 
     @Override
-    public void postExecute(Car response, RestQueryException exception) {
+    public void postExecute(Object response, Throwable exception) {
         Log.i("MainActivity - CarService", "addCar");
-        displayCar(response);
 
-        // If there is not an exception thrown.
-        if (exception == null) {
-            try {
-                carService.addCarCallback(response);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (exception != null) {
+            handleAsyncException(exception);
+            return;
         }
 
+        if (response.getClass() == Car.class) {
+            displayCar((Car) response);
+        }
+
+        try {
+            carService.addCarCallback((Car) response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        this.hideProgressDialog();
+    }
+
+    public void handleAsyncException(Throwable exception) {
+        if (exception.getCause().getClass() == UnknownHostException.class) {
+            this.hideProgressDialog();
+        }
         this.hideProgressDialog();
     }
 
