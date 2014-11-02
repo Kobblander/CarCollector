@@ -9,17 +9,16 @@ package is.ru.app.CarCollector.game.models;
  * @author jakob
  * @version 1.1
  */
-public class SubType {
+public class CarSubType {
 
     private int _id;
-
-    private String subTypeName;
     private int typeId;
+    private String subTypeName;
     private int level;
-    private int xpForNextLevel;
+    private float xpForNextLevel;
     private int totalCars;
 
-    public SubType(int _id, String subTypeName, int typeId, int level, int xpForNextLevel, int totalCars) {
+    public CarSubType(int _id, String subTypeName, int typeId, int level, float xpForNextLevel, int totalCars) {
         this._id = _id;
         this.subTypeName = subTypeName;
         this.typeId = typeId;
@@ -28,7 +27,7 @@ public class SubType {
         this.totalCars = totalCars;
     }
 
-    public SubType(String subTypeName, int typeId, int level, int xpForNextLevel, int totalCars) {
+    public CarSubType(String subTypeName, int typeId, int level, float xpForNextLevel, int totalCars) {
         this.subTypeName = subTypeName;
         this.typeId = typeId;
         this.level = level;
@@ -68,11 +67,11 @@ public class SubType {
         this.level = level;
     }
 
-    public int getXpForNextLevel() {
+    public float getXpForNextLevel() {
         return xpForNextLevel;
     }
 
-    public void setXpForNextLevel(int xpForNextLevel) {
+    public void setXpForNextLevel(float xpForNextLevel) {
         this.xpForNextLevel = xpForNextLevel;
     }
 
@@ -87,28 +86,18 @@ public class SubType {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SubType)) return false;
+        if (!(o instanceof CarSubType)) return false;
 
-        SubType subType = (SubType) o;
+        CarSubType carSubType = (CarSubType) o;
 
-        if (_id != subType._id) return false;
-        if (level != subType.level) return false;
-        if (totalCars != subType.totalCars) return false;
-        if (typeId != subType.typeId) return false;
-        if (xpForNextLevel != subType.xpForNextLevel) return false;
-        if (subTypeName != null ? !subTypeName.equals(subType.subTypeName) : subType.subTypeName != null) return false;
+        if (_id != carSubType._id) return false;
+        if (level != carSubType.level) return false;
+        if (totalCars != carSubType.totalCars) return false;
+        if (typeId != carSubType.typeId) return false;
+        if (xpForNextLevel != carSubType.xpForNextLevel) return false;
+        if (subTypeName != null ? !subTypeName.equals(carSubType.subTypeName) : carSubType.subTypeName != null) return false;
 
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = _id;
-        result = 31 * result + (subTypeName != null ? subTypeName.hashCode() : 0);
-        result = 31 * result + typeId;
-        result = 31 * result + level;
-        result = 31 * result + xpForNextLevel;
-        result = 31 * result + totalCars;
-        return result;
-    }
 }

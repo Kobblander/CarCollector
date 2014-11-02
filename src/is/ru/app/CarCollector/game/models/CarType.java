@@ -9,16 +9,15 @@ package is.ru.app.CarCollector.game.models;
  * @author jakob
  * @version 1.1
  */
-public class Type {
+public class CarType {
 
     private int _id;
-
-    private String typeName;
     private int playerId;
+    private String typeName;
     private int level;
-    private int xpForNextLevel;
+    private float xpForNextLevel;
 
-    public Type(int _id, String typeName, int playerId, int level, int xpForNextLevel) {
+    public CarType(int _id, String typeName, int playerId, int level, float xpForNextLevel) {
         this._id = _id;
         this.typeName = typeName;
         this.playerId = playerId;
@@ -26,7 +25,7 @@ public class Type {
         this.xpForNextLevel = xpForNextLevel;
     }
 
-    public Type(String typeName, int playerId, int level, int xpForNextLevel) {
+    public CarType(String typeName, int playerId, int level, float xpForNextLevel) {
         this.typeName = typeName;
         this.playerId = playerId;
         this.level = level;
@@ -65,37 +64,28 @@ public class Type {
         this.level = level;
     }
 
-    public int getXpForNextLevel() {
+    public float getXpForNextLevel() {
         return xpForNextLevel;
     }
 
-    public void setXpForNextLevel(int xpForNextLevel) {
+    public void setXpForNextLevel(float xpForNextLevel) {
         this.xpForNextLevel = xpForNextLevel;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Type)) return false;
+        if (!(o instanceof CarType)) return false;
 
-        Type type = (Type) o;
+        CarType carType = (CarType) o;
 
-        if (_id != type._id) return false;
-        if (level != type.level) return false;
-        if (playerId != type.playerId) return false;
-        if (xpForNextLevel != type.xpForNextLevel) return false;
-        if (typeName != null ? !typeName.equals(type.typeName) : type.typeName != null) return false;
+        if (_id != carType._id) return false;
+        if (level != carType.level) return false;
+        if (playerId != carType.playerId) return false;
+        if (xpForNextLevel != carType.xpForNextLevel) return false;
+        if (typeName != null ? !typeName.equals(carType.typeName) : carType.typeName != null) return false;
 
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = _id;
-        result = 31 * result + (typeName != null ? typeName.hashCode() : 0);
-        result = 31 * result + playerId;
-        result = 31 * result + level;
-        result = 31 * result + xpForNextLevel;
-        return result;
-    }
 }

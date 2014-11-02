@@ -14,7 +14,8 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 import is.ru.app.CarCollector.R;
-import is.ru.app.CarCollector.cars.data.models.Car;
+import is.ru.app.CarCollector.cars.data.rest.RestQuery;
+import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQueryException;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
@@ -78,7 +79,6 @@ public class MainActivity extends Activity implements RestCallback {
         });
     }
 
-
     public void profile(View view){
         Intent myIntent = new Intent(this, ProfileActivity.class);
         startActivity(myIntent);
@@ -123,7 +123,7 @@ public class MainActivity extends Activity implements RestCallback {
 
     @Override
     public void cancelExecute() {
-
+        RestQuery.getInstance().cancelTask();
     }
 
     /**

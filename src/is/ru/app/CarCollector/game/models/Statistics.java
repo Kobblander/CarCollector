@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class Statistics {
 
-    private List<Player> player;
-    private List<SubType> subType;
-    private List<Type> type;
+    private Player player;
+    private List<CarSubType> carSubType;
+    private List<CarType> carType;
 
     Statistics() {
     }

@@ -1,4 +1,4 @@
-package is.ru.app.CarCollector.cars.data.models;
+package is.ru.app.CarCollector.cars.models;
 
 /**
  * <h1>Car</h1>

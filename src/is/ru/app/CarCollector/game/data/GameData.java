@@ -11,6 +11,6 @@ package is.ru.app.CarCollector.game.data;
  */
 public class GameData {
 
-    GameData() {
+    public GameData() {
     }
 }

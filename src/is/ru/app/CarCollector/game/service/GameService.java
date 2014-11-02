@@ -1,6 +1,6 @@
 package is.ru.app.CarCollector.game.service;
 
-import is.ru.app.CarCollector.cars.data.models.Car;
+import is.ru.app.CarCollector.cars.models.Car;
 
 /**
  * <h1>GameService</h1>
