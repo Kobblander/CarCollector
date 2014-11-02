@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "CAR_DB";
-    public static final int DB_VERSION = 9;
+    public static final int DB_VERSION = 10;
 
 
     public static final String TableCars = "cars";
@@ -82,7 +82,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     ");";
 
     private static final String sqlDropTableCars =
-            "DROP TABLE IF EXISTS "+sqlCreateTableCars+";";
+            "DROP TABLE IF EXISTS "+TableCars+";";
 
     private static final String sqlDropTablePlayers =
             "DROP TABLE IF EXISTS "+TablePlayers+";";
