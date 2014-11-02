@@ -29,4 +29,6 @@ proguard/
 .idea/workspace.xml
 
 *.iml
+
+tess-two/
 *.eml
