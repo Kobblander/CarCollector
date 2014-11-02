@@ -58,15 +58,13 @@ public class MainActivity extends Activity implements RestCallback {
                 searchView.clearFocus();
                 searchView.setIconified(true);
 
-                // Get car
-                getCar(query);
 
                 try {
                     carService.addCar(query, restCallback);
                 } catch (CarExistsException e1) {
-
-                } catch (Exception e1) {
-
+                    isCollectable = false;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
                 return true;
@@ -82,16 +80,6 @@ public class MainActivity extends Activity implements RestCallback {
     public void profile(View view){
         Intent myIntent = new Intent(this, ProfileActivity.class);
         startActivity(myIntent);
-    }
-
-    private void getCar(String query) {
-        try {
-            carService.addCar(query, this);
-        } catch (CarExistsException cee) {
-            isCollectable = false;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
