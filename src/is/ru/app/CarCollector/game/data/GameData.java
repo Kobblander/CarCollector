@@ -52,32 +52,37 @@ public class GameData implements GameDataGateway {
     @Override
     public List<CarType> getCarTypes() {
         Cursor cursor = gameAdapter.queryCarTypes();
-        return null;
+        return getCarTypesFromCursor(cursor);
     }
 
     @Override
     public List<CarSubType> getCarSubTypes() {
-        return null;
+        Cursor cursor = gameAdapter.queryCarSubTypes();
+        return getCarSubTypesFromCursor(cursor);
     }
 
     @Override
     public List<CarType> getCarTypesByName(String carTypeName) {
-        return null;
+        Cursor cursor = gameAdapter.queryCarTypesByTypeName(carTypeName);
+        return getCarTypesFromCursor(cursor);
     }
 
     @Override
     public List<CarSubType> getCarSubTypesByName(String carSubTypeName) {
-        return null;
+        Cursor cursor = gameAdapter.queryCarSubTypesBySubTypeName(carSubTypeName);
+        return getCarSubTypesFromCursor(cursor);
     }
 
     @Override
     public List<CarType> getCarTypesByNameAndPlayer(String carTypeName, String playerName) {
-        return null;
+        Cursor cursor = gameAdapter.queryCarTypesByTypeNameAndPlayerName(carTypeName, playerName);
+        return getCarTypesFromCursor(cursor);
     }
 
     @Override
     public List<CarSubType> getCarSubTypesByNameAndPlayer(String carSubTypeName, String playerName) {
-        return null;
+        Cursor cursor = gameAdapter.queryCarSubTypesByTypeNameAndPlayerName(carSubTypeName, playerName);
+        return getCarSubTypesFromCursor(cursor);
     }
 
     private List<CarType> getCarTypesFromCursor(Cursor cursor) {
@@ -91,6 +96,23 @@ public class GameData implements GameDataGateway {
             ct.setTypeName(cursor.getString(2));
             ct.setLevel(cursor.getInt(3));
             ct.setXpForNextLevel(cursor.getFloat(4));
+
+            list.add(ct);
+        }
+
+        return list;
+    }
+
+    private List<Player> getPlayersFromCursor(Cursor cursor) {
+        List<Player> list = new ArrayList<Player>();
+
+        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            Player ct = new Player();
+            // The Cursor is now set to the right position
+            ct.set_id(cursor.getInt(0));
+            ct.setPlayerName(cursor.getString(1));
+            ct.setLevel(cursor.getInt(2));
+            ct.setXpForNextLevel(cursor.getFloat(3));
 
             list.add(ct);
         }
