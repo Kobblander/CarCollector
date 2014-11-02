@@ -16,6 +16,9 @@ public class Player {
     private int level;
     private float xpForNextLevel;
 
+    public Player() {
+    }
+
     public Player(int _id, String playerName, int level, float xpForNextLevel) {
         this._id = _id;
         this.playerName = playerName;

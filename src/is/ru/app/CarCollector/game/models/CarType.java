@@ -17,6 +17,9 @@ public class CarType {
     private int level;
     private float xpForNextLevel;
 
+    public CarType() {
+    }
+
     public CarType(int _id, String typeName, int playerId, int level, float xpForNextLevel) {
         this._id = _id;
         this.typeName = typeName;
