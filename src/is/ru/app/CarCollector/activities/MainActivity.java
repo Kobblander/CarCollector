@@ -7,18 +7,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 import is.ru.app.CarCollector.R;
+import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQuery;
 import is.ru.app.CarCollector.cars.models.Car;
-import is.ru.app.CarCollector.cars.data.rest.RestCallback;
-import is.ru.app.CarCollector.cars.data.rest.RestQueryException;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
@@ -158,22 +159,26 @@ public class MainActivity extends Activity implements RestCallback {
         plateNumber.setText(response.getNumber());
 
         // Set Pollution
-        TextView pollution = (TextView) findViewById(R.id.pollution);
-        pollution.setText(pollution.getText() + response.getPollution());
+        ((TextView)findViewById(R.id.pollution)).setText(Html.fromHtml("CO<sup>2</sup> losun: "));
+        TextView pollution = (TextView) findViewById(R.id.pollutionAns);
+        pollution.setText(response.getPollution() + " g/km");
 
         // Set Weight
-        TextView weight = (TextView) findViewById(R.id.weight);
-        weight.setText(weight.getText() + response.getWeight());
+        TextView weight = (TextView) findViewById(R.id.weightAns);
+        weight.setText(response.getWeight() + " kg");
 
         // Set registered
-        TextView registered = (TextView) findViewById(R.id.registered);
-        registered.setText(registered.getText() + response.getRegisteredAt());
-
+        TextView registered = (TextView) findViewById(R.id.registerdAns);
+        registered.setText(response.getRegisteredAt());
 
         // Set Status
         TextView status = (TextView) findViewById(R.id.status);
         status.setText(response.getStatus());
         status.setTextColor(Color.GREEN);
+
+        RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
+        carView.setVisibility(View.VISIBLE);
+
     }
 
 	/**
