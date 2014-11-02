@@ -12,19 +12,18 @@ package is.ru.app.CarCollector.game.models;
 public class Player {
 
     private int _id;
-
     private String playerName;
     private int level;
-    private double xpForNextLevel;
+    private float xpForNextLevel;
 
-    public Player(int _id, String playerName, int level, double xpForNextLevel) {
+    public Player(int _id, String playerName, int level, float xpForNextLevel) {
         this._id = _id;
         this.playerName = playerName;
         this.level = level;
         this.xpForNextLevel = xpForNextLevel;
     }
 
-    public Player(String playerName, int level, double xpForNextLevel) {
+    public Player(String playerName, int level, float xpForNextLevel) {
         this.playerName = playerName;
         this.level = level;
         this.xpForNextLevel = xpForNextLevel;
@@ -54,11 +53,11 @@ public class Player {
         this.level = level;
     }
 
-    public double getXpForNextLevel() {
+    public float getXpForNextLevel() {
         return xpForNextLevel;
     }
 
-    public void setXpForNextLevel(double xpForNextLevel) {
+    public void setXpForNextLevel(float xpForNextLevel) {
         this.xpForNextLevel = xpForNextLevel;
     }
 

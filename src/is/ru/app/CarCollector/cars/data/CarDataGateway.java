@@ -1,6 +1,6 @@
-package is.ru.app.CarCollector.cars.data.gateway;
+package is.ru.app.CarCollector.cars.data;
 
-import is.ru.app.CarCollector.cars.data.models.Car;
+import is.ru.app.CarCollector.cars.models.Car;
 
 import java.util.List;
 

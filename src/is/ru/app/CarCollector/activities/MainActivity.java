@@ -12,7 +12,7 @@ import android.view.Window;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import is.ru.app.CarCollector.R;
-import is.ru.app.CarCollector.cars.data.models.Car;
+import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQueryException;
 import is.ru.app.CarCollector.cars.service.CarExistsException;

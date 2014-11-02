@@ -2,7 +2,7 @@ package is.ru.app.CarCollector.cars.data.rest;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import is.ru.app.CarCollector.cars.data.models.Car;
+import is.ru.app.CarCollector.cars.models.Car;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.converter.StringHttpMessageConverter;

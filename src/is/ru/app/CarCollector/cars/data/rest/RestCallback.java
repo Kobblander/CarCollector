@@ -1,6 +1,6 @@
 package is.ru.app.CarCollector.cars.data.rest;
 
-import is.ru.app.CarCollector.cars.data.models.Car;
+import is.ru.app.CarCollector.cars.models.Car;
 
 /**
  * <h1>RestCallback</h1>

@@ -1,5 +1,12 @@
 package is.ru.app.CarCollector.game.data;
 
+import is.ru.app.CarCollector.game.models.CarSubType;
+import is.ru.app.CarCollector.game.models.CarType;
+import is.ru.app.CarCollector.game.models.Player;
+import is.ru.app.CarCollector.game.models.Statistics;
+
+import java.util.List;
+
 /**
  * <h1>GameDataGateway</h1>
  * <h2>is.ru.app.CarCollector.game.data</h2>
@@ -9,8 +16,15 @@ package is.ru.app.CarCollector.game.data;
  * @author jakob
  * @version 1.1
  */
-public class GameDataGateway {
+public interface GameDataGateway {
 
-    GameDataGateway() {
-    }
+    public void addPlayer(Player player);
+
+    public void addCarType(CarType carType);
+
+    public void addSubType(CarSubType carSubType);
+
+    public Statistics getStatistics();
+
+    public List<CarSubType> getCarSubTypes();
 }

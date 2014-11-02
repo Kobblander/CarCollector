@@ -3,9 +3,9 @@ package is.ru.app.CarCollector.cars.service;
 import android.content.Context;
 import android.database.SQLException;
 import android.util.Log;
-import is.ru.app.CarCollector.cars.data.models.Car;
-import is.ru.app.CarCollector.cars.data.gateway.CarData;
-import is.ru.app.CarCollector.cars.data.gateway.CarDataGateway;
+import is.ru.app.CarCollector.cars.models.Car;
+import is.ru.app.CarCollector.cars.data.CarData;
+import is.ru.app.CarCollector.cars.data.CarDataGateway;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQuery;
 
