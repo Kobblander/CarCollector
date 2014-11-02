@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -159,7 +158,6 @@ public class MainActivity extends Activity implements RestCallback {
         plateNumber.setText(response.getNumber());
 
         // Set Pollution
-        ((TextView)findViewById(R.id.pollution)).setText(Html.fromHtml("CO<sup>2</sup> losun: "));
         TextView pollution = (TextView) findViewById(R.id.pollutionAns);
         pollution.setText(response.getPollution() + " g/km");
 
@@ -178,7 +176,6 @@ public class MainActivity extends Activity implements RestCallback {
 
         RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
         carView.setVisibility(View.VISIBLE);
-
     }
 
 	/**
