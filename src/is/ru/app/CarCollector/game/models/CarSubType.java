@@ -18,6 +18,9 @@ public class CarSubType {
     private float xpForNextLevel;
     private int totalCars;
 
+    public CarSubType() {
+    }
+
     public CarSubType(int _id, String subTypeName, int typeId, int level, float xpForNextLevel, int totalCars) {
         this._id = _id;
         this.subTypeName = subTypeName;

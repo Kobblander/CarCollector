@@ -22,4 +22,8 @@ public interface GameService {
 
     public void getStats();
 
+    public void getSubTypes();
+
+    public void getTypes();
+
 }

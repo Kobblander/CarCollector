@@ -82,7 +82,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     ");";
 
     private static final String sqlDropTableCars =
-            "DROP TABLE IF EXISTS "+sqlCreateTableCars+";";
+            "DROP TABLE IF EXISTS "+TableCars+";";
 
     private static final String sqlDropTablePlayers =
             "DROP TABLE IF EXISTS "+TablePlayers+";";

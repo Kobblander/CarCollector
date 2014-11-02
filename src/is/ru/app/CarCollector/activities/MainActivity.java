@@ -97,7 +97,7 @@ public class MainActivity extends Activity implements RestCallback {
 
     @Override
     public void postExecute(Object response, Throwable exception) {
-        Log.i("MainActivity - CarService", "addCar");
+        Log.i("MainActivity", "postExecute");
 
         if (exception != null) {
             handleAsyncException(exception);
@@ -106,10 +106,12 @@ public class MainActivity extends Activity implements RestCallback {
 
         if (response.getClass() == Car.class) {
             displayCar((Car) response);
+            Log.i("MainActivity", "postExecute - displaying car");
         }
 
         try {
             carService.addCarCallback((Car) response);
+            Log.i("MainActivity", "postExecute - adding car");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,6 +120,7 @@ public class MainActivity extends Activity implements RestCallback {
     }
 
     public void handleAsyncException(Throwable exception) {
+        Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
         if (exception.getCause().getClass() == UnknownHostException.class) {
             this.hideProgressDialog();
         }

@@ -5,8 +5,15 @@ import android.util.Log;
 import is.ru.app.CarCollector.cars.models.Car;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
+import java.nio.charset.Charset;
+import java.util.Arrays;
 
 /**
  * <h1>RestQuery</h1>
@@ -58,10 +65,18 @@ public class RestQuery {
 
             try {
                 RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                HttpHeaders requestHeaders = new HttpHeaders();
 
-                String jsonString;
-                jsonString = restTemplate.getForObject(url, String.class);
+                requestHeaders.add("Content-Type", "application/text; charset=utf-8");
+
+                HttpEntity entity = new HttpEntity(requestHeaders);
+
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                Log.i("CarTask", "Before Exchange.");
+                HttpEntity<String> response = restTemplate.exchange( url, HttpMethod.GET, entity, String.class );
+                Log.i("CarTask", "After Exchange.");
+                String jsonString = response.getBody();
+                //jsonString = restTemplate.getForObject(url, String.class);
 
 
                 JSONObject jsonRoot = new JSONObject(jsonString);

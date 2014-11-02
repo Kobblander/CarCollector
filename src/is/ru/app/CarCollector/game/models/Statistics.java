@@ -14,8 +14,8 @@ import java.util.List;
 public class Statistics {
 
     private Player player;
-    private List<CarSubType> carSubType;
-    private List<CarType> carType;
+    private List<CarSubType> carSubTypes;
+    private List<CarType> carTypes;
 
     Statistics() {
     }
