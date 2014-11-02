@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Window;
 import is.ru.app.CarCollector.R;
 
@@ -38,6 +39,18 @@ public class CameraActivity extends Activity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+			/*TessBaseAPI baseApi = new TessBaseAPI();
+// DATA_PATH = Path to the storage
+			String DATA_PATH = "isl.traineddata";
+// lang = for which the language data exists, usually "eng"
+			baseApi.init(DATA_PATH, "isl");
+// Eg. baseApi.init("/mnt/sdcard/tesseract/tessdata/eng.traineddata", "eng");
+			baseApi.setImage(imageBitmap);
+			String recognizedText = baseApi.getUTF8Text();
+			baseApi.end();
+
+			Log.i("Camera reader", recognizedText);*/
 
             Intent myIntent = new Intent(this, MainActivity.class);
             startActivity(myIntent);
