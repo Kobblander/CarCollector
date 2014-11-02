@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -59,7 +60,14 @@ public class MainActivity extends Activity implements RestCallback {
                 searchView.setIconified(true);
 
                 // Get car
-                getCar(query);
+                try {
+                    carService.addCar(query, restCallback);
+                } catch (CarExistsException e1) {
+                    isCollectable = false;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 return true;
             }
 
@@ -73,16 +81,6 @@ public class MainActivity extends Activity implements RestCallback {
     public void profile(View view){
         Intent myIntent = new Intent(this, ProfileActivity.class);
         startActivity(myIntent);
-    }
-
-    private void getCar(String query) {
-        try {
-            carService.addCar(query, this);
-        } catch (CarExistsException cee) {
-            isCollectable = false;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -139,15 +137,21 @@ public class MainActivity extends Activity implements RestCallback {
 
         // Set Pollution
         TextView pollution = (TextView) findViewById(R.id.pollution);
-        pollution.setText(response.getPollution());
+        pollution.setText(pollution.getText() + response.getPollution());
 
         // Set Weight
         TextView weight = (TextView) findViewById(R.id.weight);
-        weight.setText(response.getWeight());
+        weight.setText(weight.getText() + response.getWeight());
+
+        // Set registered
+        TextView registered = (TextView) findViewById(R.id.registered);
+        registered.setText(registered.getText() + response.getRegisteredAt());
+
 
         // Set Status
         TextView status = (TextView) findViewById(R.id.status);
         status.setText(response.getStatus());
+        status.setTextColor(Color.GREEN);
     }
 
 	/**
