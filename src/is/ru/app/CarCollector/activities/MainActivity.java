@@ -60,15 +60,6 @@ public class MainActivity extends Activity implements RestCallback {
 
                 // Get car
                 getCar(query);
-
-                try {
-                    carService.addCar(query, restCallback);
-                } catch (CarExistsException e1) {
-
-                } catch (Exception e1) {
-
-                }
-
                 return true;
             }
 
