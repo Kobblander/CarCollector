@@ -13,7 +13,7 @@ import is.ru.app.CarCollector.cars.models.Car;
  */
 public interface RestCallback {
     public void preExecute();
-    public void postExecute(Car s, RestQueryException exception);
+    public void postExecute(Object o, Throwable exception);
     public String inExecute();
     public void cancelExecute();
 
