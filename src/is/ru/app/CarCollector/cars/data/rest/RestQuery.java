@@ -63,16 +63,18 @@ public class RestQuery {
         protected Car doInBackground(Void... params) {
             Log.i("CarTask", "DoInBackground.");
             Car car = new Car();
-
+            System.setProperty("http.keepAlive", "false");
             try {
                 RestTemplate restTemplate = new RestTemplate();
                 HttpHeaders requestHeaders = new HttpHeaders();
-
-                requestHeaders.add("Content-Type", "application/text; charset=utf-8");
-
-                HttpEntity entity = new HttpEntity(requestHeaders);
+                requestHeaders.set("Accept-Encoding", "");
 
                 requestHeaders.set("Connection", "Close");
+                requestHeaders.add("Content-Type", "application/text; charset=utf-8");
+                requestHeaders.add("Content-Type", "application/text; charset=utf-8");
+                System.out.println(requestHeaders);
+                HttpEntity entity = new HttpEntity(requestHeaders);
+
                 restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 Log.i("CarTask", "Before Exchange.");
