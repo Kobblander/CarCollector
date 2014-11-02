@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "CAR_DB";
-    public static final int DB_VERSION = 9;
+    public static final int DB_VERSION = 10;
 
 
     public static final String TableCars = "cars";
