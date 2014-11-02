@@ -26,4 +26,14 @@ public class GameServiceData implements GameService {
     public void getStats() {
 
     }
+
+    @Override
+    public void getSubTypes() {
+
+    }
+
+    @Override
+    public void getTypes() {
+
+    }
 }
