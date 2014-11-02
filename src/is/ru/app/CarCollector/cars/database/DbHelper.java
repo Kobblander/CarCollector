@@ -1,4 +1,4 @@
-package is.ru.app.CarCollector.database;
+package is.ru.app.CarCollector.cars.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * <h1>DbHelper</h1>
- * <h2>is.ru.app.CarCollector.database</h2>
+ * <h2>is.ru.app.CarCollector.cars.data.database</h2>
  * <p></p>
  * Created on 31.10.2014.
  *

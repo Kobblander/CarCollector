@@ -23,6 +23,7 @@ import is.ru.app.CarCollector.cars.service.CarServiceData;
 
 public class MainActivity extends Activity implements RestCallback {
     private CarService carService = new CarServiceData(this);
+    private RestCallback restCallback = this;
     private boolean isCollectable = true;
     private static ProgressDialog progressDialog;
 
@@ -58,6 +59,15 @@ public class MainActivity extends Activity implements RestCallback {
 
                 // Get car
                 getCar(query);
+
+                try {
+                    carService.addCar(query, restCallback);
+                } catch (CarExistsException e1) {
+
+                } catch (Exception e1) {
+
+                }
+
                 return true;
             }
 

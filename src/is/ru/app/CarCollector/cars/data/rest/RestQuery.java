@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import is.ru.app.CarCollector.cars.data.models.Car;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -61,7 +60,7 @@ public class RestQuery {
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-                String jsonString = "";
+                String jsonString;
                 jsonString = restTemplate.getForObject(url, String.class);
 
 
