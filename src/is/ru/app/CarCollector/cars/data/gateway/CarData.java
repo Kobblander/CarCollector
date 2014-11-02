@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import is.ru.app.CarCollector.cars.data.models.Car;
-import is.ru.app.CarCollector.database.CarAdapter;
+import is.ru.app.CarCollector.cars.database.CarAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

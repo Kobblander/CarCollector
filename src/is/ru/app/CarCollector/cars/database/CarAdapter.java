@@ -1,4 +1,4 @@
-package is.ru.app.CarCollector.database;
+package is.ru.app.CarCollector.cars.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,7 @@ import is.ru.app.CarCollector.cars.data.models.Car;
 
 /**
  * <h1>CarAdapter</h1>
- * <h2>is.ru.app.CarCollector.database</h2>
+ * <h2>is.ru.app.CarCollector.cars.data.database</h2>
  * <p></p>
  * Created on 31.10.2014.
  *
