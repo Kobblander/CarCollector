@@ -83,6 +83,11 @@ public class MainActivity extends Activity implements RestCallback {
         startActivity(myIntent);
     }
 
+    public void camera(View view) {
+        Intent myIntent = new Intent(this, CameraActivity.class);
+        startActivity(myIntent);
+    }
+
     @Override
     public void preExecute() {
         this.showProgressDialog("Retrieving the car.");
