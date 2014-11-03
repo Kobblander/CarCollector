@@ -1,4 +1,4 @@
-package is.ru.app.CarCollector.game;
+package is.ru.app.CarCollector.game.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -55,10 +55,11 @@ public class GameAdapter {
 
     public long insertPlayer(Player p) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( playersCols[0], p.get_id());
         contentValues.put( playersCols[1], p.getPlayerName());
-        contentValues.put( playersCols[3], p.getLevel());
-        contentValues.put( playersCols[4], p.getXpForNextLevel());
+        contentValues.put( playersCols[2], p.getLevel());
+        contentValues.put( playersCols[3], p.getXpForNextLevel());
+        contentValues.put( playersCols[4], p.getLevelXp());
+        contentValues.put( playersCols[5], p.getTotalXp());
         openToWrite();
         long value = db.insert(tablePlayers, null, contentValues );
         close();
@@ -67,11 +68,12 @@ public class GameAdapter {
 
     public long insertCarType(CarType ct) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( typesCols[0], ct.get_id());
         contentValues.put( typesCols[1], ct.getPlayerId());
         contentValues.put( typesCols[2], ct.getTypeName());
         contentValues.put( typesCols[3], ct.getLevel());
         contentValues.put( typesCols[4], ct.getXpForNextLevel());
+        contentValues.put( typesCols[5], ct.getLevelXp());
+        contentValues.put( typesCols[6], ct.getTotalXp());
         openToWrite();
         long value = db.insert(tableCarTypes, null, contentValues );
         close();
@@ -84,7 +86,9 @@ public class GameAdapter {
         contentValues.put( subTypesCols[2], cst.getSubTypeName());
         contentValues.put( subTypesCols[3], cst.getLevel());
         contentValues.put( subTypesCols[4], cst.getXpForNextLevel());
-        contentValues.put( subTypesCols[5], cst.getTotalCars());
+        contentValues.put( subTypesCols[5], cst.getLevelXp());
+        contentValues.put( subTypesCols[6], cst.getTotalXp());
+        contentValues.put( subTypesCols[7], cst.getTotalCars());
         openToWrite();
         long value = db.insert(tableCarSubTypes, null, contentValues );
         close();
@@ -94,8 +98,10 @@ public class GameAdapter {
     public long updatePlayer(Player p) {
         ContentValues contentValues = new ContentValues();
         contentValues.put( playersCols[1], p.getPlayerName());
-        contentValues.put( playersCols[3], p.getLevel());
-        contentValues.put( playersCols[4], p.getXpForNextLevel());
+        contentValues.put( playersCols[2], p.getLevel());
+        contentValues.put( playersCols[3], p.getXpForNextLevel());
+        contentValues.put( playersCols[4], p.getLevelXp());
+        contentValues.put( playersCols[5], p.getTotalXp());
         openToWrite();
         long value = db.update(tablePlayers, contentValues, playersCols[0] + "=" + p.get_id(), null );
         close();
@@ -104,11 +110,12 @@ public class GameAdapter {
 
     public long updateCarType(CarType ct) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( typesCols[0], ct.get_id());
         contentValues.put( typesCols[1], ct.getPlayerId());
         contentValues.put( typesCols[2], ct.getTypeName());
         contentValues.put( typesCols[3], ct.getLevel());
         contentValues.put( typesCols[4], ct.getXpForNextLevel());
+        contentValues.put( typesCols[5], ct.getLevelXp());
+        contentValues.put( typesCols[6], ct.getTotalXp());
         openToWrite();
         long value = db.update(tableCarTypes, contentValues, typesCols[0] = "=" + ct.get_id(), null );
         close();
@@ -117,12 +124,13 @@ public class GameAdapter {
 
     public long updateCarSubType(CarSubType cst) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( subTypesCols[0], cst.get_id());
         contentValues.put( subTypesCols[1], cst.getTypeId());
         contentValues.put( subTypesCols[2], cst.getSubTypeName());
         contentValues.put( subTypesCols[3], cst.getLevel());
         contentValues.put( subTypesCols[4], cst.getXpForNextLevel());
-        contentValues.put( subTypesCols[5], cst.getTotalCars());
+        contentValues.put( subTypesCols[5], cst.getLevelXp());
+        contentValues.put( subTypesCols[6], cst.getTotalXp());
+        contentValues.put( subTypesCols[7], cst.getTotalCars());
         openToWrite();
         long value = db.update(tableCarSubTypes, contentValues, subTypesCols[0] = "=" + cst.get_id(), null);
         close();
@@ -143,7 +151,7 @@ public class GameAdapter {
         } catch(Exception e) {
             String msg = "No carTypes found in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
-            throw new SQLException(msg);
+            throw new SQLException(msg, e);
         }
         return cursor;
     }
@@ -164,7 +172,7 @@ public class GameAdapter {
         } catch(Exception e) {
             String msg = "No carTypes found with carTypeName: '" + carTypeName + "' and playerName: '"+ playerName +"'in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
-            throw new SQLException(msg);
+            throw new SQLException(msg, e);
         }
         return cursor;
     }
@@ -184,7 +192,7 @@ public class GameAdapter {
         } catch(Exception e) {
             String msg = "No carTypes found with carTypeName: '" + carTypeName + "' in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
-            throw new SQLException(msg);
+            throw new SQLException(msg, e);
         }
         return cursor;
     }
@@ -204,7 +212,7 @@ public class GameAdapter {
         } catch(Exception e) {
             String msg = "No carTypes found with playerName: '" + playerName + "' in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
-            throw new SQLException(msg);
+            throw new SQLException(msg, e);
         }
         return cursor;
     }
@@ -223,7 +231,7 @@ public class GameAdapter {
         } catch(Exception e) {
             String msg = "No carSubTypes found in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
-            throw new SQLException(msg);
+            throw new SQLException(msg, e);
         }
         return cursor;
     }
@@ -244,7 +252,7 @@ public class GameAdapter {
         } catch(Exception e) {
             String msg = "No carTypes found with carTypeName: '" + carSubTypeName + "' and playerName: '"+ playerName +"'in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
-            throw new SQLException(msg);
+            throw new SQLException(msg, e);
         }
         return cursor;
     }
@@ -264,7 +272,27 @@ public class GameAdapter {
         } catch(Exception e) {
             String msg = "No carTypes found with carSubTypeName: '" + carSubTypeName + "' in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
-            throw new SQLException(msg);
+            throw new SQLException(msg, e);
+        }
+        return cursor;
+    }
+
+    /**
+     * Query the database for CarSubTypes given a name of a subType.
+     * @param  carTypeId name of the subType.
+     * @return A cursor which can be used to store the data.
+     * @throws SQLException
+     */
+    public Cursor queryCarSubTypesByTypeId(int carTypeId) {
+        openToRead();
+        Cursor cursor;
+        String query = "select * from "+tableCarSubTypes+" where typeId = ?";
+        try {
+            cursor = db.rawQuery(query, new String[] {String.valueOf(carTypeId)});
+        } catch(Exception e) {
+            String msg = "No carSubTypes found with carTypeId: '" + carTypeId + "' in the database. Nested exception is: " + e.getMessage();
+            Log.i("CarAdapterExceptionThrown", msg);
+            throw new SQLException(msg, e);
         }
         return cursor;
     }
@@ -284,7 +312,7 @@ public class GameAdapter {
         } catch(Exception e) {
             String msg = "No carTypes found with playerName: '" + playerName + "' in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
-            throw new SQLException(msg);
+            throw new SQLException(msg, e);
         }
         return cursor;
     }
@@ -304,7 +332,7 @@ public class GameAdapter {
         } catch(Exception e) {
             String msg = "No carTypes found with playerName: '" + playerName + "' in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);
-            throw new SQLException(msg);
+            throw new SQLException(msg, e);
         }
         return cursor;
     }

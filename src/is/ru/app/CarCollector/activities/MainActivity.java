@@ -22,11 +22,14 @@ import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
+import is.ru.app.CarCollector.game.service.GameService;
+import is.ru.app.CarCollector.game.service.GameServiceData;
 
 import java.net.UnknownHostException;
 
 public class MainActivity extends Activity implements RestCallback {
     private CarService carService = new CarServiceData(this);
+    private GameService gameService = new GameServiceData(this);
     private RestCallback restCallback = this;
     private boolean isCollectable = true;
     private static ProgressDialog progressDialog;
@@ -111,6 +114,7 @@ public class MainActivity extends Activity implements RestCallback {
 
         try {
             carService.addCarCallback((Car) response);
+            gameService.updateStats((Car) response);
             Log.i("MainActivity", "postExecute - adding car");
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,6 +126,7 @@ public class MainActivity extends Activity implements RestCallback {
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
         if (exception.getCause().getClass() == UnknownHostException.class) {
+            // TODO: DO STUFF
             this.hideProgressDialog();
         }
         this.hideProgressDialog();

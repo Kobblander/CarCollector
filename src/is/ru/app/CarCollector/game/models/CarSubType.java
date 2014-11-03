@@ -12,30 +12,20 @@ package is.ru.app.CarCollector.game.models;
 public class CarSubType {
 
     private int _id;
-    private int typeId;
+    private String typeName;
     private String subTypeName;
     private int level;
     private float xpForNextLevel;
+    private float levelXp;
+    private float totalXp;
     private int totalCars;
 
     public CarSubType() {
     }
 
-    public CarSubType(int _id, String subTypeName, int typeId, int level, float xpForNextLevel, int totalCars) {
-        this._id = _id;
+    public CarSubType(String typeName, String subTypeName) {
+        this.typeName = typeName;
         this.subTypeName = subTypeName;
-        this.typeId = typeId;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
-        this.totalCars = totalCars;
-    }
-
-    public CarSubType(String subTypeName, int typeId, int level, float xpForNextLevel, int totalCars) {
-        this.subTypeName = subTypeName;
-        this.typeId = typeId;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
-        this.totalCars = totalCars;
     }
 
     public int get_id() {
@@ -54,12 +44,12 @@ public class CarSubType {
         this.subTypeName = subTypeName;
     }
 
-    public int getTypeId() {
-        return typeId;
+    public String getTypeId() {
+        return typeName;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setTypeId(String typeName) {
+        this.typeName = typeName;
     }
 
     public int getLevel() {
@@ -86,6 +76,30 @@ public class CarSubType {
         this.totalCars = totalCars;
     }
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public float getLevelXp() {
+        return levelXp;
+    }
+
+    public void setLevelXp(float levelXp) {
+        this.levelXp = levelXp;
+    }
+
+    public float getTotalXp() {
+        return totalXp;
+    }
+
+    public void setTotalXp(float totalXp) {
+        this.totalXp = totalXp;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,7 +110,7 @@ public class CarSubType {
         if (_id != carSubType._id) return false;
         if (level != carSubType.level) return false;
         if (totalCars != carSubType.totalCars) return false;
-        if (typeId != carSubType.typeId) return false;
+        if (typeName != carSubType.typeName) return false;
         if (xpForNextLevel != carSubType.xpForNextLevel) return false;
         if (subTypeName != null ? !subTypeName.equals(carSubType.subTypeName) : carSubType.subTypeName != null) return false;
 

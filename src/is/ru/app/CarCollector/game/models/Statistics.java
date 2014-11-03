@@ -17,6 +17,36 @@ public class Statistics {
     private List<CarSubType> carSubTypes;
     private List<CarType> carTypes;
 
-    Statistics() {
+    public Statistics() {
+    }
+
+    public Statistics(Player player, List<CarSubType> carSubTypes, List<CarType> carTypes) {
+        this.player = player;
+        this.carSubTypes = carSubTypes;
+        this.carTypes = carTypes;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public List<CarSubType> getCarSubTypes() {
+        return carSubTypes;
+    }
+
+    public void setCarSubTypes(List<CarSubType> carSubTypes) {
+        this.carSubTypes = carSubTypes;
+    }
+
+    public List<CarType> getCarTypes() {
+        return carTypes;
+    }
+
+    public void setCarTypes(List<CarType> carTypes) {
+        this.carTypes = carTypes;
     }
 }

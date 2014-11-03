@@ -3,8 +3,6 @@ package is.ru.app.CarCollector.game.data;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-import is.ru.app.CarCollector.cars.models.Car;
-import is.ru.app.CarCollector.game.GameAdapter;
 import is.ru.app.CarCollector.game.models.CarSubType;
 import is.ru.app.CarCollector.game.models.CarType;
 import is.ru.app.CarCollector.game.models.Player;
@@ -32,21 +30,21 @@ public class GameData implements GameDataGateway {
     }
 
     @Override
-    public void addPlayer(Player player) {
-        gameAdapter.insertPlayer(player);
+    public Long addPlayer(Player player) {
         Log.i("GameData", "Player successfully added to database: " + player.toString());
+        return gameAdapter.insertPlayer(player);
     }
 
     @Override
-    public void addCarType(CarType carType) {
-        gameAdapter.insertCarType(carType);
+    public Long addCarType(CarType carType) {
         Log.i("GameData", "CarType successfully added to database: " + carType.toString());
+        return gameAdapter.insertCarType(carType);
     }
 
     @Override
-    public void addCarSubType(CarSubType carSubType) {
-        gameAdapter.insertCarSubType(carSubType);
+    public Long addCarSubType(CarSubType carSubType) {
         Log.i("GameData", "CarSubType successfully added to database: " + carSubType.toString());
+        return gameAdapter.insertCarSubType(carSubType);
     }
 
     @Override
@@ -62,15 +60,23 @@ public class GameData implements GameDataGateway {
     }
 
     @Override
-    public List<CarType> getCarTypesByName(String carTypeName) {
+    public CarType getCarTypeByName(String carTypeName) {
         Cursor cursor = gameAdapter.queryCarTypesByTypeName(carTypeName);
-        return getCarTypesFromCursor(cursor);
+        List<CarType> carTypeList = getCarTypesFromCursor(cursor);
+        if (carTypeList.isEmpty()) {
+            return null;
+        }
+        return carTypeList.get(0);
     }
 
     @Override
-    public List<CarSubType> getCarSubTypesByName(String carSubTypeName) {
+    public CarSubType getCarSubTypeByName(String carSubTypeName) {
         Cursor cursor = gameAdapter.queryCarSubTypesBySubTypeName(carSubTypeName);
-        return getCarSubTypesFromCursor(cursor);
+        List<CarSubType> carSubTypeList = getCarSubTypesFromCursor(cursor);
+        if (carSubTypeList.isEmpty()) {
+            return null;
+        }
+        return carSubTypeList.get(0);
     }
 
     @Override
@@ -85,6 +91,22 @@ public class GameData implements GameDataGateway {
         return getCarSubTypesFromCursor(cursor);
     }
 
+    @Override
+    public List<CarSubType> getCarSubTypesByTypeId(int typeId) {
+        Cursor cursor = gameAdapter.queryCarSubTypesByTypeId(typeId);
+        return getCarSubTypesFromCursor(cursor);
+    }
+
+    @Override
+    public Long updateCarType(CarType carType) {
+        return gameAdapter.updateCarType(carType);
+    }
+
+    @Override
+    public Long updateCarSubType(CarSubType carSubType) {
+        return  gameAdapter.updateCarSubType(carSubType);
+    }
+
     private List<CarType> getCarTypesFromCursor(Cursor cursor) {
         List<CarType> list = new ArrayList<CarType>();
 
@@ -92,7 +114,7 @@ public class GameData implements GameDataGateway {
             CarType ct = new CarType();
             // The Cursor is now set to the right position
             ct.set_id(cursor.getInt(0));
-            ct.setPlayerId(cursor.getInt(1));
+            ct.setPlayerName(cursor.getString(1));
             ct.setTypeName(cursor.getString(2));
             ct.setLevel(cursor.getInt(3));
             ct.setXpForNextLevel(cursor.getFloat(4));
@@ -127,7 +149,7 @@ public class GameData implements GameDataGateway {
             CarSubType ct = new CarSubType();
             // The Cursor is now set to the right position
             ct.set_id(cursor.getInt(0));
-            ct.setTypeId(cursor.getInt(1));
+            ct.setTypeId(String.valueOf(cursor.getInt(1)));
             ct.setSubTypeName(cursor.getString(2));
             ct.setLevel(cursor.getInt(3));
             ct.setXpForNextLevel(cursor.getFloat(4));

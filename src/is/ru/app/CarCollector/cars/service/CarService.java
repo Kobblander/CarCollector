@@ -59,4 +59,5 @@ public interface CarService {
      * @return A cursor that can be used to access the data.
      */
     public List<Car> getCarsBySubType(String subType, String limit) throws CarServiceException;
+
 }

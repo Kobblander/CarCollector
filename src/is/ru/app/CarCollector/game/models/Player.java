@@ -15,8 +15,14 @@ public class Player {
     private String playerName;
     private int level;
     private float xpForNextLevel;
+    private float levelXp;
+    private float totalXp;
 
     public Player() {
+    }
+
+    public Player(String playerName) {
+        this.playerName = playerName;
     }
 
     public Player(int _id, String playerName, int level, float xpForNextLevel) {
@@ -62,6 +68,22 @@ public class Player {
 
     public void setXpForNextLevel(float xpForNextLevel) {
         this.xpForNextLevel = xpForNextLevel;
+    }
+
+    public float getLevelXp() {
+        return levelXp;
+    }
+
+    public void setLevelXp(float levelXp) {
+        this.levelXp = levelXp;
+    }
+
+    public float getTotalXp() {
+        return totalXp;
+    }
+
+    public void setTotalXp(float totalXp) {
+        this.totalXp = totalXp;
     }
 
     @Override

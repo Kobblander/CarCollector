@@ -12,28 +12,25 @@ package is.ru.app.CarCollector.game.models;
 public class CarType {
 
     private int _id;
-    private int playerId;
+    private String playerName;
     private String typeName;
     private int level;
     private float xpForNextLevel;
+    private float levelXp;
+    private float totalXp;
 
     public CarType() {
     }
 
-    public CarType(int _id, String typeName, int playerId, int level, float xpForNextLevel) {
-        this._id = _id;
+    public CarType(String typeName) {
         this.typeName = typeName;
-        this.playerId = playerId;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
     }
 
-    public CarType(String typeName, int playerId, int level, float xpForNextLevel) {
+    public CarType(String playerName, String typeName) {
+        this.playerName = playerName;
         this.typeName = typeName;
-        this.playerId = playerId;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
     }
+
 
     public int get_id() {
         return _id;
@@ -51,12 +48,12 @@ public class CarType {
         this.typeName = typeName;
     }
 
-    public int getPlayerId() {
-        return playerId;
+    public String getPlayerId() {
+        return playerName;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
+    public void setPlayer(String playerName) {
+        this.playerName = playerName;
     }
 
     public int getLevel() {
@@ -75,6 +72,30 @@ public class CarType {
         this.xpForNextLevel = xpForNextLevel;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public float getLevelXp() {
+        return levelXp;
+    }
+
+    public void setLevelXp(float levelXp) {
+        this.levelXp = levelXp;
+    }
+
+    public float getTotalXp() {
+        return totalXp;
+    }
+
+    public void setTotalXp(float totalXp) {
+        this.totalXp = totalXp;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,7 +105,7 @@ public class CarType {
 
         if (_id != carType._id) return false;
         if (level != carType.level) return false;
-        if (playerId != carType.playerId) return false;
+        if (playerName != carType.playerName) return false;
         if (xpForNextLevel != carType.xpForNextLevel) return false;
         if (typeName != null ? !typeName.equals(carType.typeName) : carType.typeName != null) return false;
 

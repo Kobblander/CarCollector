@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "CAR_DB";
-    public static final int DB_VERSION = 10;
+    public static final int DB_VERSION = 14;
 
 
     public static final String TableCars = "cars";
@@ -31,12 +31,14 @@ public class DbHelper extends SQLiteOpenHelper {
                                                    "type", "subType", "color", "registeredAt", "status",
                                                    "nextCheck", "pollution", "weight" };
 
-    public static final String[] TablePlayersCols = { "_id", "playerName", "level", "xpForNextLevel" };
+    public static final String[] TablePlayersCols = { "_id", "playerName", "level", "xpForNextLevel",
+                                                      "levelXp", "totalXp" };
 
-    public static final String[] TableCarTypesCols = { "_id", "playerId", "carTypeName", "level", "xpForNextLevel" };
+    public static final String[] TableCarTypesCols = { "_id", "playerName", "carTypeName", "level",
+                                                       "xpForNextLevel", "levelXp", "totalXp"};
 
-    public static final String[] TableCarSubTypesCols = { "_id", "typeId", "carSubTypeName", "level", "xpForNextLevel",
-                                                          "totalCars"};
+    public static final String[] TableCarSubTypesCols = { "_id", "carTypeName", "carSubTypeName", "level",
+                                                          "xpForNextLevel", "levelXp", "totalXp", "totalCars"};
 
     private static final String sqlCreateTableCars =
             "CREATE TABLE "+TableCars+"(" +
@@ -59,7 +61,9 @@ public class DbHelper extends SQLiteOpenHelper {
                     " "+TablePlayersCols[0]+" INTEGER PRIMARY KEY AUTOINCREMENT," +
                     " "+TablePlayersCols[1]+" TEXT," +
                     " "+TablePlayersCols[2]+" INTEGER," +
-                    " "+TablePlayersCols[3]+" FLOAT" +
+                    " "+TablePlayersCols[3]+" FLOAT," +
+                    " "+TablePlayersCols[4]+" FLOAT," +
+                    " "+TablePlayersCols[5]+" FLOAT" +
                     ");";
 
     private static final String sqlCreateTableCarTypes =
@@ -68,7 +72,9 @@ public class DbHelper extends SQLiteOpenHelper {
                     " "+TableCarTypesCols[1]+" INTEGER," +
                     " "+TableCarTypesCols[2]+" TEXT," +
                     " "+TableCarTypesCols[3]+" INTEGER," +
-                    " "+TableCarTypesCols[4]+" FLOAT" +
+                    " "+TableCarTypesCols[4]+" FLOAT," +
+                    " "+TableCarTypesCols[5]+" FLOAT," +
+                    " "+TableCarTypesCols[6]+" FLOAT" +
                     ");";
 
     private static final String sqlCreateTableCarSubTypes =
@@ -77,8 +83,10 @@ public class DbHelper extends SQLiteOpenHelper {
                     " "+TableCarSubTypesCols[1]+" INTEGER," +
                     " "+TableCarSubTypesCols[2]+" TEXT," +
                     " "+TableCarSubTypesCols[3]+" INTEGER," +
-                    " "+TableCarSubTypesCols[4]+" FLOAT" +
-                    " "+TableCarSubTypesCols[5]+" INTEGER," +
+                    " "+TableCarSubTypesCols[4]+" FLOAT," +
+                    " "+TableCarSubTypesCols[5]+" FLOAT," +
+                    " "+TableCarSubTypesCols[6]+" FLOAT," +
+                    " "+TableCarSubTypesCols[7]+" INTEGER" +
                     ");";
 
     private static final String sqlDropTableCars =
@@ -101,6 +109,9 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL( sqlCreateTableCars );
+        db.execSQL( sqlCreateTableCarTypes );
+        db.execSQL( sqlCreateTableCarSubTypes );
+        db.execSQL( sqlCreateTablePlayers );
     }
 
     @Override
