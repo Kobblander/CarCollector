@@ -59,4 +59,13 @@ public interface CarService {
      * @return A cursor that can be used to access the data.
      */
     public List<Car> getCarsBySubType(String subType, String limit) throws CarServiceException;
+
+    /**
+     * Query image in Google API
+     * @param type Car type
+     * @param subType Car subtype
+     * @param color Car color
+     * @param restCallback callback
+     */
+    public void addImage(String type, String subType, String color, RestCallback restCallback);
 }

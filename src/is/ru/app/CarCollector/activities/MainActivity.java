@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -109,6 +110,11 @@ public class MainActivity extends Activity implements RestCallback {
             Log.i("MainActivity", "postExecute - displaying car");
         }
 
+        // Response is images
+        if (response.getClass() == Bitmap.class) {
+            displayImages((Bitmap) response);
+        }
+
         try {
             carService.addCarCallback((Car) response);
             Log.i("MainActivity", "postExecute - adding car");
@@ -134,7 +140,7 @@ public class MainActivity extends Activity implements RestCallback {
 
     @Override
     public void cancelExecute() {
-        RestQuery.getInstance().cancelTask();
+        RestQuery.getInstance().cancelCarTask();
     }
 
     /**
@@ -142,8 +148,7 @@ public class MainActivity extends Activity implements RestCallback {
      * @param response the car gotten from the api
      */
     public void displayCar(Car response) {
-        ImageView carImage = (ImageView) findViewById(R.id.carimage);
-        // carImage.setImageBitmap(image);
+        carService.addImage(response.getType(), response.getSubType(), response.getColor(), restCallback);
 
         // Set car type
         TextView type = (TextView) findViewById(R.id.type);
@@ -176,6 +181,13 @@ public class MainActivity extends Activity implements RestCallback {
 
         RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
         carView.setVisibility(View.VISIBLE);
+    }
+
+    private void displayImages(Bitmap map) {
+        ImageView carImage = (ImageView) findViewById(R.id.carimage);
+
+        carImage.setImageDrawable(null);
+        carImage.setImageBitmap(map);
     }
 
 	/**

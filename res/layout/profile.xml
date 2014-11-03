@@ -3,16 +3,50 @@
 <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Profile View"
-            android:id="@+id/textView" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
-            android:layout_marginTop="36dp"/>
-    <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/carList" android:layout_below="@+id/textView" android:layout_alignParentStart="true"
-            android:layout_marginTop="61dp"/>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="155dp" android:id="@+id/relativeLayout"
+            android:layout_alignParentTop="true" android:layout_alignParentStart="true">
+        <ProgressBar
+                android:id="@+id/testSummaryProgressBar"
+                android:progress="60"
+                style="@style/ProgressBarStyle"
+                android:layout_height="10dp"
+                android:layout_width="wrap_content"
+                android:layout_toLeftOf="@+id/imageView" android:layout_toRightOf="@+id/textView"
+                android:layout_marginTop="25dp" android:layout_marginRight="10dp"/>
+
+
+
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0.5dp"
+                      android:layout_above="@+id/bottombar" android:layout_centerHorizontal="true"
+                      android:background="#aaa" android:id="@+id/linearLayout2"
+                      android:layout_alignParentBottom="true"/>
+        <ImageView
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/ic_action_person"
+                android:background="@drawable/image_border"
+                android:layout_alignParentTop="true" android:layout_alignParentEnd="true" android:layout_margin="10dp"
+                />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="7"
+                android:id="@+id/textView"
+                android:gravity="center_vertical"
+                android:layout_alignTop="@+id/testSummaryProgressBar" android:layout_alignParentStart="true"
+                android:layout_marginLeft="10dp" android:layout_marginRight="20dp" android:layout_marginTop="-10dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_below="@+id/relativeLayout">
+        <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/carList" android:layout_alignParentStart="true"
+                android:layout_marginTop="0dp"/>
+    </RelativeLayout>
 </RelativeLayout>
