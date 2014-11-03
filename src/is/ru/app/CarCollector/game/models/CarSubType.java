@@ -14,11 +14,16 @@ public class CarSubType {
     private int _id;
     private String typeName;
     private String subTypeName;
-    private int level;
-    private float xpForNextLevel;
-    private float levelXp;
-    private float totalXp;
-    private int totalCars;
+    private int levelCur;
+    private int levelOld;
+    private float xpForNextLevelCur;
+    private float xpForNextLevelOld;
+    private float levelXpCur;
+    private float levelXpOld;
+    private float totalXpCur;
+    private float totalXpOld;
+    private int totalCarsCur;
+    private int totalCarsOld;
 
     public CarSubType() {
     }
@@ -52,30 +57,6 @@ public class CarSubType {
         this.typeName = typeName;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public float getXpForNextLevel() {
-        return xpForNextLevel;
-    }
-
-    public void setXpForNextLevel(float xpForNextLevel) {
-        this.xpForNextLevel = xpForNextLevel;
-    }
-
-    public int getTotalCars() {
-        return totalCars;
-    }
-
-    public void setTotalCars(int totalCars) {
-        this.totalCars = totalCars;
-    }
-
     public String getTypeName() {
         return typeName;
     }
@@ -84,20 +65,84 @@ public class CarSubType {
         this.typeName = typeName;
     }
 
-    public float getLevelXp() {
-        return levelXp;
+    public int getLevelCur() {
+        return levelCur;
     }
 
-    public void setLevelXp(float levelXp) {
-        this.levelXp = levelXp;
+    public void setLevelCur(int levelCur) {
+        this.levelCur = levelCur;
     }
 
-    public float getTotalXp() {
-        return totalXp;
+    public int getLevelOld() {
+        return levelOld;
     }
 
-    public void setTotalXp(float totalXp) {
-        this.totalXp = totalXp;
+    public void setLevelOld(int levelOld) {
+        this.levelOld = levelOld;
+    }
+
+    public float getXpForNextLevelCur() {
+        return xpForNextLevelCur;
+    }
+
+    public void setXpForNextLevelCur(float xpForNextLevelCur) {
+        this.xpForNextLevelCur = xpForNextLevelCur;
+    }
+
+    public float getXpForNextLevelOld() {
+        return xpForNextLevelOld;
+    }
+
+    public void setXpForNextLevelOld(float xpForNextLevelOld) {
+        this.xpForNextLevelOld = xpForNextLevelOld;
+    }
+
+    public float getLevelXpCur() {
+        return levelXpCur;
+    }
+
+    public void setLevelXpCur(float levelXpCur) {
+        this.levelXpCur = levelXpCur;
+    }
+
+    public float getLevelXpOld() {
+        return levelXpOld;
+    }
+
+    public void setLevelXpOld(float levelXpOld) {
+        this.levelXpOld = levelXpOld;
+    }
+
+    public float getTotalXpCur() {
+        return totalXpCur;
+    }
+
+    public void setTotalXpCur(float totalXpCur) {
+        this.totalXpCur = totalXpCur;
+    }
+
+    public float getTotalXpOld() {
+        return totalXpOld;
+    }
+
+    public void setTotalXpOld(float totalXpOld) {
+        this.totalXpOld = totalXpOld;
+    }
+
+    public int getTotalCarsCur() {
+        return totalCarsCur;
+    }
+
+    public void setTotalCarsCur(int totalCarsCur) {
+        this.totalCarsCur = totalCarsCur;
+    }
+
+    public int getTotalCarsOld() {
+        return totalCarsOld;
+    }
+
+    public void setTotalCarsOld(int totalCarsOld) {
+        this.totalCarsOld = totalCarsOld;
     }
 
     @Override
@@ -105,16 +150,59 @@ public class CarSubType {
         if (this == o) return true;
         if (!(o instanceof CarSubType)) return false;
 
-        CarSubType carSubType = (CarSubType) o;
+        CarSubType that = (CarSubType) o;
 
-        if (_id != carSubType._id) return false;
-        if (level != carSubType.level) return false;
-        if (totalCars != carSubType.totalCars) return false;
-        if (typeName != carSubType.typeName) return false;
-        if (xpForNextLevel != carSubType.xpForNextLevel) return false;
-        if (subTypeName != null ? !subTypeName.equals(carSubType.subTypeName) : carSubType.subTypeName != null) return false;
+        if (_id != that._id) return false;
+        if (levelCur != that.levelCur) return false;
+        if (levelOld != that.levelOld) return false;
+        if (Float.compare(that.levelXpCur, levelXpCur) != 0) return false;
+        if (Float.compare(that.levelXpOld, levelXpOld) != 0) return false;
+        if (totalCarsCur != that.totalCarsCur) return false;
+        if (totalCarsOld != that.totalCarsOld) return false;
+        if (Float.compare(that.totalXpCur, totalXpCur) != 0) return false;
+        if (Float.compare(that.totalXpOld, totalXpOld) != 0) return false;
+        if (Float.compare(that.xpForNextLevelCur, xpForNextLevelCur) != 0) return false;
+        if (Float.compare(that.xpForNextLevelOld, xpForNextLevelOld) != 0) return false;
+        if (subTypeName != null ? !subTypeName.equals(that.subTypeName) : that.subTypeName != null) return false;
+        if (typeName != null ? !typeName.equals(that.typeName) : that.typeName != null) return false;
 
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        int result = _id;
+        result = 31 * result + (typeName != null ? typeName.hashCode() : 0);
+        result = 31 * result + (subTypeName != null ? subTypeName.hashCode() : 0);
+        result = 31 * result + levelCur;
+        result = 31 * result + levelOld;
+        result = 31 * result + (xpForNextLevelCur != +0.0f ? Float.floatToIntBits(xpForNextLevelCur) : 0);
+        result = 31 * result + (xpForNextLevelOld != +0.0f ? Float.floatToIntBits(xpForNextLevelOld) : 0);
+        result = 31 * result + (levelXpCur != +0.0f ? Float.floatToIntBits(levelXpCur) : 0);
+        result = 31 * result + (levelXpOld != +0.0f ? Float.floatToIntBits(levelXpOld) : 0);
+        result = 31 * result + (totalXpCur != +0.0f ? Float.floatToIntBits(totalXpCur) : 0);
+        result = 31 * result + (totalXpOld != +0.0f ? Float.floatToIntBits(totalXpOld) : 0);
+        result = 31 * result + totalCarsCur;
+        result = 31 * result + totalCarsOld;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CarSubType{" +
+                "_id=" + _id +
+                ", typeName='" + typeName + '\'' +
+                ", subTypeName='" + subTypeName + '\'' +
+                ", levelCur=" + levelCur +
+                ", levelOld=" + levelOld +
+                ", xpForNextLevelCur=" + xpForNextLevelCur +
+                ", xpForNextLevelOld=" + xpForNextLevelOld +
+                ", levelXpCur=" + levelXpCur +
+                ", levelXpOld=" + levelXpOld +
+                ", totalXpCur=" + totalXpCur +
+                ", totalXpOld=" + totalXpOld +
+                ", totalCarsCur=" + totalCarsCur +
+                ", totalCarsOld=" + totalCarsOld +
+                '}';
+    }
 }

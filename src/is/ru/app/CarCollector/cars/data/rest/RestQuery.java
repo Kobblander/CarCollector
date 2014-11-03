@@ -1,20 +1,9 @@
 package is.ru.app.CarCollector.cars.data.rest;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import is.ru.app.CarCollector.cars.models.Car;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import java.nio.charset.Charset;
-import java.util.Arrays;
 
 /**
  * <h1>RestQuery</h1>
@@ -26,107 +15,67 @@ import java.util.Arrays;
  * @version 1.1
  */
 public class RestQuery {
-
     private static RestQuery instance = null;
+    private static AsyncTask<Void, Void, Car> carTask = null;
+    private static AsyncTask<Void, Void, Bitmap> imageTask = null;
 
-    private static AsyncTask<Void, Void, Car> currentTask = null;
-
-    private RestQuery() {
-    }
-
+    /**
+     * Create get or create instance of RestQuery
+     * @return RestQuery instance
+     */
     public static RestQuery getInstance() {
         if (instance == null) {
             instance = new RestQuery();
         }
+
         return instance;
     }
 
+    /**
+     * Executes the car task
+     * @param registryNumber car plate number
+     * @param c callback
+     */
     public void getCar(String registryNumber, RestCallback c) {
         Log.i("RestQuery", "getCar.");
+
         final String url = "http://apis.is/car?number=" + registryNumber;
-        currentTask = new CarTask(url, c);
-        currentTask.execute();
+
+        carTask = new CarTask(url, c);
+        carTask.execute();
     }
 
-    private class CarTask extends AsyncTask<Void, Void, Car> {
+    /**
+     * Executes the image task
+     * @param type car type
+     * @param subType car subtype
+     * @param color car color
+     * @param c callback
+     */
+    public void queryImage(String type, String subType, String color, RestCallback c) {
+        Log.i("RestQuery", "queryImage.");
 
-        private final String url;
-        private final RestCallback callback;
-        private RestQueryException exception = null;
+        final String url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + type + " " + subType;
 
-        private CarTask(String url, RestCallback callback) {
-            this.url = url;
-            this.callback = callback;
-        }
+        imageTask = new ImageTask(url, c);
+        imageTask.execute();
+    }
 
-        @Override
-        protected Car doInBackground(Void... params) {
-            Log.i("CarTask", "DoInBackground.");
-            Car car = new Car();
-            System.setProperty("http.keepAlive", "false");
-            try {
-                RestTemplate restTemplate = new RestTemplate();
-                HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.set("Accept-Encoding", "");
-
-                requestHeaders.set("Connection", "Close");
-                requestHeaders.add("Content-Type", "application/text; charset=utf-8");
-                requestHeaders.add("Content-Type", "application/text; charset=utf-8");
-                System.out.println(requestHeaders);
-                HttpEntity entity = new HttpEntity(requestHeaders);
-
-                restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                Log.i("CarTask", "Before Exchange.");
-                HttpEntity<String> response = restTemplate.exchange( url, HttpMethod.GET, entity, String.class );
-                Log.i("CarTask", "After Exchange.");
-                String jsonString = response.getBody();
-                //jsonString = restTemplate.getForObject(url, String.class);
-
-
-                JSONObject jsonRoot = new JSONObject(jsonString);
-                JSONArray jsonResults = (JSONArray) jsonRoot.get("results");
-
-                for (int i = 0; i < jsonResults.length(); i++) {
-                    JSONObject jsonCar = (JSONObject) jsonResults.get(i);
-                    car.setNumber(jsonCar.get("number").toString());
-                    car.setFactoryNumber(jsonCar.get("factoryNumber").toString());
-                    car.setRegisteredAt(jsonCar.get("registeredAt").toString());
-                    car.setSubType(jsonCar.get("subType").toString());
-                    car.setType(jsonCar.get("type").toString());
-                    car.setColor(jsonCar.get("color").toString());
-                    car.setRegistryNumber(jsonCar.get("registryNumber").toString());
-                    car.setStatus(jsonCar.get("status").toString());
-                    car.setNextCheck(jsonCar.get("nextCheck").toString());
-                    car.setPollution(jsonCar.get("pollution").toString());
-                    car.setWeight(jsonCar.get("weight").toString());
-
-                }
-            } catch (Exception e) {
-                String msg = "Failed receiving json from: " + url + ". NestedException is: " + e.getMessage();
-                Log.i("MainActivity - RestQuery", msg);
-                exception = new RestQueryException(msg, e);
-            }
-
-            return car;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            Log.i("CarTask", "PreExecute.");
-            callback.preExecute();
-        }
-
-        @Override
-        protected void onPostExecute(Car s) {
-            Log.i("CarTask", "PostExecute.");
-            callback.postExecute(s, exception);
+    /**
+     * Cancel the img task
+     */
+    public void cancelImageTask() {
+        if(imageTask != null) {
+            imageTask.cancel(true);
         }
     }
 
-    public void cancelTask() {
-        if (currentTask != null) {
-            currentTask.cancel(true);
+    /**
+     * Cancel the car task
+     */
+    public void cancelCarTask() {
+        if (carTask != null) {
+            carTask.cancel(true);
         }
     }
 }

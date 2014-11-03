@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "CAR_DB";
-    public static final int DB_VERSION = 14;
+    public static final int DB_VERSION = 17;
 
 
     public static final String TableCars = "cars";
@@ -31,14 +31,26 @@ public class DbHelper extends SQLiteOpenHelper {
                                                    "type", "subType", "color", "registeredAt", "status",
                                                    "nextCheck", "pollution", "weight" };
 
-    public static final String[] TablePlayersCols = { "_id", "playerName", "level", "xpForNextLevel",
-                                                      "levelXp", "totalXp" };
+    public static final String[] TablePlayersCols = { "_id INTEGER PRIMARY KEY AUTOINCREMENT", "playerName TEXT",
+                                                      "levelCur INTEGER",          "levelOld INTEGER",
+                                                      "xpForNextLevelCur FLOAT",   "xpForNextLevelOld FLOAT",
+                                                      "levelXpCur FLOAT",          "levelXpOld FLOAT",
+                                                      "totalXpCur FLOAT",          "totalXpOld FLOAT" };
 
-    public static final String[] TableCarTypesCols = { "_id", "playerName", "carTypeName", "level",
-                                                       "xpForNextLevel", "levelXp", "totalXp"};
+    public static final String[] TableCarTypesCols = { "_id INTEGER PRIMARY KEY AUTOINCREMENT",
+                                                       "playerName TEXT",          "carTypeName TEXT",
+                                                       "levelCur INTEGER",         "levelOld INTEGER",
+                                                       "xpForNextLevelCur FLOAT",  "xpForNextLevelOld FLOAT",
+                                                       "levelXpCur FLOAT",         "levelXpOldFLOAT",
+                                                       "totalXpCur FLOAT",         "totalXpOld FLOAT"};
 
-    public static final String[] TableCarSubTypesCols = { "_id", "carTypeName", "carSubTypeName", "level",
-                                                          "xpForNextLevel", "levelXp", "totalXp", "totalCars"};
+    public static final String[] TableCarSubTypesCols = { "_id INTEGER PRIMARY KEY AUTOINCREMENT",
+                                                          "carTypeName TEXT", "carSubTypeName TEXT",
+                                                          "levelCur INTEGER",         "levelOld INTEGER",
+                                                          "xpForNextLevelCur FLOAT",  "xpForNextLevelOld FLOAT",
+                                                          "levelXpCur FLOAT",         "levelXpOld FLOAT",
+                                                          "totalXpCur FLOAT",         "totalXpOld FLOAT",
+                                                          "totalCarsCur INTEGER",     "totalCarsOld INTEGER"};
 
     private static final String sqlCreateTableCars =
             "CREATE TABLE "+TableCars+"(" +
@@ -58,35 +70,47 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String sqlCreateTablePlayers =
             "CREATE TABLE "+TablePlayers+"(" +
-                    " "+TablePlayersCols[0]+" INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " "+TablePlayersCols[1]+" TEXT," +
-                    " "+TablePlayersCols[2]+" INTEGER," +
-                    " "+TablePlayersCols[3]+" FLOAT," +
-                    " "+TablePlayersCols[4]+" FLOAT," +
-                    " "+TablePlayersCols[5]+" FLOAT" +
+                    " "+TablePlayersCols[0]+" ," +
+                    " "+TablePlayersCols[1]+" ," +
+                    " "+TablePlayersCols[2]+" ," +
+                    " "+TablePlayersCols[3]+" ," +
+                    " "+TablePlayersCols[4]+" ," +
+                    " "+TablePlayersCols[5]+" ," +
+                    " "+TablePlayersCols[6]+" ," +
+                    " "+TablePlayersCols[7]+" ," +
+                    " "+TablePlayersCols[8]+" ," +
+                    " "+TablePlayersCols[9]+" " +
                     ");";
 
     private static final String sqlCreateTableCarTypes =
             "CREATE TABLE "+TableCarTypes+"(" +
-                    " "+TableCarTypesCols[0]+" INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " "+TableCarTypesCols[1]+" INTEGER," +
-                    " "+TableCarTypesCols[2]+" TEXT," +
-                    " "+TableCarTypesCols[3]+" INTEGER," +
-                    " "+TableCarTypesCols[4]+" FLOAT," +
-                    " "+TableCarTypesCols[5]+" FLOAT," +
-                    " "+TableCarTypesCols[6]+" FLOAT" +
+                    " "+TableCarTypesCols[0]+ " ," +
+                    " "+TableCarTypesCols[1]+ " ," +
+                    " "+TableCarTypesCols[2]+ " ," +
+                    " "+TableCarTypesCols[3]+ " ," +
+                    " "+TableCarTypesCols[4]+ " ," +
+                    " "+TableCarTypesCols[5]+ " ," +
+                    " "+TableCarTypesCols[7]+ " ," +
+                    " "+TableCarTypesCols[8]+ " ," +
+                    " "+TableCarTypesCols[9]+ " ," +
+                    " "+TableCarTypesCols[10]+" " +
                     ");";
 
     private static final String sqlCreateTableCarSubTypes =
             "CREATE TABLE "+TableCarSubTypes+"(" +
-                    " "+TableCarSubTypesCols[0]+" INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " "+TableCarSubTypesCols[1]+" INTEGER," +
-                    " "+TableCarSubTypesCols[2]+" TEXT," +
-                    " "+TableCarSubTypesCols[3]+" INTEGER," +
-                    " "+TableCarSubTypesCols[4]+" FLOAT," +
-                    " "+TableCarSubTypesCols[5]+" FLOAT," +
-                    " "+TableCarSubTypesCols[6]+" FLOAT," +
-                    " "+TableCarSubTypesCols[7]+" INTEGER" +
+                    " "+TableCarSubTypesCols[0]+ " ," +
+                    " "+TableCarSubTypesCols[1]+ " ," +
+                    " "+TableCarSubTypesCols[2]+ " ," +
+                    " "+TableCarSubTypesCols[3]+ " ," +
+                    " "+TableCarSubTypesCols[4]+ " ," +
+                    " "+TableCarSubTypesCols[5]+ " ," +
+                    " "+TableCarSubTypesCols[6]+ " ," +
+                    " "+TableCarSubTypesCols[7]+ " ," +
+                    " "+TableCarSubTypesCols[8]+ " ," +
+                    " "+TableCarSubTypesCols[9]+ " ," +
+                    " "+TableCarSubTypesCols[10]+" ," +
+                    " "+TableCarSubTypesCols[11]+" ," +
+                    " "+TableCarSubTypesCols[12]+" " +
                     ");";
 
     private static final String sqlDropTableCars =

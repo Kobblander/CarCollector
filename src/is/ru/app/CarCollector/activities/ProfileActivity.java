@@ -42,7 +42,6 @@ public class ProfileActivity extends Activity {
         getActionBar().hide();
 
         setContentView(R.layout.profile);
-
         setCarlist();
     }
 

@@ -85,7 +85,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/main" android:layout_alignParentEnd="true" android:layout_below="@+id/topbar"
-            android:layout_above="@+id/bottombar" android:visibility="invisible">
+            android:layout_above="@+id/bottombar" android:visibility="visible">
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="125dp" android:id="@+id/relativeLayout">
@@ -181,6 +181,13 @@
                     android:layout_alignStart="@+id/weightAns" android:text="New Value"
                     android:layout_below="@+id/weight"
                     android:gravity="center_vertical" android:layout_alignBottom="@+id/pollution"/>
+            <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Collect"
+                    android:id="@+id/button" android:layout_alignBottom="@+id/platenumber"
+                    android:layout_alignParentEnd="true" style="?android:attr/buttonBarButtonStyle"
+                    />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

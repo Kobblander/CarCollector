@@ -116,8 +116,14 @@ public class GameData implements GameDataGateway {
             ct.set_id(cursor.getInt(0));
             ct.setPlayerName(cursor.getString(1));
             ct.setTypeName(cursor.getString(2));
-            ct.setLevel(cursor.getInt(3));
-            ct.setXpForNextLevel(cursor.getFloat(4));
+            ct.setLevelCur(cursor.getInt(3));
+            ct.setLevelOld(cursor.getInt(4));
+            ct.setXpForNextLevelCur(cursor.getFloat(5));
+            ct.setXpForNextLevelOld(cursor.getFloat(6));
+            ct.setLevelXpCur(cursor.getFloat(7));
+            ct.setLevelXpOld(cursor.getFloat(8));
+            ct.setTotalXpCur(cursor.getFloat(9));
+            ct.setTotalXpOld(cursor.getFloat(10));
 
             list.add(ct);
         }
@@ -133,8 +139,14 @@ public class GameData implements GameDataGateway {
             // The Cursor is now set to the right position
             ct.set_id(cursor.getInt(0));
             ct.setPlayerName(cursor.getString(1));
-            ct.setLevel(cursor.getInt(2));
-            ct.setXpForNextLevel(cursor.getFloat(3));
+            ct.setLevelCur(cursor.getInt(2));
+            ct.setLevelOld(cursor.getInt(3));
+            ct.setXpForNextLevelCur(cursor.getFloat(4));
+            ct.setXpForNextLevelOld(cursor.getFloat(5));
+            ct.setLevelXpCur(cursor.getFloat(6));
+            ct.setLevelXpOld(cursor.getFloat(7));
+            ct.setTotalXpCur(cursor.getFloat(8));
+            ct.setTotalXpOld(cursor.getFloat(9));
 
             list.add(ct);
         }
@@ -151,9 +163,16 @@ public class GameData implements GameDataGateway {
             ct.set_id(cursor.getInt(0));
             ct.setTypeId(String.valueOf(cursor.getInt(1)));
             ct.setSubTypeName(cursor.getString(2));
-            ct.setLevel(cursor.getInt(3));
-            ct.setXpForNextLevel(cursor.getFloat(4));
-            ct.setTotalCars(cursor.getInt(5));
+            ct.setLevelCur(cursor.getInt(3));
+            ct.setLevelOld(cursor.getInt(4));
+            ct.setXpForNextLevelCur(cursor.getFloat(5));
+            ct.setXpForNextLevelOld(cursor.getFloat(6));
+            ct.setLevelXpCur(cursor.getFloat(7));
+            ct.setLevelXpOld(cursor.getFloat(8));
+            ct.setTotalXpCur(cursor.getFloat(9));
+            ct.setTotalXpOld(cursor.getFloat(10));
+            ct.setTotalCarsCur(cursor.getInt(11));
+            ct.setTotalCarsOld(cursor.getInt(12));
 
             list.add(ct);
         }
