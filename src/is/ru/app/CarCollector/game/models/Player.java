@@ -15,12 +15,12 @@ public class Player {
     private String playerName;
     private int levelCur;
     private int levelOld;
-    private float xpForNextLevelCur;
-    private float xpForNextLevelOld;
-    private float levelXpCur;
-    private float levelXpOld;
-    private float totalXpCur;
-    private float totalXpOld;
+    private double xpForNextLevelCur;
+    private double xpForNextLevelOld;
+    private double levelXpCur;
+    private double levelXpOld;
+    private double totalXpCur;
+    private double totalXpOld;
 
     public Player() {
     }
@@ -66,51 +66,51 @@ public class Player {
         this.levelOld = levelOld;
     }
 
-    public float getXpForNextLevelCur() {
+    public double getXpForNextLevelCur() {
         return xpForNextLevelCur;
     }
 
-    public void setXpForNextLevelCur(float xpForNextLevelCur) {
+    public void setXpForNextLevelCur(double xpForNextLevelCur) {
         this.xpForNextLevelCur = xpForNextLevelCur;
     }
 
-    public float getXpForNextLevelOld() {
+    public double getXpForNextLevelOld() {
         return xpForNextLevelOld;
     }
 
-    public void setXpForNextLevelOld(float xpForNextLevelOld) {
+    public void setXpForNextLevelOld(double xpForNextLevelOld) {
         this.xpForNextLevelOld = xpForNextLevelOld;
     }
 
-    public float getLevelXpCur() {
+    public double getLevelXpCur() {
         return levelXpCur;
     }
 
-    public void setLevelXpCur(float levelXpCur) {
+    public void setLevelXpCur(double levelXpCur) {
         this.levelXpCur = levelXpCur;
     }
 
-    public float getTotalXpOld() {
+    public double getTotalXpOld() {
         return totalXpOld;
     }
 
-    public void setTotalXpOld(float totalXpOld) {
+    public void setTotalXpOld(double totalXpOld) {
         this.totalXpOld = totalXpOld;
     }
 
-    public float getLevelXpOld() {
+    public double getLevelXpOld() {
         return levelXpOld;
     }
 
-    public void setLevelXpOld(float levelXpOld) {
+    public void setLevelXpOld(double levelXpOld) {
         this.levelXpOld = levelXpOld;
     }
 
-    public float getTotalXpCur() {
+    public double getTotalXpCur() {
         return totalXpCur;
     }
 
-    public void setTotalXpCur(float totalXpCur) {
+    public void setTotalXpCur(double totalXpCur) {
         this.totalXpCur = totalXpCur;
     }
 
@@ -130,39 +130,4 @@ public class Player {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Player)) return false;
-
-        Player player = (Player) o;
-
-        if (_id != player._id) return false;
-        if (levelCur != player.levelCur) return false;
-        if (levelOld != player.levelOld) return false;
-        if (Float.compare(player.levelXpCur, levelXpCur) != 0) return false;
-        if (Float.compare(player.levelXpOld, levelXpOld) != 0) return false;
-        if (Float.compare(player.totalXpCur, totalXpCur) != 0) return false;
-        if (Float.compare(player.totalXpOld, totalXpOld) != 0) return false;
-        if (Float.compare(player.xpForNextLevelCur, xpForNextLevelCur) != 0) return false;
-        if (Float.compare(player.xpForNextLevelOld, xpForNextLevelOld) != 0) return false;
-        if (playerName != null ? !playerName.equals(player.playerName) : player.playerName != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = _id;
-        result = 31 * result + (playerName != null ? playerName.hashCode() : 0);
-        result = 31 * result + levelCur;
-        result = 31 * result + levelOld;
-        result = 31 * result + (xpForNextLevelCur != +0.0f ? Float.floatToIntBits(xpForNextLevelCur) : 0);
-        result = 31 * result + (xpForNextLevelOld != +0.0f ? Float.floatToIntBits(xpForNextLevelOld) : 0);
-        result = 31 * result + (levelXpCur != +0.0f ? Float.floatToIntBits(levelXpCur) : 0);
-        result = 31 * result + (levelXpOld != +0.0f ? Float.floatToIntBits(levelXpOld) : 0);
-        result = 31 * result + (totalXpCur != +0.0f ? Float.floatToIntBits(totalXpCur) : 0);
-        result = 31 * result + (totalXpOld != +0.0f ? Float.floatToIntBits(totalXpOld) : 0);
-        return result;
-    }
 }

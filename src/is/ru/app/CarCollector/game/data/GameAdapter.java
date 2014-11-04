@@ -56,14 +56,14 @@ public class GameAdapter {
     public long insertPlayer(Player p) {
         ContentValues contentValues = new ContentValues();
         contentValues.put( playersCols[1], p.getPlayerName());
-        contentValues.put( playersCols[2], p.getLevelCur());
-        contentValues.put( playersCols[3], p.getLevelOld());
-        contentValues.put( playersCols[4], p.getXpForNextLevelCur());
-        contentValues.put( playersCols[5], p.getXpForNextLevelOld());
-        contentValues.put( playersCols[6], p.getLevelXpCur());
-        contentValues.put( playersCols[7], p.getLevelXpOld());
-        contentValues.put( playersCols[8], p.getTotalXpCur());
-        contentValues.put( playersCols[9], p.getTotalXpOld());
+        contentValues.put( playersCols[2], ((Integer)p.getLevelCur()).toString());
+        contentValues.put( playersCols[3], ((Integer)p.getLevelOld()).toString());
+        contentValues.put( playersCols[4], ((Double)p.getXpForNextLevelCur()).toString());
+        contentValues.put( playersCols[5], ((Double)p.getXpForNextLevelOld()).toString());
+        contentValues.put( playersCols[6], ((Double)p.getLevelXpCur()).toString());
+        contentValues.put( playersCols[7], ((Double)p.getLevelXpOld()).toString());
+        contentValues.put( playersCols[8], ((Double)p.getTotalXpCur()).toString());
+        contentValues.put( playersCols[9], ((Double)p.getTotalXpOld()).toString());
         openToWrite();
         long value = db.insert(tablePlayers, null, contentValues );
         close();
@@ -72,16 +72,16 @@ public class GameAdapter {
 
     public long insertCarType(CarType ct) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( typesCols[1], ct.getPlayerId());
+        contentValues.put( typesCols[1], ct.getPlayerName());
         contentValues.put( typesCols[2], ct.getTypeName());
-        contentValues.put( typesCols[3], ct.getLevelCur());
-        contentValues.put( typesCols[4], ct.getLevelOld());
-        contentValues.put( typesCols[5], ct.getXpForNextLevelCur());
-        contentValues.put( typesCols[6], ct.getXpForNextLevelOld());
-        contentValues.put( typesCols[7], ct.getLevelXpCur());
-        contentValues.put( typesCols[8], ct.getLevelXpOld());
-        contentValues.put( typesCols[9], ct.getTotalXpCur());
-        contentValues.put( typesCols[10], ct.getTotalXpOld());
+        contentValues.put( typesCols[3], ((Integer)ct.getLevelCur()).toString());
+        contentValues.put( typesCols[4], ((Integer)ct.getLevelOld()).toString());
+        contentValues.put( typesCols[5], ((Double)ct.getXpForNextLevelCur()).toString());
+        contentValues.put( typesCols[6], ((Double)ct.getXpForNextLevelOld()).toString());
+        contentValues.put( typesCols[7], ((Double)ct.getLevelXpCur()).toString());
+        contentValues.put( typesCols[8], ((Double)ct.getLevelXpOld()).toString());
+        contentValues.put( typesCols[9], ((Double)ct.getTotalXpCur()).toString());
+        contentValues.put( typesCols[10], ((Double)ct.getTotalXpOld()).toString());
         openToWrite();
         long value = db.insert(tableCarTypes, null, contentValues );
         close();
@@ -90,18 +90,18 @@ public class GameAdapter {
 
     public long insertCarSubType(CarSubType cst) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( subTypesCols[1], cst.getTypeId());
+        contentValues.put( subTypesCols[1], cst.getTypeName());
         contentValues.put( subTypesCols[2], cst.getSubTypeName());
-        contentValues.put( subTypesCols[3], cst.getLevelCur());
-        contentValues.put( subTypesCols[4], cst.getLevelOld());
-        contentValues.put( subTypesCols[5], cst.getXpForNextLevelCur());
-        contentValues.put( subTypesCols[6], cst.getXpForNextLevelOld());
-        contentValues.put( subTypesCols[7], cst.getLevelXpCur());
-        contentValues.put( subTypesCols[8], cst.getLevelXpOld());
-        contentValues.put( subTypesCols[9], cst.getTotalXpCur());
-        contentValues.put( subTypesCols[10], cst.getTotalXpOld());
-        contentValues.put( subTypesCols[11], cst.getTotalCarsCur());
-        contentValues.put( subTypesCols[12], cst.getTotalCarsOld());
+        contentValues.put( subTypesCols[3], ((Integer)cst.getLevelCur()).toString());
+        contentValues.put( subTypesCols[4], ((Integer)cst.getLevelOld()).toString());
+        contentValues.put( subTypesCols[5], ((Double)cst.getXpForNextLevelCur()).toString());
+        contentValues.put( subTypesCols[6], ((Double)cst.getXpForNextLevelOld()).toString());
+        contentValues.put( subTypesCols[7], ((Double)cst.getLevelXpCur()).toString());
+        contentValues.put( subTypesCols[8], ((Double)cst.getLevelXpOld()).toString());
+        contentValues.put( subTypesCols[9], ((Double)cst.getTotalXpCur()).toString());
+        contentValues.put( subTypesCols[10], ((Double)cst.getTotalXpOld()).toString());
+        contentValues.put( subTypesCols[11], ((Integer)cst.getTotalCarsCur()).toString());
+        contentValues.put( subTypesCols[12], ((Integer)cst.getTotalCarsOld()).toString());
         openToWrite();
         long value = db.insert(tableCarSubTypes, null, contentValues );
         close();
@@ -111,14 +111,14 @@ public class GameAdapter {
     public long updatePlayer(Player p) {
         ContentValues contentValues = new ContentValues();
         contentValues.put( playersCols[1], p.getPlayerName());
-        contentValues.put( playersCols[2], p.getLevelCur());
-        contentValues.put( playersCols[3], p.getLevelOld());
-        contentValues.put( playersCols[4], p.getXpForNextLevelCur());
-        contentValues.put( playersCols[5], p.getXpForNextLevelOld());
-        contentValues.put( playersCols[6], p.getLevelXpCur());
-        contentValues.put( playersCols[7], p.getLevelXpOld());
-        contentValues.put( playersCols[8], p.getTotalXpCur());
-        contentValues.put( playersCols[9], p.getTotalXpOld());
+        contentValues.put( playersCols[2], ((Integer)p.getLevelCur()).toString());
+        contentValues.put( playersCols[3], ((Integer)p.getLevelOld()).toString());
+        contentValues.put( playersCols[4], ((Double)p.getXpForNextLevelCur()).toString());
+        contentValues.put( playersCols[5], ((Double)p.getXpForNextLevelOld()).toString());
+        contentValues.put( playersCols[6], ((Double)p.getLevelXpCur()).toString());
+        contentValues.put( playersCols[7], ((Double)p.getLevelXpOld()).toString());
+        contentValues.put( playersCols[8], ((Double)p.getTotalXpCur()).toString());
+        contentValues.put( playersCols[9], ((Double)p.getTotalXpOld()).toString());
         openToWrite();
         long value = db.update(tablePlayers, contentValues, playersCols[0] + "=" + p.get_id(), null );
         close();
@@ -127,38 +127,38 @@ public class GameAdapter {
 
     public long updateCarType(CarType ct) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( typesCols[1], ct.getPlayerId());
+        contentValues.put( typesCols[1], ct.getPlayerName());
         contentValues.put( typesCols[2], ct.getTypeName());
-        contentValues.put( typesCols[3], ct.getLevelCur());
-        contentValues.put( typesCols[4], ct.getLevelOld());
-        contentValues.put( typesCols[5], ct.getXpForNextLevelCur());
-        contentValues.put( typesCols[6], ct.getXpForNextLevelOld());
-        contentValues.put( typesCols[7], ct.getLevelXpCur());
-        contentValues.put( typesCols[8], ct.getLevelXpOld());
-        contentValues.put( typesCols[9], ct.getTotalXpCur());
-        contentValues.put( typesCols[10], ct.getTotalXpOld());
+        contentValues.put( typesCols[3], ((Integer)ct.getLevelCur()).toString());
+        contentValues.put( typesCols[4], ((Integer)ct.getLevelOld()).toString());
+        contentValues.put( typesCols[5], ((Double)ct.getXpForNextLevelCur()).toString());
+        contentValues.put( typesCols[6], ((Double)ct.getXpForNextLevelOld()).toString());
+        contentValues.put( typesCols[7], ((Double)ct.getLevelXpCur()).toString());
+        contentValues.put( typesCols[8], ((Double)ct.getLevelXpOld()).toString());
+        contentValues.put( typesCols[9], ((Double)ct.getTotalXpCur()).toString());
+        contentValues.put( typesCols[10], ((Double)ct.getTotalXpOld()).toString());
         openToWrite();
-        long value = db.update(tableCarTypes, contentValues, typesCols[0] = "=" + ct.get_id(), null );
+        long value = db.update(tableCarTypes, contentValues, typesCols[2] + "=" + ct.getTypeName(), null );
         close();
         return value;
     }
 
     public long updateCarSubType(CarSubType cst) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( subTypesCols[1], cst.getTypeId());
+        contentValues.put( subTypesCols[1], cst.getTypeName());
         contentValues.put( subTypesCols[2], cst.getSubTypeName());
-        contentValues.put( subTypesCols[3], cst.getLevelCur());
-        contentValues.put( subTypesCols[4], cst.getLevelOld());
-        contentValues.put( subTypesCols[5], cst.getXpForNextLevelCur());
-        contentValues.put( subTypesCols[6], cst.getXpForNextLevelOld());
-        contentValues.put( subTypesCols[7], cst.getLevelXpCur());
-        contentValues.put( subTypesCols[8], cst.getLevelXpOld());
-        contentValues.put( subTypesCols[9], cst.getTotalXpCur());
-        contentValues.put( subTypesCols[10], cst.getTotalXpOld());
-        contentValues.put( subTypesCols[11], cst.getTotalCarsCur());
-        contentValues.put( subTypesCols[12], cst.getTotalCarsOld());
+        contentValues.put( subTypesCols[3], ((Integer)cst.getLevelCur()).toString());
+        contentValues.put( subTypesCols[4], ((Integer)cst.getLevelOld()).toString());
+        contentValues.put( subTypesCols[5], ((Double)cst.getXpForNextLevelCur()).toString());
+        contentValues.put( subTypesCols[6], ((Double)cst.getXpForNextLevelOld()).toString());
+        contentValues.put( subTypesCols[7], ((Double)cst.getLevelXpCur()).toString());
+        contentValues.put( subTypesCols[8], ((Double)cst.getLevelXpOld()).toString());
+        contentValues.put( subTypesCols[9], ((Double)cst.getTotalXpCur()).toString());
+        contentValues.put( subTypesCols[10], ((Double)cst.getTotalXpOld()).toString());
+        contentValues.put( subTypesCols[11], ((Integer)cst.getTotalCarsCur()).toString());
+        contentValues.put( subTypesCols[12], ((Integer)cst.getTotalCarsOld()).toString());
         openToWrite();
-        long value = db.update(tableCarSubTypes, contentValues, subTypesCols[0] = "=" + cst.get_id(), null);
+        long value = db.update(tableCarSubTypes, contentValues, subTypesCols[1] = "=" + cst.getSubTypeName(), null);
         close();
         return value;
     }

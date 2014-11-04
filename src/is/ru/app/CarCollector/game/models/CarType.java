@@ -16,23 +16,35 @@ public class CarType {
     private String typeName;
     private int levelCur;
     private int levelOld;
-    private float xpForNextLevelCur;
-    private float xpForNextLevelOld;
-    private float levelXpCur;
-    private float levelXpOld;
-    private float totalXpCur;
-    private float totalXpOld;
+    private double xpForNextLevelCur;
+    private double xpForNextLevelOld;
+    private double levelXpCur;
+    private double levelXpOld;
+    private double totalXpCur;
+    private double totalXpOld;
 
     public CarType() {
     }
 
     public CarType(String typeName) {
         this.typeName = typeName;
+        this.xpForNextLevelCur = 0.0f;
+        this.xpForNextLevelOld = 0.0f;
+        this.levelXpCur = 0.0f;
+        this.levelXpOld = 0.0f;
+        this.totalXpCur = 0.0f;
+        this.totalXpOld = 0.0f;
     }
 
     public CarType(String playerName, String typeName) {
         this.playerName = playerName;
         this.typeName = typeName;
+        this.xpForNextLevelCur = 0.0f;
+        this.xpForNextLevelOld = 0.0f;
+        this.levelXpCur = 0.0f;
+        this.levelXpOld = 0.0f;
+        this.totalXpCur = 0.0f;
+        this.totalXpOld = 0.0f;
     }
 
     public int get_id() {
@@ -43,28 +55,20 @@ public class CarType {
         this._id = _id;
     }
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public String getPlayerId() {
-        return playerName;
-    }
-
-    public void setPlayer(String playerName) {
-        this.playerName = playerName;
-    }
-
     public String getPlayerName() {
         return playerName;
     }
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public int getLevelCur() {
@@ -83,89 +87,52 @@ public class CarType {
         this.levelOld = levelOld;
     }
 
-    public float getXpForNextLevelCur() {
+    public double getXpForNextLevelCur() {
         return xpForNextLevelCur;
     }
 
-    public void setXpForNextLevelCur(float xpForNextLevelCur) {
+    public void setXpForNextLevelCur(double xpForNextLevelCur) {
         this.xpForNextLevelCur = xpForNextLevelCur;
     }
 
-    public float getXpForNextLevelOld() {
+    public double getXpForNextLevelOld() {
         return xpForNextLevelOld;
     }
 
-    public void setXpForNextLevelOld(float xpForNextLevelOld) {
+    public void setXpForNextLevelOld(double xpForNextLevelOld) {
         this.xpForNextLevelOld = xpForNextLevelOld;
     }
 
-    public float getLevelXpCur() {
+    public double getLevelXpCur() {
         return levelXpCur;
     }
 
-    public void setLevelXpCur(float levelXpCur) {
+    public void setLevelXpCur(double levelXpCur) {
         this.levelXpCur = levelXpCur;
     }
 
-    public float getLevelXpOld() {
+    public double getLevelXpOld() {
         return levelXpOld;
     }
 
-    public void setLevelXpOld(float levelXpOld) {
+    public void setLevelXpOld(double levelXpOld) {
         this.levelXpOld = levelXpOld;
     }
 
-    public float getTotalXpCur() {
+    public double getTotalXpCur() {
         return totalXpCur;
     }
 
-    public void setTotalXpCur(float totalXpCur) {
+    public void setTotalXpCur(double totalXpCur) {
         this.totalXpCur = totalXpCur;
     }
 
-    public float getTotalXpOld() {
+    public double getTotalXpOld() {
         return totalXpOld;
     }
 
-    public void setTotalXpOld(float totalXpOld) {
+    public void setTotalXpOld(double totalXpOld) {
         this.totalXpOld = totalXpOld;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CarType)) return false;
-
-        CarType carType = (CarType) o;
-
-        if (_id != carType._id) return false;
-        if (levelCur != carType.levelCur) return false;
-        if (levelOld != carType.levelOld) return false;
-        if (Float.compare(carType.levelXpCur, levelXpCur) != 0) return false;
-        if (Float.compare(carType.levelXpOld, levelXpOld) != 0) return false;
-        if (Float.compare(carType.totalXpCur, totalXpCur) != 0) return false;
-        if (Float.compare(carType.totalXpOld, totalXpOld) != 0) return false;
-        if (Float.compare(carType.xpForNextLevelCur, xpForNextLevelCur) != 0) return false;
-        if (Float.compare(carType.xpForNextLevelOld, xpForNextLevelOld) != 0) return false;
-        if (playerName != null ? !playerName.equals(carType.playerName) : carType.playerName != null) return false;
-        if (typeName != null ? !typeName.equals(carType.typeName) : carType.typeName != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = _id;
-        result = 31 * result + (playerName != null ? playerName.hashCode() : 0);
-        result = 31 * result + (typeName != null ? typeName.hashCode() : 0);
-        result = 31 * result + levelCur;
-        result = 31 * result + levelOld;
-        result = 31 * result + (xpForNextLevelCur != +0.0f ? Float.floatToIntBits(xpForNextLevelCur) : 0);
-        result = 31 * result + (xpForNextLevelOld != +0.0f ? Float.floatToIntBits(xpForNextLevelOld) : 0);
-        result = 31 * result + (levelXpCur != +0.0f ? Float.floatToIntBits(levelXpCur) : 0);
-        result = 31 * result + (levelXpOld != +0.0f ? Float.floatToIntBits(levelXpOld) : 0);
-        result = 31 * result + (totalXpCur != +0.0f ? Float.floatToIntBits(totalXpCur) : 0);
-        result = 31 * result + (totalXpOld != +0.0f ? Float.floatToIntBits(totalXpOld) : 0);
-        return result;
-    }
 }

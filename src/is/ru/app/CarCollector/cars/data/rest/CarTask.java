@@ -3,6 +3,8 @@ package is.ru.app.CarCollector.cars.data.rest;
 import android.os.AsyncTask;
 import android.util.Log;
 import is.ru.app.CarCollector.cars.models.Car;
+import is.ru.app.CarCollector.utilities.RestHelper;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -21,6 +23,8 @@ import org.springframework.web.client.RestTemplate;
 class CarTask extends AsyncTask<Void, Void, Car> {
     private final String url;
     private final RestCallback callback;
+    private final int readTimeOutSeconds = 7;
+    private final int connectionTimeOutSeconds = 5;
     private RestQueryException exception = null;
 
     CarTask(String url, RestCallback callback) {
@@ -40,16 +44,21 @@ class CarTask extends AsyncTask<Void, Void, Car> {
 
             requestHeaders.set("Connection", "Close");
             requestHeaders.add("Content-Type", "application/text; charset=utf-8");
-            requestHeaders.add("Content-Type", "application/text; charset=utf-8");
             System.out.println(requestHeaders);
             HttpEntity entity = new HttpEntity(requestHeaders);
 
-            restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+            HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+            factory.setConnectTimeout(connectionTimeOutSeconds * 1000);
+            factory.setReadTimeout(readTimeOutSeconds * 1000);
+            restTemplate.setRequestFactory(factory);
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             Log.i("CarTask", "Before Exchange.");
             HttpEntity<String> response = restTemplate.exchange( url, HttpMethod.GET, entity, String.class );
             Log.i("CarTask", "After Exchange.");
             String jsonString = response.getBody();
+
+            jsonString = RestHelper.toUTF8(jsonString);
+
             //jsonString = restTemplate.getForObject(url, String.class);
 
             JSONObject jsonRoot = new JSONObject(jsonString);
@@ -72,7 +81,7 @@ class CarTask extends AsyncTask<Void, Void, Car> {
             }
         } catch (Exception e) {
             String msg = "Failed receiving json from: " + url + ". NestedException is: " + e.getMessage();
-            Log.i("MainActivity - RestQuery", msg);
+            Log.i("CarTask", msg);
             exception = new RestQueryException(msg, e);
         }
 

@@ -18,11 +18,11 @@ import java.util.List;
  */
 public interface GameDataGateway {
 
-    public Long addPlayer(Player player);
+    public Player addPlayer(Player player);
 
-    public Long addCarType(CarType carType);
+    public CarType addCarType(CarType carType);
 
-    public Long addCarSubType(CarSubType carSubType);
+    public CarSubType addCarSubType(CarSubType carSubType);
 
     public List<CarType> getCarTypes();
 

@@ -34,7 +34,7 @@ public class GameServiceData implements GameService {
 
             CarType carType = gameDataGateway.getCarTypeByName(typeName);
             CarSubType carSubType = gameDataGateway.getCarSubTypeByName(subTypeName);
-            if (carType == null) {
+            if (carType == null && carSubType == null) {
                 carType = new CarType(typeName);
                 carSubType = new CarSubType(typeName, subTypeName);
                 // TODO: UPDATE XP CARTYPE(INITIALIZE)
@@ -49,6 +49,7 @@ public class GameServiceData implements GameService {
                 // TODO: UPDATE XP CARSUBTYPE(INITIALIZE)
 
                 Log.i("GameServiceData", "Updating carType and adding carSubType.");
+                //TODO: VILLA I UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!a
                 gameDataGateway.updateCarType(carType);
                 gameDataGateway.addCarSubType(carSubType);
             } else {

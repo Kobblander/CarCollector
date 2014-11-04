@@ -30,21 +30,24 @@ public class GameData implements GameDataGateway {
     }
 
     @Override
-    public Long addPlayer(Player player) {
-        Log.i("GameData", "Player successfully added to database: " + player.toString());
-        return gameAdapter.insertPlayer(player);
+    public Player addPlayer(Player player) {
+        int id = ((Long) gameAdapter.insertPlayer(player)).intValue();
+        player.set_id(id);
+        return player;
     }
 
     @Override
-    public Long addCarType(CarType carType) {
-        Log.i("GameData", "CarType successfully added to database: " + carType.toString());
-        return gameAdapter.insertCarType(carType);
+    public CarType addCarType(CarType carType) {
+        int id = ((Long)gameAdapter.insertCarType(carType)).intValue();
+        carType.set_id(id);
+        return carType;
     }
 
     @Override
-    public Long addCarSubType(CarSubType carSubType) {
-        Log.i("GameData", "CarSubType successfully added to database: " + carSubType.toString());
-        return gameAdapter.insertCarSubType(carSubType);
+    public CarSubType addCarSubType(CarSubType carSubType) {
+        int id = ((Long)gameAdapter.insertCarSubType(carSubType)).intValue();
+        carSubType.set_id(id);
+        return carSubType;
     }
 
     @Override
@@ -161,7 +164,7 @@ public class GameData implements GameDataGateway {
             CarSubType ct = new CarSubType();
             // The Cursor is now set to the right position
             ct.set_id(cursor.getInt(0));
-            ct.setTypeId(String.valueOf(cursor.getInt(1)));
+            ct.setTypeName(String.valueOf(cursor.getInt(1)));
             ct.setSubTypeName(cursor.getString(2));
             ct.setLevelCur(cursor.getInt(3));
             ct.setLevelOld(cursor.getInt(4));

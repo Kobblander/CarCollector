@@ -51,7 +51,7 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
         Log.i("ImageTask", "After Exchange.");
 
         // Convert the request to UTF8
-        String json = toUTF8(response.getBody());
+        String json = RestHelper.toUTF8(response.getBody());
 
         // Get the img urls from the json
         List<String> urls = getUrls(json);
@@ -123,22 +123,6 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
         return requestHeaders;
     }
 
-    /**
-     * Converts the respond to UTF-8 format
-     * @param str string to convert
-     * @return string in utf8 format
-     */
-    private String toUTF8(String str) {
-        String strUTF8 = "Invalid string";
-
-        try {
-            strUTF8 = URLDecoder.decode(str, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return strUTF8;
-    }
 
     @Override
     protected void onPostExecute(Bitmap s) {

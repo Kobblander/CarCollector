@@ -65,6 +65,7 @@ public class RestQuery {
      * Cancel the img task
      */
     public void cancelImageTask() {
+        Log.i("RestQuery", "CancelImageTask.");
         if(imageTask != null) {
             imageTask.cancel(true);
         }
@@ -74,6 +75,7 @@ public class RestQuery {
      * Cancel the car task
      */
     public void cancelCarTask() {
+        Log.i("RestQuery", "CancelCarTask.");
         if (carTask != null) {
             carTask.cancel(true);
         }
