@@ -1,6 +1,7 @@
 package is.ru.app.CarCollector.game.service;
 
 import is.ru.app.CarCollector.cars.models.Car;
+import is.ru.app.CarCollector.game.models.Statistics;
 
 /**
  * <h1>GameService</h1>
@@ -18,12 +19,13 @@ public interface GameService {
      * It calculates it based on type and subtype.
      * @param car The car which was added toward the stats.
      */
-    public void updateStats(Car car);
+    public void updateStats(Car car) throws GameServiceException;
 
-    public void getStats();
+    /**
+     */
+    public Statistics getStats() throws GameServiceException;
 
-    public void getSubTypes();
+    public Statistics getLevelXpScreenData();
 
-    public void getTypes();
 
 }

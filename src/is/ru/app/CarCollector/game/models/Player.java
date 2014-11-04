@@ -13,23 +13,25 @@ public class Player {
 
     private int _id;
     private String playerName;
-    private int level;
-    private float xpForNextLevel;
+    private int levelCur;
+    private int levelOld;
+    private double xpForNextLevelCur;
+    private double xpForNextLevelOld;
+    private double levelXpCur;
+    private double levelXpOld;
+    private double totalXpCur;
+    private double totalXpOld;
 
     public Player() {
     }
 
-    public Player(int _id, String playerName, int level, float xpForNextLevel) {
-        this._id = _id;
+    public Player(String playerName) {
         this.playerName = playerName;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
     }
 
-    public Player(String playerName, int level, float xpForNextLevel) {
+    public Player(int _id, String playerName) {
+        this._id = _id;
         this.playerName = playerName;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
     }
 
     public int get_id() {
@@ -48,46 +50,84 @@ public class Player {
         this.playerName = playerName;
     }
 
-    public int getLevel() {
-        return level;
+    public int getLevelCur() {
+        return levelCur;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setLevelCur(int levelCur) {
+        this.levelCur = levelCur;
     }
 
-    public float getXpForNextLevel() {
-        return xpForNextLevel;
+    public int getLevelOld() {
+        return levelOld;
     }
 
-    public void setXpForNextLevel(float xpForNextLevel) {
-        this.xpForNextLevel = xpForNextLevel;
+    public void setLevelOld(int levelOld) {
+        this.levelOld = levelOld;
+    }
+
+    public double getXpForNextLevelCur() {
+        return xpForNextLevelCur;
+    }
+
+    public void setXpForNextLevelCur(double xpForNextLevelCur) {
+        this.xpForNextLevelCur = xpForNextLevelCur;
+    }
+
+    public double getXpForNextLevelOld() {
+        return xpForNextLevelOld;
+    }
+
+    public void setXpForNextLevelOld(double xpForNextLevelOld) {
+        this.xpForNextLevelOld = xpForNextLevelOld;
+    }
+
+    public double getLevelXpCur() {
+        return levelXpCur;
+    }
+
+    public void setLevelXpCur(double levelXpCur) {
+        this.levelXpCur = levelXpCur;
+    }
+
+    public double getTotalXpOld() {
+        return totalXpOld;
+    }
+
+    public void setTotalXpOld(double totalXpOld) {
+        this.totalXpOld = totalXpOld;
+    }
+
+    public double getLevelXpOld() {
+        return levelXpOld;
+    }
+
+    public void setLevelXpOld(double levelXpOld) {
+        this.levelXpOld = levelXpOld;
+    }
+
+    public double getTotalXpCur() {
+        return totalXpCur;
+    }
+
+    public void setTotalXpCur(double totalXpCur) {
+        this.totalXpCur = totalXpCur;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Player)) return false;
-
-        Player player = (Player) o;
-
-        if (_id != player._id) return false;
-        if (level != player.level) return false;
-        if (Double.compare(player.xpForNextLevel, xpForNextLevel) != 0) return false;
-        if (playerName != null ? !playerName.equals(player.playerName) : player.playerName != null) return false;
-
-        return true;
+    public String toString() {
+        return "Player{" +
+                "_id=" + _id +
+                ", playerName='" + playerName + '\'' +
+                ", levelCur=" + levelCur +
+                ", levelOld=" + levelOld +
+                ", xpForNextLevelCur=" + xpForNextLevelCur +
+                ", xpForNextLevelOld=" + xpForNextLevelOld +
+                ", levelXpCur=" + levelXpCur +
+                ", levelXpOld=" + levelXpOld +
+                ", totalXpCur=" + totalXpCur +
+                ", totalXpOld=" + totalXpOld +
+                '}';
     }
 
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = _id;
-        result = 31 * result + (playerName != null ? playerName.hashCode() : 0);
-        result = 31 * result + level;
-        temp = Double.doubleToLongBits(xpForNextLevel);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
 }

@@ -12,30 +12,25 @@ package is.ru.app.CarCollector.game.models;
 public class CarSubType {
 
     private int _id;
-    private int typeId;
+    private String typeName;
     private String subTypeName;
-    private int level;
-    private float xpForNextLevel;
-    private int totalCars;
+    private int levelCur;
+    private int levelOld;
+    private double xpForNextLevelCur;
+    private double xpForNextLevelOld;
+    private double levelXpCur;
+    private double levelXpOld;
+    private double totalXpCur;
+    private double totalXpOld;
+    private int totalCarsCur;
+    private int totalCarsOld;
 
     public CarSubType() {
     }
 
-    public CarSubType(int _id, String subTypeName, int typeId, int level, float xpForNextLevel, int totalCars) {
-        this._id = _id;
+    public CarSubType(String typeName, String subTypeName) {
+        this.typeName = typeName;
         this.subTypeName = subTypeName;
-        this.typeId = typeId;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
-        this.totalCars = totalCars;
-    }
-
-    public CarSubType(String subTypeName, int typeId, int level, float xpForNextLevel, int totalCars) {
-        this.subTypeName = subTypeName;
-        this.typeId = typeId;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
-        this.totalCars = totalCars;
     }
 
     public int get_id() {
@@ -46,6 +41,14 @@ public class CarSubType {
         this._id = _id;
     }
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
     public String getSubTypeName() {
         return subTypeName;
     }
@@ -54,53 +57,102 @@ public class CarSubType {
         this.subTypeName = subTypeName;
     }
 
-    public int getTypeId() {
-        return typeId;
+    public int getLevelCur() {
+        return levelCur;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setLevelCur(int levelCur) {
+        this.levelCur = levelCur;
     }
 
-    public int getLevel() {
-        return level;
+    public int getLevelOld() {
+        return levelOld;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setLevelOld(int levelOld) {
+        this.levelOld = levelOld;
     }
 
-    public float getXpForNextLevel() {
-        return xpForNextLevel;
+    public double getXpForNextLevelCur() {
+        return xpForNextLevelCur;
     }
 
-    public void setXpForNextLevel(float xpForNextLevel) {
-        this.xpForNextLevel = xpForNextLevel;
+    public void setXpForNextLevelCur(double xpForNextLevelCur) {
+        this.xpForNextLevelCur = xpForNextLevelCur;
     }
 
-    public int getTotalCars() {
-        return totalCars;
+    public double getXpForNextLevelOld() {
+        return xpForNextLevelOld;
     }
 
-    public void setTotalCars(int totalCars) {
-        this.totalCars = totalCars;
+    public void setXpForNextLevelOld(double xpForNextLevelOld) {
+        this.xpForNextLevelOld = xpForNextLevelOld;
+    }
+
+    public double getLevelXpCur() {
+        return levelXpCur;
+    }
+
+    public void setLevelXpCur(double levelXpCur) {
+        this.levelXpCur = levelXpCur;
+    }
+
+    public double getLevelXpOld() {
+        return levelXpOld;
+    }
+
+    public void setLevelXpOld(double levelXpOld) {
+        this.levelXpOld = levelXpOld;
+    }
+
+    public double getTotalXpCur() {
+        return totalXpCur;
+    }
+
+    public void setTotalXpCur(double totalXpCur) {
+        this.totalXpCur = totalXpCur;
+    }
+
+    public double getTotalXpOld() {
+        return totalXpOld;
+    }
+
+    public void setTotalXpOld(double totalXpOld) {
+        this.totalXpOld = totalXpOld;
+    }
+
+    public int getTotalCarsCur() {
+        return totalCarsCur;
+    }
+
+    public void setTotalCarsCur(int totalCarsCur) {
+        this.totalCarsCur = totalCarsCur;
+    }
+
+    public int getTotalCarsOld() {
+        return totalCarsOld;
+    }
+
+    public void setTotalCarsOld(int totalCarsOld) {
+        this.totalCarsOld = totalCarsOld;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CarSubType)) return false;
-
-        CarSubType carSubType = (CarSubType) o;
-
-        if (_id != carSubType._id) return false;
-        if (level != carSubType.level) return false;
-        if (totalCars != carSubType.totalCars) return false;
-        if (typeId != carSubType.typeId) return false;
-        if (xpForNextLevel != carSubType.xpForNextLevel) return false;
-        if (subTypeName != null ? !subTypeName.equals(carSubType.subTypeName) : carSubType.subTypeName != null) return false;
-
-        return true;
+    public String toString() {
+        return "CarSubType{" +
+                "_id=" + _id +
+                ", typeName='" + typeName + '\'' +
+                ", subTypeName='" + subTypeName + '\'' +
+                ", levelCur=" + levelCur +
+                ", levelOld=" + levelOld +
+                ", xpForNextLevelCur=" + xpForNextLevelCur +
+                ", xpForNextLevelOld=" + xpForNextLevelOld +
+                ", levelXpCur=" + levelXpCur +
+                ", levelXpOld=" + levelXpOld +
+                ", totalXpCur=" + totalXpCur +
+                ", totalXpOld=" + totalXpOld +
+                ", totalCarsCur=" + totalCarsCur +
+                ", totalCarsOld=" + totalCarsOld +
+                '}';
     }
-
 }

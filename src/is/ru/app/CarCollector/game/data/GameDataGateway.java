@@ -18,22 +18,28 @@ import java.util.List;
  */
 public interface GameDataGateway {
 
-    public void addPlayer(Player player);
+    public Player addPlayer(Player player);
 
-    public void addCarType(CarType carType);
+    public CarType addCarType(CarType carType);
 
-    public void addCarSubType(CarSubType carSubType);
+    public CarSubType addCarSubType(CarSubType carSubType);
 
     public List<CarType> getCarTypes();
 
     public List<CarSubType> getCarSubTypes();
 
-    public List<CarType> getCarTypesByName(String carTypeName);
+    public CarType getCarTypeByName(String carTypeName);
 
-    public List<CarSubType> getCarSubTypesByName(String carSubTypeName);
+    public CarSubType getCarSubTypeByName(String carSubTypeName);
 
     public List<CarType> getCarTypesByNameAndPlayer(String carTypeName, String playerName);
 
     public List<CarSubType> getCarSubTypesByNameAndPlayer(String carSubTypeName, String playerName);
+
+    public List<CarSubType> getCarSubTypesByTypeId(int typeId);
+
+    public Long updateCarType(CarType carType);
+
+    public Long updateCarSubType(CarSubType carSubType);
 
 }
