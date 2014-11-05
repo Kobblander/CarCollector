@@ -3,4 +3,6 @@
     <string name="app_name">CarCollector</string>
     <string name="main_camera">Main Camera</string>
     <string name="user_profile">User Profile</string>
+    <string name="carType">carType</string>
+    <string name="subType">subType</string>
 </resources>
