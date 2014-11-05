@@ -1,5 +1,6 @@
 package is.ru.app.CarCollector.cars.data.rest;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import java.io.InputStream;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -27,7 +29,7 @@ import java.util.List;
 * Date : 11/3/2014
 * Time : 15:45
 */
-class ImageTask extends AsyncTask<Void, Void, Bitmap> {
+class ImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
     private final String url;
     private final RestCallback callback;
     private RestQueryException exception = null;
@@ -38,7 +40,7 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
     }
 
     @Override
-    protected Bitmap doInBackground(Void... params) {
+    protected List<Bitmap> doInBackground(Void... params) {
         Log.i("ImageTask", "DoInBackground.");
 
         // Setup request
@@ -59,8 +61,13 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
         // Setup image request
         RestTemplate restTemplateImg = RestHelper.getImgTemplate();
 
+		List<Bitmap> bMap = new ArrayList<Bitmap>();
+
         // Get the image in bitmap form
-        return urlToBitmap(restTemplateImg, entity, urls.get(0));
+		for(int i = 0; i < urls.size(); i++) {
+			bMap.add(urlToBitmap(restTemplateImg, entity, urls.get(i)));
+		}
+        return bMap;
     }
 
     /**
@@ -99,14 +106,57 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
         ResponseEntity<Resource> respond = rest.exchange(url, HttpMethod.GET, entity, Resource.class);
         Bitmap map = null;
 
+
         try {
-            map = BitmapFactory.decodeStream(respond.getBody().getInputStream());
+			map = Bitmap.createScaledBitmap(BitmapFactory.decodeStream(respond.getBody().getInputStream()), 150, 250, true);
+            //map = BitmapFactory.decodeStream(respond.getBody().getInputStream());
+
+			//map = decodeSampledBitmapFromResource(respond.getBody().getInputStream(), 150, 250);
         } catch (IOException e) {
             e.printStackTrace();
+			return map;
         }
-
         return map;
     }
+
+	public static Bitmap decodeSampledBitmapFromResource(InputStream res,
+														 int reqWidth, int reqHeight) {
+
+		// First decode with inJustDecodeBounds=true to check dimensions
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeStream(res, null, options);
+
+		// Calculate inSampleSize
+		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+		// Decode bitmap with inSampleSize set
+		options.inJustDecodeBounds = false;
+		return BitmapFactory.decodeStream(res, null, options);
+	}
+
+	public static int calculateInSampleSize(
+			BitmapFactory.Options options, int reqWidth, int reqHeight) {
+		// Raw height and width of image
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth) {
+
+			final int halfHeight = height / 2;
+			final int halfWidth = width / 2;
+
+			// Calculate the largest inSampleSize value that is a power of 2 and keeps both
+			// height and width larger than the requested height and width.
+			while ((halfHeight / inSampleSize) > reqHeight
+					&& (halfWidth / inSampleSize) > reqWidth) {
+				inSampleSize *= 2;
+			}
+		}
+
+		return inSampleSize;
+	}
 
     /**
      * Setups the request header
@@ -125,7 +175,7 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
 
 
     @Override
-    protected void onPostExecute(Bitmap s) {
+    protected void onPostExecute(List<Bitmap> s) {
         Log.i("ImageTask", "PostExecute.");
         callback.postExecute(s, exception);
     }

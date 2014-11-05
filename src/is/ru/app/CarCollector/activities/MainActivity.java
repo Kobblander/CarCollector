@@ -12,11 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
+import android.widget.*;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.TextView;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQuery;
@@ -29,9 +26,16 @@ import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
 import is.ru.app.CarCollector.utilities.DbHelper;
 import is.ru.app.CarCollector.utilities.Debugger;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity implements RestCallback {
     private CarService carService = new CarServiceData(this);
@@ -40,6 +44,7 @@ public class MainActivity extends Activity implements RestCallback {
     private String currentQuery;
     private boolean isCollectable = true;
     private static ProgressDialog progressDialog;
+	private LinearLayout myGallery;
 
     /**
      * Called when the activity is first created.
@@ -127,8 +132,8 @@ public class MainActivity extends Activity implements RestCallback {
             }
 
             // Response is images
-            if (response.getClass() == Bitmap.class) {
-                displayImages((Bitmap) response);
+            if (response.getClass() == ArrayList.class) {
+                displayImages((List<Bitmap>) response);
             }
 
             Log.i("MainActivity", "postExecute - adding car");
@@ -208,12 +213,28 @@ public class MainActivity extends Activity implements RestCallback {
         carView.setVisibility(View.VISIBLE);
     }
 
-    private void displayImages(Bitmap map) {
-        ImageView carImage = (ImageView) findViewById(R.id.carimage);
+    private void displayImages(List<Bitmap> bmap) {
+		myGallery = (LinearLayout)findViewById(R.id.mygallery);
 
-        carImage.setImageDrawable(null);
-        carImage.setImageBitmap(map);
+		for(Bitmap map : bmap) {
+			myGallery.addView(insertPhoto(map));
+		}
     }
+
+	View insertPhoto(Bitmap bm){
+
+		LinearLayout layout = new LinearLayout(getApplicationContext());
+		layout.setLayoutParams(new LayoutParams(300, 250));
+		layout.setGravity(Gravity.CENTER);
+
+		ImageView imageView = new ImageView(getApplicationContext());
+		imageView.setLayoutParams(new LayoutParams(270, 220));
+		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		imageView.setImageBitmap(bm);
+
+		layout.addView(imageView);
+		return layout;
+	}
 
 	/**
 	 * Shows a Progress Dialog with a Cancel Button
