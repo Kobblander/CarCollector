@@ -99,7 +99,7 @@ public class MainActivity extends Activity implements RestCallback {
     }
 
     public void camera(View view) {
-        Intent myIntent = new Intent(this, CameraActivity.class);
+        Intent myIntent = new Intent(this, ProfileListActivity.class);
         startActivity(myIntent);
     }
 
