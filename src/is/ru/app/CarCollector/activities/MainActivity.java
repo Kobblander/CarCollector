@@ -280,14 +280,13 @@ public class MainActivity extends Activity implements RestCallback {
 	View insertPhoto(Bitmap bm){
 
 		LinearLayout layout = new LinearLayout(getApplicationContext());
-		layout.setLayoutParams(new LayoutParams(300, 250));
+		layout.setLayoutParams(new LayoutParams(400, 400));
 		layout.setGravity(Gravity.CENTER);
 
 		ImageView imageView = new ImageView(getApplicationContext());
-		imageView.setLayoutParams(new LayoutParams(270, 220));
-		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		imageView.setLayoutParams(new LayoutParams(300, 300));
+		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 		imageView.setImageBitmap(bm);
-
 		layout.addView(imageView);
 		return layout;
 	}
