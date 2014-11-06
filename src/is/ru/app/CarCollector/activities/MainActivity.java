@@ -73,6 +73,9 @@ public class MainActivity extends Activity implements RestCallback {
                 searchView.clearFocus();
                 searchView.setIconified(true);
 
+                RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
+                carView.setVisibility(View.INVISIBLE);
+
                 // Get car
                 try {
                     currentQuery = query;
@@ -121,8 +124,9 @@ public class MainActivity extends Activity implements RestCallback {
 
             if (response.getClass() == Car.class) {
                 carService.addCarCallback((Car) response);
-                //gameService.updateStats((Car) response);
+                gameService.updateStats((Car) response);
                 displayCar((Car) response);
+
                 Log.i("MainActivity", "postExecute - displaying car");
             }
 
@@ -142,16 +146,10 @@ public class MainActivity extends Activity implements RestCallback {
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
         this.cancelExecute();
-        if (exception.getCause().getClass() == UnknownHostException.class) {
-            // TODO: DO STUFF
-        }
         if (exception.getClass() == RestQueryException.class) {
             Log.i("MainActivity", "Retrying getting car");
-            try {
-                carService.addCar(currentQuery, restCallback);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            // TODO: DISPLAY THE RETRY BUTTON.
+            // TODO: Sorry could not connect to our servers. Try again?
             return;
         }
         this.hideProgressDialog();
@@ -204,8 +202,6 @@ public class MainActivity extends Activity implements RestCallback {
         status.setText(response.getStatus());
         status.setTextColor(Color.GREEN);
 
-        RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
-        carView.setVisibility(View.VISIBLE);
     }
 
     private void displayImages(Bitmap map) {
@@ -213,6 +209,9 @@ public class MainActivity extends Activity implements RestCallback {
 
         carImage.setImageDrawable(null);
         carImage.setImageBitmap(map);
+
+        RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
+        carView.setVisibility(View.VISIBLE);
     }
 
 	/**

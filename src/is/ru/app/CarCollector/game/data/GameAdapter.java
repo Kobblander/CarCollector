@@ -138,7 +138,8 @@ public class GameAdapter {
         contentValues.put( typesCols[9], ((Double)ct.getTotalXpCur()).toString());
         contentValues.put( typesCols[10], ((Double)ct.getTotalXpOld()).toString());
         openToWrite();
-        long value = db.update(tableCarTypes, contentValues, typesCols[2] + "=" + ct.getTypeName(), null );
+
+        long value = db.update(tableCarTypes, contentValues, typesCols[0] + "=" + ct.get_id(), null);
         close();
         return value;
     }
@@ -158,7 +159,7 @@ public class GameAdapter {
         contentValues.put( subTypesCols[11], ((Integer)cst.getTotalCarsCur()).toString());
         contentValues.put( subTypesCols[12], ((Integer)cst.getTotalCarsOld()).toString());
         openToWrite();
-        long value = db.update(tableCarSubTypes, contentValues, subTypesCols[1] = "=" + cst.getSubTypeName(), null);
+        long value = db.update(tableCarSubTypes, contentValues, subTypesCols[0] = "=" + cst.get_id(), null);
         close();
         return value;
     }

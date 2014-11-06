@@ -8,6 +8,8 @@ import is.ru.app.CarCollector.game.data.GameDataGateway;
 import is.ru.app.CarCollector.game.models.CarSubType;
 import is.ru.app.CarCollector.game.models.CarType;
 import is.ru.app.CarCollector.game.models.Statistics;
+import is.ru.app.CarCollector.game.xp.XpCalculator;
+import is.ru.app.CarCollector.game.xp.XpSystem;
 
 /**
  * <h1>GameServiceData</h1>
@@ -21,9 +23,11 @@ import is.ru.app.CarCollector.game.models.Statistics;
 public class GameServiceData implements GameService {
 
     GameDataGateway gameDataGateway;
+    XpSystem xpSystem;
 
     public GameServiceData(Context ctx) {
         this.gameDataGateway = new GameData(ctx);
+        this.xpSystem = new XpCalculator();
     }
 
     @Override
@@ -37,31 +41,29 @@ public class GameServiceData implements GameService {
             if (carType == null && carSubType == null) {
                 carType = new CarType(typeName);
                 carSubType = new CarSubType(typeName, subTypeName);
-                // TODO: UPDATE XP CARTYPE(INITIALIZE)
-                // TODO: UPDATE XP CARSUBTYPE(INITIALIZE)
+
+                xpSystem.calculateXp(null, carType, carSubType);
 
                 Log.i("GameServiceData", "Adding both Type and Subtype to database.");
                 gameDataGateway.addCarType(carType);
                 gameDataGateway.addCarSubType(carSubType);
             } else if (carSubType == null) {
                 carSubType = new CarSubType(typeName, subTypeName);
-                // TODO: UPDATE XP CARTYPE
-                // TODO: UPDATE XP CARSUBTYPE(INITIALIZE)
+
+                xpSystem.calculateXp(null, carType, carSubType);
 
                 Log.i("GameServiceData", "Updating carType and adding carSubType.");
-                //TODO: VILLA I UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!a
                 gameDataGateway.updateCarType(carType);
                 gameDataGateway.addCarSubType(carSubType);
             } else {
-                // TODO: UPDATE XP CARTYPE
-                // TODO: UPDATE XP CARSUBTYPE
+
+                xpSystem.calculateXp(null, carType, carSubType);
 
                 Log.i("GameServiceData", "Updating botch carType and carSubType.");
                 gameDataGateway.updateCarType(carType);
                 gameDataGateway.updateCarSubType(carSubType);
             }
 
-            // TODO: UPDATE XP OF SUBTYPE, THEN TYPE, THEN PLAYER
         } catch (Exception e) {
             String msg = "Fatal error in GameService; Nested exception is: " + e.getMessage();
             throw new GameServiceException(msg, e);
