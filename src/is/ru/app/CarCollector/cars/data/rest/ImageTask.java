@@ -101,58 +101,29 @@ class ImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
      */
     private Bitmap urlToBitmap(RestTemplate rest, HttpEntity entity, String url) {
         ResponseEntity<Resource> respond = rest.exchange(url, HttpMethod.GET, entity, Resource.class);
-        Bitmap map = null;
-
+        Bitmap map;
+		Bitmap scaledMap;
+		double scale;
+		int height;
+		int width;
 
         try {
-			map = Bitmap.createScaledBitmap(BitmapFactory.decodeStream(respond.getBody().getInputStream()), 150, 250, true);
-            //map = BitmapFactory.decodeStream(respond.getBody().getInputStream());
-
-			//map = decodeSampledBitmapFromResource(respond.getBody().getInputStream(), 150, 250);
+			map = BitmapFactory.decodeStream(respond.getBody().getInputStream());
+			scale = calculateScale(map);
+			height = (int) (scale * map.getHeight());
+			width = (int) (scale * map.getWidth());
+			scaledMap = Bitmap.createScaledBitmap(map, width, height, true);
         } catch (IOException e) {
             e.printStackTrace();
-			return map;
+			return null;
         }
-        return map;
+        return scaledMap;
     }
 
-	public static Bitmap decodeSampledBitmapFromResource(InputStream res,
-														 int reqWidth, int reqHeight) {
+	double calculateScale(Bitmap map) {
+		double height = map.getHeight();
 
-		// First decode with inJustDecodeBounds=true to check dimensions
-		final BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeStream(res, null, options);
-
-		// Calculate inSampleSize
-		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-		// Decode bitmap with inSampleSize set
-		options.inJustDecodeBounds = false;
-		return BitmapFactory.decodeStream(res, null, options);
-	}
-
-	public static int calculateInSampleSize(
-			BitmapFactory.Options options, int reqWidth, int reqHeight) {
-		// Raw height and width of image
-		final int height = options.outHeight;
-		final int width = options.outWidth;
-		int inSampleSize = 1;
-
-		if (height > reqHeight || width > reqWidth) {
-
-			final int halfHeight = height / 2;
-			final int halfWidth = width / 2;
-
-			// Calculate the largest inSampleSize value that is a power of 2 and keeps both
-			// height and width larger than the requested height and width.
-			while ((halfHeight / inSampleSize) > reqHeight
-					&& (halfWidth / inSampleSize) > reqWidth) {
-				inSampleSize *= 2;
-			}
-		}
-
-		return inSampleSize;
+		return 150/height;
 	}
 
     /**
