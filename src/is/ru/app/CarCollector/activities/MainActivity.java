@@ -5,18 +5,22 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
+import android.view.Window;
+import android.widget.*;
+import android.widget.SearchView.OnQueryTextListener;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQuery;
@@ -25,13 +29,19 @@ import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
+import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
 import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
 import is.ru.app.CarCollector.utilities.DbHelper;
 import is.ru.app.CarCollector.utilities.Debugger;
-
-import java.net.SocketTimeoutException;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity implements RestCallback {
     private CarService carService = new CarServiceData(this);
@@ -40,26 +50,44 @@ public class MainActivity extends Activity implements RestCallback {
     private String currentQuery;
     private boolean isCollectable = true;
     private static ProgressDialog progressDialog;
+    private NavigationDrawer nav;
+	private LinearLayout myGallery;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
         Debugger.getInstance().resetDatabase(this);
 
-        // Hide the action bar
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();
+        nav = new NavigationDrawer(this);
+        nav.setup();
 
-        setContentView(R.layout.main);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayShowTitleEnabled(false);
+    }
 
-        // Set search
-        final SearchView searchView = (SearchView) findViewById(R.id.searchView);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar, menu);
 
-        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+        final MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean queryTextFocused) {
+                if(!queryTextFocused) {
+                    searchMenuItem.collapseActionView();
+                    searchView.setQuery("", false);
+                }
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Remove keyboard
@@ -94,6 +122,36 @@ public class MainActivity extends Activity implements RestCallback {
                 return false;
             }
         });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        nav.onPrepareOptionsMenu(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        nav.syncToggle();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        nav.onToggleConfigChange(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean navItemPressed = nav.onOptionsItemSelected(item);
+
+        // If nav item was pressed we want to return true
+        if(navItemPressed) return navItemPressed;
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void profile(View view){
@@ -102,7 +160,7 @@ public class MainActivity extends Activity implements RestCallback {
     }
 
     public void camera(View view) {
-        Intent myIntent = new Intent(this, CameraActivity.class);
+        Intent myIntent = new Intent(this, ProfileListActivity.class);
         startActivity(myIntent);
     }
 
@@ -131,8 +189,8 @@ public class MainActivity extends Activity implements RestCallback {
             }
 
             // Response is images
-            if (response.getClass() == Bitmap.class) {
-                displayImages((Bitmap) response);
+            if (response.getClass() == ArrayList.class) {
+                displayImages((List<Bitmap>) response);
             }
 
             Log.i("MainActivity", "postExecute - adding car");
@@ -196,23 +254,43 @@ public class MainActivity extends Activity implements RestCallback {
         // Set registered
         TextView registered = (TextView) findViewById(R.id.registerdAns);
         registered.setText(response.getRegisteredAt());
-
+        /*
         // Set Status
         TextView status = (TextView) findViewById(R.id.status);
         status.setText(response.getStatus());
-        status.setTextColor(Color.GREEN);
+        status.setTextColor(Color.GREEN);*/
 
     }
 
-    private void displayImages(Bitmap map) {
-        ImageView carImage = (ImageView) findViewById(R.id.carimage);
+    private void displayImages(List<Bitmap> bmap) {
+		myGallery = (LinearLayout)findViewById(R.id.mygallery);
 
+        /*
         carImage.setImageDrawable(null);
         carImage.setImageBitmap(map);
 
         RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
         carView.setVisibility(View.VISIBLE);
+        */
+		for(Bitmap map : bmap) {
+			myGallery.addView(insertPhoto(map));
+		}
     }
+
+	View insertPhoto(Bitmap bm){
+
+		LinearLayout layout = new LinearLayout(getApplicationContext());
+		layout.setLayoutParams(new LayoutParams(300, 250));
+		layout.setGravity(Gravity.CENTER);
+
+		ImageView imageView = new ImageView(getApplicationContext());
+		imageView.setLayoutParams(new LayoutParams(270, 220));
+		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		imageView.setImageBitmap(bm);
+
+		layout.addView(imageView);
+		return layout;
+	}
 
 	/**
 	 * Shows a Progress Dialog with a Cancel Button

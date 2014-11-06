@@ -3,6 +3,8 @@
     <color name="greenStart">#ff33dd44</color>
     <color name="greenMid">#ff0A8815</color>
     <color name="greenEnd">#ff1da130</color>
+    <color name="list_item_title">#fff</color>
+    <color name="counter_text_color">#fff</color>
 
     <style name="ProgressBarStyle" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:layout_width">fill_parent</item>
