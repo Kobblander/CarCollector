@@ -255,15 +255,15 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
         // Set Pollution
         String pollution = response.getPollution();
-        LinearLayout pollutonContainer = (LinearLayout) findViewById(R.id.carEnvironment);
+        LinearLayout pollutionContainer = (LinearLayout) findViewById(R.id.carEnvironment);
 
         if(!pollution.isEmpty()) {
-            pollutonContainer.setVisibility(View.VISIBLE);
+            pollutionContainer.setVisibility(View.VISIBLE);
 
             TextView pollutionText = (TextView) findViewById(R.id.pollutionAns);
             pollutionText.setText(response.getPollution() + " g/km");
         } else {
-            pollutonContainer.setVisibility(View.GONE);
+            pollutionContainer.setVisibility(View.GONE);
         }
 
         // Set Weight
