@@ -8,11 +8,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.*;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
@@ -27,11 +22,7 @@ import is.ru.app.CarCollector.game.service.GameServiceData;
 import is.ru.app.CarCollector.utilities.Debugger;
 import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
 import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import java.net.UnknownHostException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,6 +98,9 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
                 RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
                 carView.setVisibility(View.INVISIBLE);
+
+				// Strip spaces
+				query.replaceAll("\\s","");
 
                 // Get car
                 getCar(query);
@@ -189,7 +183,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 carService.addCarCallback(car);
                 gameService.updateStats(car);
                 displayCar(car);
-                carService.addImage(car.getType(), car.getSubType(), car.getColor(), restCallback);
+                carService.addImage(car.getType(), car.getSubType(), car.getColor(), car.getRegisteredAt(), restCallback);
                 this.hideProgressDialog();
 
                 Log.i("MainActivity", "postExecute - displaying car");
@@ -267,16 +261,16 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         status.setText(response.getStatus());
         status.setTextColor(Color.GREEN);*/
 
+		RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
+		carView.setVisibility(View.VISIBLE);
     }
 
     private void displayImages(List<Bitmap> bmap) {
 		myGallery = (LinearLayout)findViewById(R.id.mygallery);
 		myGallery.removeAllViews();
 
-        RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
-        carView.setVisibility(View.VISIBLE);
-
 		for(Bitmap map : bmap) {
+			Log.i("Loading image", Integer.toString(bmap.size()));
 			myGallery.addView(insertPhoto(map));
 		}
     }
