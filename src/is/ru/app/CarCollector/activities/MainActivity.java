@@ -8,15 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.view.Window;
 import android.widget.*;
 import android.widget.SearchView.OnQueryTextListener;
 import is.ru.app.CarCollector.R;
@@ -33,7 +29,6 @@ import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
 import is.ru.app.CarCollector.utilities.DbHelper;
 import is.ru.app.CarCollector.utilities.Debugger;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
@@ -273,9 +268,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
     private void displayImages(List<Bitmap> bmap) {
 		myGallery = (LinearLayout)findViewById(R.id.mygallery);
-
-        //carImage.setImageDrawable(null);
-        //carImage.setImageBitmap(map);
+		myGallery.removeAllViews();
 
         RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
         carView.setVisibility(View.VISIBLE);
@@ -288,13 +281,16 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 	View insertPhoto(Bitmap bm){
 
 		LinearLayout layout = new LinearLayout(getApplicationContext());
-		layout.setLayoutParams(new LayoutParams(400, 400));
+
 		layout.setGravity(Gravity.CENTER);
 
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(bm.getWidth(), bm.getHeight());
+		params.setMargins(10, 20, 10, 30);
 		ImageView imageView = new ImageView(getApplicationContext());
-		imageView.setLayoutParams(new LayoutParams(300, 300));
-		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+		imageView.setLayoutParams(params);
+		imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		imageView.setImageBitmap(bm);
+
 		layout.addView(imageView);
 		return layout;
 	}

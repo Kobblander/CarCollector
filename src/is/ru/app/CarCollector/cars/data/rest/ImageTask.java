@@ -128,7 +128,7 @@ class ImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
 	double calculateScale(Bitmap map) {
 		double height = map.getHeight();
 
-		return 150/height;
+		return 300/height;
 	}
 
     /**
