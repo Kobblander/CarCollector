@@ -5,16 +5,17 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
@@ -23,6 +24,7 @@ import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
+import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
 
 import java.net.UnknownHostException;
 
@@ -31,24 +33,42 @@ public class MainActivity extends Activity implements RestCallback {
     private RestCallback restCallback = this;
     private boolean isCollectable = true;
     private static ProgressDialog progressDialog;
+    private NavigationDrawer nav;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Hide the action bar
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();
-
         setContentView(R.layout.main);
 
-        // Set search
-        final SearchView searchView = (SearchView) findViewById(R.id.searchView);
+        nav = new NavigationDrawer(this);
+        nav.setup();
 
-        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar, menu);
+
+        final MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean queryTextFocused) {
+                if(!queryTextFocused) {
+                    searchMenuItem.collapseActionView();
+                    searchView.setQuery("", false);
+                }
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Remove keyboard
@@ -79,6 +99,36 @@ public class MainActivity extends Activity implements RestCallback {
                 return false;
             }
         });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        nav.onPrepareOptionsMenu(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        nav.syncToggle();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        nav.onToggleConfigChange(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean navItemPressed = nav.onOptionsItemSelected(item);
+
+        // If nav item was pressed we want to return true
+        if(navItemPressed) return navItemPressed;
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void profile(View view){
@@ -173,11 +223,11 @@ public class MainActivity extends Activity implements RestCallback {
         // Set registered
         TextView registered = (TextView) findViewById(R.id.registerdAns);
         registered.setText(response.getRegisteredAt());
-
+        /*
         // Set Status
         TextView status = (TextView) findViewById(R.id.status);
         status.setText(response.getStatus());
-        status.setTextColor(Color.GREEN);
+        status.setTextColor(Color.GREEN);*/
 
         RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
         carView.setVisibility(View.VISIBLE);
