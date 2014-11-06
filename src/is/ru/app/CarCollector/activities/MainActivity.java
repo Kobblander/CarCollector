@@ -4,21 +4,12 @@ import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.view.Window;
+import android.view.*;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
-import android.widget.SearchView.OnQueryTextListener;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQuery;
@@ -27,18 +18,12 @@ import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
-import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
-import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
 import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
-import is.ru.app.CarCollector.utilities.DbHelper;
 import is.ru.app.CarCollector.utilities.Debugger;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import java.net.UnknownHostException;
+import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
+import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +47,9 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
         nav = new NavigationDrawer(this);
         nav.setup();
+
+        // Display main view
+        nav.displayView(0);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -101,6 +89,13 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 // Remove focus, to icon
                 searchView.clearFocus();
                 searchView.setIconified(true);
+
+                // Set the main fragment
+                nav.displayView(0);
+
+                // Load main fragment
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.executePendingTransactions();
 
                 RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
                 carView.setVisibility(View.INVISIBLE);
@@ -157,11 +152,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         if(navItemPressed) return navItemPressed;
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void profile(View view){
-        Intent myIntent = new Intent(this, ProfileActivity.class);
-        startActivity(myIntent);
     }
 
     public void camera(View view) {
