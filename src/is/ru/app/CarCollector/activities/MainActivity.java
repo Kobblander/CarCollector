@@ -8,11 +8,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.*;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
@@ -27,11 +22,7 @@ import is.ru.app.CarCollector.game.service.GameServiceData;
 import is.ru.app.CarCollector.utilities.Debugger;
 import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
 import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import java.net.UnknownHostException;
+
 import java.util.ArrayList;
 import java.util.List;
 
