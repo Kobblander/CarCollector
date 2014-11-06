@@ -187,6 +187,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 gameService.updateStats(car);
                 displayCar(car);
                 carService.addImage(car.getType(), car.getSubType(), car.getColor(), restCallback);
+                this.hideProgressDialog();
 
                 Log.i("MainActivity", "postExecute - displaying car");
             }
@@ -196,7 +197,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 displayImages((List<Bitmap>) response);
 
                 // Don't hide progress dialog until after images have arrived.
-                this.hideProgressDialog();
             }
 
             Log.i("MainActivity", "postExecute - adding car");
@@ -209,6 +209,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
+        exception.printStackTrace();
         this.cancelExecute();
         if (exception.getClass() == RestQueryException.class) {
             Log.i("MainActivity", "Showing errorDialog.");
