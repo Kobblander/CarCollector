@@ -231,6 +231,8 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
      * @param response the car gotten from the api
      */
     public void displayCar(Car response) {
+        RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
+        carView.setVisibility(View.VISIBLE);
 
         // Set car type
         TextView type = (TextView) findViewById(R.id.type);
@@ -245,24 +247,49 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         plateNumber.setText(response.getNumber());
 
         // Set Pollution
-        TextView pollution = (TextView) findViewById(R.id.pollutionAns);
-        pollution.setText(response.getPollution() + " g/km");
+        String pollution = response.getPollution();
+        LinearLayout pollutonContainer = (LinearLayout) findViewById(R.id.carEnvironment);
+
+        if(!pollution.isEmpty()) {
+            pollutonContainer.setVisibility(View.VISIBLE);
+
+            TextView pollutionText = (TextView) findViewById(R.id.pollutionAns);
+            pollutionText.setText(response.getPollution() + " g/km");
+        } else {
+            pollutonContainer.setVisibility(View.GONE);
+        }
 
         // Set Weight
-        TextView weight = (TextView) findViewById(R.id.weightAns);
-        weight.setText(response.getWeight() + " kg");
+        String weight = response.getWeight();
+        LinearLayout weightContainer = (LinearLayout) findViewById(R.id.carWeight);
+
+        if(!weight.isEmpty()) {
+            weightContainer.setVisibility(View.VISIBLE);
+
+            TextView weightText = (TextView) findViewById(R.id.weightAns);
+            weightText.setText(weight + " kg");
+        } else {
+            weightContainer.setVisibility(View.GONE);
+        }
 
         // Set registered
-        TextView registered = (TextView) findViewById(R.id.registerdAns);
-        registered.setText(response.getRegisteredAt());
+        String registered = response.getRegisteredAt();
+        LinearLayout registeredContainer = (LinearLayout) findViewById(R.id.carRegisterd);
+
+        if(!registered.isEmpty()) {
+            registeredContainer.setVisibility(View.VISIBLE);
+
+            TextView registeredText = (TextView) findViewById(R.id.registerdAns);
+            registeredText.setText(registered);
+        } else {
+            registeredContainer.setVisibility(View.GONE);
+        }
+
         /*
         // Set Status
         TextView status = (TextView) findViewById(R.id.status);
         status.setText(response.getStatus());
         status.setTextColor(Color.GREEN);*/
-
-		RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
-		carView.setVisibility(View.VISIBLE);
     }
 
     private void displayImages(List<Bitmap> bmap) {

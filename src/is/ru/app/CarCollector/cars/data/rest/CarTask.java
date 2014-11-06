@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.utilities.RestHelper;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

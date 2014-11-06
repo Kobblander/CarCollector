@@ -66,6 +66,7 @@ public class GameServiceData implements GameService {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             String msg = "Fatal error in GameService; Nested exception is: " + e.getMessage();
             throw new GameServiceException(msg, e);
         }
