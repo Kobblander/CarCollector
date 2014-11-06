@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,29 +18,47 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.view.Window;
+import android.widget.*;
+import android.widget.SearchView.OnQueryTextListener;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQuery;
+import is.ru.app.CarCollector.cars.data.rest.RestQueryException;
 import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
 import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
-
+import is.ru.app.CarCollector.game.service.GameService;
+import is.ru.app.CarCollector.game.service.GameServiceData;
+import is.ru.app.CarCollector.utilities.DbHelper;
+import is.ru.app.CarCollector.utilities.Debugger;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity implements RestCallback {
     private CarService carService = new CarServiceData(this);
+    private GameService gameService = new GameServiceData(this);
     private RestCallback restCallback = this;
+    private String currentQuery;
     private boolean isCollectable = true;
     private static ProgressDialog progressDialog;
     private NavigationDrawer nav;
+	private LinearLayout myGallery;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.main);
+
+        Debugger.getInstance().resetDatabase(this);
 
         nav = new NavigationDrawer(this);
         nav.setup();
@@ -84,6 +103,7 @@ public class MainActivity extends Activity implements RestCallback {
 
                 // Get car
                 try {
+                    currentQuery = query;
                     carService.addCar(query, restCallback);
                 } catch (CarExistsException e1) {
                     isCollectable = false;
@@ -137,7 +157,7 @@ public class MainActivity extends Activity implements RestCallback {
     }
 
     public void camera(View view) {
-        Intent myIntent = new Intent(this, CameraActivity.class);
+        Intent myIntent = new Intent(this, ProfileListActivity.class);
         startActivity(myIntent);
     }
 
@@ -155,18 +175,20 @@ public class MainActivity extends Activity implements RestCallback {
             return;
         }
 
-        if (response.getClass() == Car.class) {
-            displayCar((Car) response);
-            Log.i("MainActivity", "postExecute - displaying car");
-        }
-
-        // Response is images
-        if (response.getClass() == Bitmap.class) {
-            displayImages((Bitmap) response);
-        }
-
         try {
-            carService.addCarCallback((Car) response);
+
+            if (response.getClass() == Car.class) {
+                carService.addCarCallback((Car) response);
+                //gameService.updateStats((Car) response);
+                displayCar((Car) response);
+                Log.i("MainActivity", "postExecute - displaying car");
+            }
+
+            // Response is images
+            if (response.getClass() == ArrayList.class) {
+                displayImages((List<Bitmap>) response);
+            }
+
             Log.i("MainActivity", "postExecute - adding car");
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,8 +199,18 @@ public class MainActivity extends Activity implements RestCallback {
 
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
+        this.cancelExecute();
         if (exception.getCause().getClass() == UnknownHostException.class) {
-            this.hideProgressDialog();
+            // TODO: DO STUFF
+        }
+        if (exception.getClass() == RestQueryException.class) {
+            Log.i("MainActivity", "Retrying getting car");
+            try {
+                carService.addCar(currentQuery, restCallback);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
         }
         this.hideProgressDialog();
     }
@@ -191,6 +223,7 @@ public class MainActivity extends Activity implements RestCallback {
     @Override
     public void cancelExecute() {
         RestQuery.getInstance().cancelCarTask();
+        RestQuery.getInstance().cancelImageTask();
     }
 
     /**
@@ -233,12 +266,28 @@ public class MainActivity extends Activity implements RestCallback {
         carView.setVisibility(View.VISIBLE);
     }
 
-    private void displayImages(Bitmap map) {
-        ImageView carImage = (ImageView) findViewById(R.id.carimage);
+    private void displayImages(List<Bitmap> bmap) {
+		myGallery = (LinearLayout)findViewById(R.id.mygallery);
 
-        carImage.setImageDrawable(null);
-        carImage.setImageBitmap(map);
+		for(Bitmap map : bmap) {
+			myGallery.addView(insertPhoto(map));
+		}
     }
+
+	View insertPhoto(Bitmap bm){
+
+		LinearLayout layout = new LinearLayout(getApplicationContext());
+		layout.setLayoutParams(new LayoutParams(300, 250));
+		layout.setGravity(Gravity.CENTER);
+
+		ImageView imageView = new ImageView(getApplicationContext());
+		imageView.setLayoutParams(new LayoutParams(270, 220));
+		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		imageView.setImageBitmap(bm);
+
+		layout.addView(imageView);
+		return layout;
+	}
 
 	/**
 	 * Shows a Progress Dialog with a Cancel Button

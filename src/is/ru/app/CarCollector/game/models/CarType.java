@@ -12,27 +12,39 @@ package is.ru.app.CarCollector.game.models;
 public class CarType {
 
     private int _id;
-    private int playerId;
+    private String playerName;
     private String typeName;
-    private int level;
-    private float xpForNextLevel;
+    private int levelCur;
+    private int levelOld;
+    private double xpForNextLevelCur;
+    private double xpForNextLevelOld;
+    private double levelXpCur;
+    private double levelXpOld;
+    private double totalXpCur;
+    private double totalXpOld;
 
     public CarType() {
     }
 
-    public CarType(int _id, String typeName, int playerId, int level, float xpForNextLevel) {
-        this._id = _id;
+    public CarType(String typeName) {
         this.typeName = typeName;
-        this.playerId = playerId;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
+        this.xpForNextLevelCur = 0.0f;
+        this.xpForNextLevelOld = 0.0f;
+        this.levelXpCur = 0.0f;
+        this.levelXpOld = 0.0f;
+        this.totalXpCur = 0.0f;
+        this.totalXpOld = 0.0f;
     }
 
-    public CarType(String typeName, int playerId, int level, float xpForNextLevel) {
+    public CarType(String playerName, String typeName) {
+        this.playerName = playerName;
         this.typeName = typeName;
-        this.playerId = playerId;
-        this.level = level;
-        this.xpForNextLevel = xpForNextLevel;
+        this.xpForNextLevelCur = 0.0f;
+        this.xpForNextLevelOld = 0.0f;
+        this.levelXpCur = 0.0f;
+        this.levelXpOld = 0.0f;
+        this.totalXpCur = 0.0f;
+        this.totalXpOld = 0.0f;
     }
 
     public int get_id() {
@@ -43,6 +55,14 @@ public class CarType {
         this._id = _id;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
     public String getTypeName() {
         return typeName;
     }
@@ -51,44 +71,68 @@ public class CarType {
         this.typeName = typeName;
     }
 
-    public int getPlayerId() {
-        return playerId;
+    public int getLevelCur() {
+        return levelCur;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
+    public void setLevelCur(int levelCur) {
+        this.levelCur = levelCur;
     }
 
-    public int getLevel() {
-        return level;
+    public int getLevelOld() {
+        return levelOld;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setLevelOld(int levelOld) {
+        this.levelOld = levelOld;
     }
 
-    public float getXpForNextLevel() {
-        return xpForNextLevel;
+    public double getXpForNextLevelCur() {
+        return xpForNextLevelCur;
     }
 
-    public void setXpForNextLevel(float xpForNextLevel) {
-        this.xpForNextLevel = xpForNextLevel;
+    public void setXpForNextLevelCur(double xpForNextLevelCur) {
+        this.xpForNextLevelCur = xpForNextLevelCur;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CarType)) return false;
+    public double getXpForNextLevelOld() {
+        return xpForNextLevelOld;
+    }
 
-        CarType carType = (CarType) o;
+    public void setXpForNextLevelOld(double xpForNextLevelOld) {
+        this.xpForNextLevelOld = xpForNextLevelOld;
+    }
 
-        if (_id != carType._id) return false;
-        if (level != carType.level) return false;
-        if (playerId != carType.playerId) return false;
-        if (xpForNextLevel != carType.xpForNextLevel) return false;
-        if (typeName != null ? !typeName.equals(carType.typeName) : carType.typeName != null) return false;
+    public double getLevelXpCur() {
+        return levelXpCur;
+    }
 
-        return true;
+    public void setLevelXpCur(double levelXpCur) {
+        this.levelXpCur = levelXpCur;
+    }
+
+    public double getLevelXpOld() {
+        return levelXpOld;
+    }
+
+    public void setLevelXpOld(double levelXpOld) {
+        this.levelXpOld = levelXpOld;
+    }
+
+    public double getTotalXpCur() {
+        return totalXpCur;
+    }
+
+    public void setTotalXpCur(double totalXpCur) {
+        this.totalXpCur = totalXpCur;
+    }
+
+    public double getTotalXpOld() {
+        return totalXpOld;
+    }
+
+    public void setTotalXpOld(double totalXpOld) {
+        this.totalXpOld = totalXpOld;
     }
 
 }

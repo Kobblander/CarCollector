@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import is.ru.app.CarCollector.cars.models.Car;
 
+import java.util.List;
+
 /**
  * <h1>RestQuery</h1>
  * <h2>is.ru.app.CarCollector.cars.service</h2>
@@ -17,7 +19,7 @@ import is.ru.app.CarCollector.cars.models.Car;
 public class RestQuery {
     private static RestQuery instance = null;
     private static AsyncTask<Void, Void, Car> carTask = null;
-    private static AsyncTask<Void, Void, Bitmap> imageTask = null;
+    private static AsyncTask<Void, Void, List<Bitmap>> imageTask = null;
 
     /**
      * Create get or create instance of RestQuery
@@ -65,6 +67,7 @@ public class RestQuery {
      * Cancel the img task
      */
     public void cancelImageTask() {
+        Log.i("RestQuery", "CancelImageTask.");
         if(imageTask != null) {
             imageTask.cancel(true);
         }
@@ -74,6 +77,7 @@ public class RestQuery {
      * Cancel the car task
      */
     public void cancelCarTask() {
+        Log.i("RestQuery", "CancelCarTask.");
         if (carTask != null) {
             carTask.cancel(true);
         }

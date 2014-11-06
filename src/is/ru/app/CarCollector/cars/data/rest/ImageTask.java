@@ -16,8 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ import java.util.List;
 * Date : 11/3/2014
 * Time : 15:45
 */
-class ImageTask extends AsyncTask<Void, Void, Bitmap> {
+class ImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
     private final String url;
     private final RestCallback callback;
     private RestQueryException exception = null;
@@ -38,7 +37,7 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
     }
 
     @Override
-    protected Bitmap doInBackground(Void... params) {
+    protected List<Bitmap> doInBackground(Void... params) {
         Log.i("ImageTask", "DoInBackground.");
 
         // Setup request
@@ -51,7 +50,7 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
         Log.i("ImageTask", "After Exchange.");
 
         // Convert the request to UTF8
-        String json = toUTF8(response.getBody());
+        String json = RestHelper.toUTF8(response.getBody());
 
         // Get the img urls from the json
         List<String> urls = getUrls(json);
@@ -59,8 +58,13 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
         // Setup image request
         RestTemplate restTemplateImg = RestHelper.getImgTemplate();
 
+		List<Bitmap> bMap = new ArrayList<Bitmap>();
+
         // Get the image in bitmap form
-        return urlToBitmap(restTemplateImg, entity, urls.get(0));
+		for(int i = 0; i < urls.size(); i++) {
+			bMap.add(urlToBitmap(restTemplateImg, entity, urls.get(i)));
+		}
+        return bMap;
     }
 
     /**
@@ -99,14 +103,57 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
         ResponseEntity<Resource> respond = rest.exchange(url, HttpMethod.GET, entity, Resource.class);
         Bitmap map = null;
 
+
         try {
-            map = BitmapFactory.decodeStream(respond.getBody().getInputStream());
+			map = Bitmap.createScaledBitmap(BitmapFactory.decodeStream(respond.getBody().getInputStream()), 150, 250, true);
+            //map = BitmapFactory.decodeStream(respond.getBody().getInputStream());
+
+			//map = decodeSampledBitmapFromResource(respond.getBody().getInputStream(), 150, 250);
         } catch (IOException e) {
             e.printStackTrace();
+			return map;
         }
-
         return map;
     }
+
+	public static Bitmap decodeSampledBitmapFromResource(InputStream res,
+														 int reqWidth, int reqHeight) {
+
+		// First decode with inJustDecodeBounds=true to check dimensions
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeStream(res, null, options);
+
+		// Calculate inSampleSize
+		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+		// Decode bitmap with inSampleSize set
+		options.inJustDecodeBounds = false;
+		return BitmapFactory.decodeStream(res, null, options);
+	}
+
+	public static int calculateInSampleSize(
+			BitmapFactory.Options options, int reqWidth, int reqHeight) {
+		// Raw height and width of image
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth) {
+
+			final int halfHeight = height / 2;
+			final int halfWidth = width / 2;
+
+			// Calculate the largest inSampleSize value that is a power of 2 and keeps both
+			// height and width larger than the requested height and width.
+			while ((halfHeight / inSampleSize) > reqHeight
+					&& (halfWidth / inSampleSize) > reqWidth) {
+				inSampleSize *= 2;
+			}
+		}
+
+		return inSampleSize;
+	}
 
     /**
      * Setups the request header
@@ -123,25 +170,9 @@ class ImageTask extends AsyncTask<Void, Void, Bitmap> {
         return requestHeaders;
     }
 
-    /**
-     * Converts the respond to UTF-8 format
-     * @param str string to convert
-     * @return string in utf8 format
-     */
-    private String toUTF8(String str) {
-        String strUTF8 = "Invalid string";
-
-        try {
-            strUTF8 = URLDecoder.decode(str, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return strUTF8;
-    }
 
     @Override
-    protected void onPostExecute(Bitmap s) {
+    protected void onPostExecute(List<Bitmap> s) {
         Log.i("ImageTask", "PostExecute.");
         callback.postExecute(s, exception);
     }

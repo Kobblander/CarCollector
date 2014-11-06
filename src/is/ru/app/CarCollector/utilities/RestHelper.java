@@ -6,6 +6,9 @@ import org.springframework.http.converter.ResourceHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 /**
  * Created with IntelliJ IDEA
  * User : Oli
@@ -31,5 +34,22 @@ public class RestHelper {
         restTemplate.getMessageConverters().add(new ResourceHttpMessageConverter());
 
         return restTemplate;
+    }
+
+    /**
+     * Converts the respond to UTF-8 format
+     * @param str string to convert
+     * @return string in utf8 format
+     */
+    public static String toUTF8(String str) {
+        String strUTF8 = "Invalid string";
+
+        try {
+            strUTF8 = URLDecoder.decode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return strUTF8;
     }
 }

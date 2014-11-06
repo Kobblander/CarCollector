@@ -32,4 +32,8 @@ proguard/
 
 tess-two/
 *.eml
-isl.traineddata
+isl.traineddat
+
+.idea/modules.xml
+out/
+tessdata/

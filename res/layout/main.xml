@@ -18,6 +18,7 @@
             <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+
                     android:id="@+id/main" android:layout_alignParentEnd="true"
                     android:visibility="visible">
                 <RelativeLayout
@@ -185,14 +186,42 @@
                                           android:layout_toRightOf="@+id/imageView3" android:layout_marginTop="5dp"/>
                             </RelativeLayout>
                         </LinearLayout>
-
-
                     </RelativeLayout>
                 </ScrollView>
             </RelativeLayout>
         </RelativeLayout>
 
+
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="125dp" android:id="@+id/relativeLayout4">
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          xmlns:tools="http://schemas.android.com/tools"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:orientation="vertical">
+
+                <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+                    <LinearLayout
+                            android:id="@+id/mygallery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            />
+                </HorizontalScrollView>
+
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0.5dp"
+                          android:layout_above="@+id/bottombar" android:layout_centerHorizontal="true"
+                          android:background="#aaa" android:id="@+id/linearLayout6"
+                          android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
     </FrameLayout>
+
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"
               android:layout_width="240dp"
