@@ -1,17 +1,17 @@
 package is.ru.app.CarCollector.activities;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import is.ru.app.CarCollector.R;
-import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
-import is.ru.app.CarCollector.cars.service.CarServiceException;
 import is.ru.app.CarCollector.game.models.CarType;
 import is.ru.app.CarCollector.game.models.Statistics;
 import is.ru.app.CarCollector.game.service.GameService;
@@ -27,22 +27,21 @@ import java.util.List;
  * Date : 10/30/2014
  * Time : 22:22
  */
-public class ProfileActivity extends Activity {
-    private CarService carService = new CarServiceData(this);
-    private GameService gameService = new GameServiceData(this);
+public class ProfileFragment extends Fragment {
+    private CarService carService;
+    private GameService gameService;
 
     /**
      * Called when the activity is first created.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.profile, container, false);
 
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();
+        carService = new CarServiceData(rootView.getContext());
+        gameService = new GameServiceData(rootView.getContext());
 
-        setContentView(R.layout.profile);
-        setCarlist();
+        return rootView;
     }
 
     private void setCarlist() {
@@ -50,7 +49,7 @@ public class ProfileActivity extends Activity {
         //List<Car> cars = new ArrayList<Car>();
         Statistics stats = new Statistics();
         List<CarType> carTypes = new ArrayList<CarType>();
-        final ListView listview = (ListView) findViewById(R.id.carList);
+        final ListView listview = (ListView) getView().findViewById(R.id.carList);
 
         try {
             //cars = carService.getCars(null);
@@ -70,7 +69,7 @@ public class ProfileActivity extends Activity {
         for (int i = 0; i < carTypes.size(); i++) {
             list.add(carTypes.get(i).getTypeName());
         }
-        final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+        final StableArrayAdapter adapter = new StableArrayAdapter(getView().getContext(), android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
     }
 

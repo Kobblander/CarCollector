@@ -1,15 +1,21 @@
 package is.ru.app.CarCollector.utilities.navbar;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import is.ru.app.CarCollector.R;
+import is.ru.app.CarCollector.activities.MainFragment;
+import is.ru.app.CarCollector.activities.ProfileFragment;
 
 import java.util.ArrayList;
 
@@ -29,7 +35,6 @@ public class NavigationDrawer {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private Activity activity;
-
 
     public NavigationDrawer(Activity activity) {
         // Get Activity title
@@ -51,8 +56,9 @@ public class NavigationDrawer {
     }
 
     public void setup() {
-        // Set navigation list adapter
+        // Set navigation list adapter and click listener
         mDrawerList.setAdapter(setupAdapter());
+        mDrawerList.setOnItemClickListener(new NavClickListener());
 
         // Set toggle
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -80,17 +86,20 @@ public class NavigationDrawer {
     private NavAdapter setupAdapter() {
         ArrayList<NavItem> navDrawerItems = new ArrayList<NavItem>();
 
-        // Profile
+        // Home
         navDrawerItems.add(new NavItem(mNavList[0], navMenuIcons.getResourceId(0, -1)));
 
-        // Stats
+        // Profile
         navDrawerItems.add(new NavItem(mNavList[1], navMenuIcons.getResourceId(1, -1)));
 
-        // Settings
+        // Stats
         navDrawerItems.add(new NavItem(mNavList[2], navMenuIcons.getResourceId(2, -1)));
 
-        // Delete
+        // Settings
         navDrawerItems.add(new NavItem(mNavList[3], navMenuIcons.getResourceId(3, -1)));
+
+        // Delete
+        navDrawerItems.add(new NavItem(mNavList[4], navMenuIcons.getResourceId(4, -1)));
 
         return new NavAdapter(activity.getApplicationContext(), navDrawerItems);
     }
@@ -116,5 +125,52 @@ public class NavigationDrawer {
         }
 
         return false;
+    }
+
+    private class NavClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            // display view for selected nav drawer item
+            displayView(position);
+        }
+    }
+
+    public void displayView(int position) {
+        // update the main content by replacing fragments
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new MainFragment();
+                break;
+            case 1:
+                fragment = new ProfileFragment();
+                break;
+            case 2:
+                // fragment = new StatsFragment();
+                break;
+            case 3:
+                // fragment = new SettingsFragment();
+                break;
+            case 4:
+                // fragment = new CommunityFragment();
+                break;
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = activity.getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            activity.setTitle(mNavList[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+            // error in creating fragment
+            Log.e("MainActivity", "Error in creating fragment");
+        }
     }
 }
