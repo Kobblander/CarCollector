@@ -214,6 +214,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
+        exception.printStackTrace();
         this.cancelExecute();
         if (exception.getClass() == RestQueryException.class) {
             Log.i("MainActivity", "Showing errorDialog.");
