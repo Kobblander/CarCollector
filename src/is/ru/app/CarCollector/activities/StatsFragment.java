@@ -1,6 +1,5 @@
 package is.ru.app.CarCollector.activities;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 
@@ -13,7 +12,7 @@ import android.os.Bundle;
  * @author jakob
  * @version 1.1
  */
-public class StatsActivity extends Fragment {
+public class StatsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

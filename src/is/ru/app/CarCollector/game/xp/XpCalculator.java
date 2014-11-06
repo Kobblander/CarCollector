@@ -130,10 +130,10 @@ public class XpCalculator {
     public void initCarSubType(CarSubType carSubType) {
         carSubType.setLevelCur(0);
         carSubType.setLevelOld(0);
-        carSubType.setLevelXpCur(0);
-        carSubType.setLevelXpOld(0);
-        carSubType.setTotalXpCur(0);
-        carSubType.setTotalXpOld(0);
+        carSubType.setLevelXpCur(baseXpStart);
+        carSubType.setLevelXpOld(baseXpStart);
+        carSubType.setTotalXpCur(baseXpStart);
+        carSubType.setTotalXpOld(baseXpStart);
         carSubType.setXpForNextLevelCur(baseCarTypeXpForLevel);
         carSubType.setXpForNextLevelOld(baseCarTypeXpForLevel);
         carSubType.setTotalCarsCur(0);
