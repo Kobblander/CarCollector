@@ -67,6 +67,6 @@ public interface CarService {
      * @param color Car color
      * @param restCallback callback
      */
-    public void addImage(String type, String subType, String color, RestCallback restCallback);
+    public void addImage(String type, String subType, String color, String registered, RestCallback restCallback);
 
 }

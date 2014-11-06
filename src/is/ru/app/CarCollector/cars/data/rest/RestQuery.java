@@ -54,10 +54,10 @@ public class RestQuery {
      * @param color car color
      * @param c callback
      */
-    public void queryImage(String type, String subType, String color, RestCallback c) {
+    public void queryImage(String type, String subType, String color, String registered,  RestCallback c) {
         Log.i("RestQuery", "queryImage.");
-
-        final String url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + type + " " + subType;
+		String year = registered.substring(registered.length() - 4);
+        final String url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + type + " " + subType + " " + year;
 
         imageTask = new ImageTask(url, c);
         imageTask.execute();

@@ -100,6 +100,9 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
                 carView.setVisibility(View.INVISIBLE);
 
+				// Strip spaces
+				query.replaceAll("\\s","");
+
                 // Get car
                 getCar(query);
 
@@ -186,7 +189,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 carService.addCarCallback(car);
                 gameService.updateStats(car);
                 displayCar(car);
-                carService.addImage(car.getType(), car.getSubType(), car.getColor(), restCallback);
+                carService.addImage(car.getType(), car.getSubType(), car.getColor(), car.getRegisteredAt(), restCallback);
                 this.hideProgressDialog();
 
                 Log.i("MainActivity", "postExecute - displaying car");
@@ -234,7 +237,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
      * @param response the car gotten from the api
      */
     public void displayCar(Car response) {
-        carService.addImage(response.getType(), response.getSubType(), response.getColor(), restCallback);
 
         // Set car type
         TextView type = (TextView) findViewById(R.id.type);
@@ -265,16 +267,16 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         status.setText(response.getStatus());
         status.setTextColor(Color.GREEN);*/
 
+		RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
+		carView.setVisibility(View.VISIBLE);
     }
 
     private void displayImages(List<Bitmap> bmap) {
 		myGallery = (LinearLayout)findViewById(R.id.mygallery);
 		myGallery.removeAllViews();
 
-        RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
-        carView.setVisibility(View.VISIBLE);
-
 		for(Bitmap map : bmap) {
+			Log.i("Loading image", Integer.toString(bmap.size()));
 			myGallery.addView(insertPhoto(map));
 		}
     }

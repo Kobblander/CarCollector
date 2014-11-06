@@ -62,7 +62,9 @@ class ImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
 
             // Get the image in bitmap form
             for (int i = 0; i < urls.size(); i++) {
-                bMap.add(urlToBitmap(restTemplateImg, entity, urls.get(i)));
+				Bitmap map = urlToBitmap(restTemplateImg, entity, urls.get(i));
+				if(map != null)
+                	bMap.add(map);
             }
         } catch (Exception e) {
             String msg = "Failed receiving image from: " + url + ". NestedException is: " + e.getMessage();
@@ -107,17 +109,19 @@ class ImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
     private Bitmap urlToBitmap(RestTemplate rest, HttpEntity entity, String url) {
         ResponseEntity<Resource> respond = rest.exchange(url, HttpMethod.GET, entity, Resource.class);
         Bitmap map;
-		Bitmap scaledMap;
+		Bitmap scaledMap = null;
 		double scale;
 		int height;
 		int width;
 
         try {
 			map = BitmapFactory.decodeStream(respond.getBody().getInputStream());
-			scale = calculateScale(map);
-			height = (int) (scale * map.getHeight());
-			width = (int) (scale * map.getWidth());
-			scaledMap = Bitmap.createScaledBitmap(map, width, height, true);
+			if(map != null) {
+				scale = calculateScale(map);
+				height = (int) (scale * map.getHeight());
+				width = (int) (scale * map.getWidth());
+				scaledMap = Bitmap.createScaledBitmap(map, width, height, true);
+			}
         } catch (IOException e) {
             e.printStackTrace();
 			return null;

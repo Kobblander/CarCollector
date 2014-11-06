@@ -102,8 +102,8 @@ public class CarServiceData implements CarService {
     }
 
     @Override
-    public void addImage(String type, String subType, String color, RestCallback callback) {
-        RestQuery.getInstance().queryImage(type, subType, color, callback);
+    public void addImage(String type, String subType, String color, String registered, RestCallback callback) {
+        RestQuery.getInstance().queryImage(type, subType, color, registered, callback);
     }
 
 
