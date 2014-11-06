@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="libs1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/spring-android-rest-template-1.0.1.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/spring-android-core-1.0.1.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/AppData/Local/Android/android-sdk/extras/android/support/v4/android-support-v4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
