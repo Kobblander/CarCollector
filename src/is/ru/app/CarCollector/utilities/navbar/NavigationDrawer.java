@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.activities.MainFragment;
-import is.ru.app.CarCollector.activities.ProfileFragment;
+import is.ru.app.CarCollector.activities.StatsFragment;
 
 import java.util.ArrayList;
 
@@ -89,17 +89,14 @@ public class NavigationDrawer {
         // Home
         navDrawerItems.add(new NavItem(mNavList[0], navMenuIcons.getResourceId(0, -1)));
 
-        // Profile
+        // Stats
         navDrawerItems.add(new NavItem(mNavList[1], navMenuIcons.getResourceId(1, -1)));
 
-        // Stats
+        // Settings
         navDrawerItems.add(new NavItem(mNavList[2], navMenuIcons.getResourceId(2, -1)));
 
-        // Settings
-        navDrawerItems.add(new NavItem(mNavList[3], navMenuIcons.getResourceId(3, -1)));
-
         // Delete
-        navDrawerItems.add(new NavItem(mNavList[4], navMenuIcons.getResourceId(4, -1)));
+        navDrawerItems.add(new NavItem(mNavList[3], navMenuIcons.getResourceId(3, -1)));
 
         return new NavAdapter(activity.getApplicationContext(), navDrawerItems);
     }
@@ -144,7 +141,7 @@ public class NavigationDrawer {
                 fragment = new MainFragment();
                 break;
             case 1:
-                fragment = new ProfileFragment();
+                fragment = new StatsFragment();
                 break;
             case 2:
                 // fragment = new StatsFragment();

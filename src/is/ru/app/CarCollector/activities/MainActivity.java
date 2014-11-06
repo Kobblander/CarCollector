@@ -237,7 +237,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
      * @param response the car gotten from the api
      */
     public void displayCar(Car response) {
-        carService.addImage(response.getType(), response.getSubType(), response.getColor(), restCallback);
 
         // Set car type
         TextView type = (TextView) findViewById(R.id.type);
