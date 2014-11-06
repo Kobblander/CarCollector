@@ -21,4 +21,9 @@
     <string name="carType">carType</string>
     <string name="subType">subType</string>
     <string name="action_check_updates">Update</string>
+
+    <string name="errorQueryTitle">Oops, something went wrong!</string>
+    <string name="errorQueryMessage">Do you want to try and obtain the car again?</string>
+    <string name="errorQueryCancel">Cancel</string>
+    <string name="errorQueryRetry">Retry</string>
 </resources>

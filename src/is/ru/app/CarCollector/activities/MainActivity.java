@@ -1,8 +1,6 @@
 package is.ru.app.CarCollector.activities;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
+import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -29,6 +27,7 @@ import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
+import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
 import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
 import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
@@ -43,13 +42,14 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity implements RestCallback {
+public class MainActivity extends Activity implements RestCallback, ErrorMessageDialog.ErrorDialogListener {
     private CarService carService = new CarServiceData(this);
     private GameService gameService = new GameServiceData(this);
     private RestCallback restCallback = this;
     private String currentQuery;
     private boolean isCollectable = true;
     private static ProgressDialog progressDialog;
+    private static AlertDialog errorDialog;
     private NavigationDrawer nav;
 	private LinearLayout myGallery;
 
@@ -91,6 +91,7 @@ public class MainActivity extends Activity implements RestCallback {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Remove keyboard
+                currentQuery = query;
                 searchView.setVisibility(View.INVISIBLE);
                 searchView.setVisibility(View.VISIBLE);
 
@@ -105,14 +106,8 @@ public class MainActivity extends Activity implements RestCallback {
                 carView.setVisibility(View.INVISIBLE);
 
                 // Get car
-                try {
-                    currentQuery = query;
-                    carService.addCar(query, restCallback);
-                } catch (CarExistsException e1) {
-                    isCollectable = false;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                getCar(query);
+
 
                 return true;
             }
@@ -124,6 +119,16 @@ public class MainActivity extends Activity implements RestCallback {
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void getCar(String query) {
+        try {
+            carService.addCar(query, restCallback);
+        } catch (CarExistsException e1) {
+            isCollectable = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -174,6 +179,7 @@ public class MainActivity extends Activity implements RestCallback {
         Log.i("MainActivity", "postExecute");
 
         if (exception != null) {
+            this.hideProgressDialog();
             handleAsyncException(exception);
             return;
         }
@@ -181,9 +187,11 @@ public class MainActivity extends Activity implements RestCallback {
         try {
 
             if (response.getClass() == Car.class) {
-                carService.addCarCallback((Car) response);
-                gameService.updateStats((Car) response);
-                displayCar((Car) response);
+                Car car = (Car) response;
+                carService.addCarCallback(car);
+                gameService.updateStats(car);
+                displayCar(car);
+                carService.addImage(car.getType(), car.getSubType(), car.getColor(), restCallback);
 
                 Log.i("MainActivity", "postExecute - displaying car");
             }
@@ -191,26 +199,27 @@ public class MainActivity extends Activity implements RestCallback {
             // Response is images
             if (response.getClass() == ArrayList.class) {
                 displayImages((List<Bitmap>) response);
+
+                // Don't hide progress dialog until after images have arrived.
+                this.hideProgressDialog();
             }
 
             Log.i("MainActivity", "postExecute - adding car");
         } catch (Exception e) {
             e.printStackTrace();
         }
+        currentQuery = "";
 
-        this.hideProgressDialog();
     }
 
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
         this.cancelExecute();
         if (exception.getClass() == RestQueryException.class) {
-            Log.i("MainActivity", "Retrying getting car");
-            // TODO: DISPLAY THE RETRY BUTTON.
-            // TODO: Sorry could not connect to our servers. Try again?
+            Log.i("MainActivity", "Showing errorDialog.");
+            this.showErrorDialog();
             return;
         }
-        this.hideProgressDialog();
     }
 
     @Override
@@ -297,6 +306,7 @@ public class MainActivity extends Activity implements RestCallback {
 	 */
 	public void showProgressDialog(String msg)
 	{
+        Log.i("MainActivity", "Showing progress dialog.");
 		final RestCallback callback = this;
 
 		// check for existing progressDialog
@@ -332,6 +342,7 @@ public class MainActivity extends Activity implements RestCallback {
 	 * Hides the Progress Dialog
 	 */
 	public void hideProgressDialog() {
+        Log.i("MainActivity", "Hiding progress dialog.");
 
 		if (progressDialog != null) {
 			progressDialog.dismiss();
@@ -339,4 +350,21 @@ public class MainActivity extends Activity implements RestCallback {
 
 		progressDialog = null;
 	}
+
+    public void showErrorDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new ErrorMessageDialog();
+        dialog.show(getFragmentManager(), "ErrorDialog");
+    }
+
+    @Override
+    public void onErrorDialogPositiveClick(DialogFragment dialog) {
+        Log.i("Main activity", "ErrorDialog positive click. Getting car again.");
+        getCar(currentQuery);
+    }
+
+    @Override
+    public void onErrorDialogNegativeClick(DialogFragment dialog) {
+        Log.i("Main activity", "ErrorDialog negative click.");
+    }
 }
