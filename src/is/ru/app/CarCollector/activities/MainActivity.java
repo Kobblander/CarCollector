@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.*;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.data.rest.RestCallback;
@@ -23,7 +27,11 @@ import is.ru.app.CarCollector.game.service.GameServiceData;
 import is.ru.app.CarCollector.utilities.Debugger;
 import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
 import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
-
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,6 +190,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 gameService.updateStats(car);
                 displayCar(car);
                 carService.addImage(car.getType(), car.getSubType(), car.getColor(), restCallback);
+                this.hideProgressDialog();
 
                 Log.i("MainActivity", "postExecute - displaying car");
             }
@@ -191,7 +200,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 displayImages((List<Bitmap>) response);
 
                 // Don't hide progress dialog until after images have arrived.
-                this.hideProgressDialog();
             }
 
             Log.i("MainActivity", "postExecute - adding car");
@@ -204,6 +212,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
+        exception.printStackTrace();
         this.cancelExecute();
         if (exception.getClass() == RestQueryException.class) {
             Log.i("MainActivity", "Showing errorDialog.");
@@ -263,9 +272,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
     private void displayImages(List<Bitmap> bmap) {
 		myGallery = (LinearLayout)findViewById(R.id.mygallery);
-
-        //carImage.setImageDrawable(null);
-        //carImage.setImageBitmap(map);
+		myGallery.removeAllViews();
 
         RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
         carView.setVisibility(View.VISIBLE);
@@ -278,13 +285,16 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 	View insertPhoto(Bitmap bm){
 
 		LinearLayout layout = new LinearLayout(getApplicationContext());
-		layout.setLayoutParams(new LayoutParams(400, 400));
+
 		layout.setGravity(Gravity.CENTER);
 
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(bm.getWidth(), bm.getHeight());
+		params.setMargins(10, 20, 10, 30);
 		ImageView imageView = new ImageView(getApplicationContext());
-		imageView.setLayoutParams(new LayoutParams(300, 300));
-		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+		imageView.setLayoutParams(params);
+		imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		imageView.setImageBitmap(bm);
+
 		layout.addView(imageView);
 		return layout;
 	}
