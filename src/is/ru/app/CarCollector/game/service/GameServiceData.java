@@ -9,7 +9,6 @@ import is.ru.app.CarCollector.game.models.CarSubType;
 import is.ru.app.CarCollector.game.models.CarType;
 import is.ru.app.CarCollector.game.models.Statistics;
 import is.ru.app.CarCollector.game.xp.XpCalculator;
-import is.ru.app.CarCollector.game.xp.XpSystem;
 
 /**
  * <h1>GameServiceData</h1>
@@ -23,11 +22,10 @@ import is.ru.app.CarCollector.game.xp.XpSystem;
 public class GameServiceData implements GameService {
 
     GameDataGateway gameDataGateway;
-    XpSystem xpSystem;
+    XpCalculator xpCalculator = XpCalculator.getInstance();
 
     public GameServiceData(Context ctx) {
         this.gameDataGateway = new GameData(ctx);
-        this.xpSystem = new XpCalculator();
     }
 
     @Override
@@ -39,27 +37,30 @@ public class GameServiceData implements GameService {
             CarType carType = gameDataGateway.getCarTypeByName(typeName);
             CarSubType carSubType = gameDataGateway.getCarSubTypeByName(subTypeName);
             if (carType == null && carSubType == null) {
+                Log.i("GameServiceData", "Adding both Type and Subtype to database.");
                 carType = new CarType(typeName);
                 carSubType = new CarSubType(typeName, subTypeName);
 
-                xpSystem.calculateXp(null, carType, carSubType);
+                xpCalculator.initCarType(carType);
+                xpCalculator.initCarSubType(carSubType);
 
-                Log.i("GameServiceData", "Adding both Type and Subtype to database.");
                 gameDataGateway.addCarType(carType);
                 gameDataGateway.addCarSubType(carSubType);
             } else if (carSubType == null) {
+                Log.i("GameServiceData", "Updating carType and adding carSubType.");
                 carSubType = new CarSubType(typeName, subTypeName);
 
-                xpSystem.calculateXp(null, carType, carSubType);
+                xpCalculator.updateCarType(carType);
+                xpCalculator.initCarSubType(carSubType);
 
-                Log.i("GameServiceData", "Updating carType and adding carSubType.");
                 gameDataGateway.updateCarType(carType);
                 gameDataGateway.addCarSubType(carSubType);
             } else {
-
-                xpSystem.calculateXp(null, carType, carSubType);
-
                 Log.i("GameServiceData", "Updating botch carType and carSubType.");
+
+                xpCalculator.updateCarType(carType);
+                xpCalculator.updateCarSubType(carSubType);
+
                 gameDataGateway.updateCarType(carType);
                 gameDataGateway.updateCarSubType(carSubType);
             }

@@ -2,6 +2,7 @@ package is.ru.app.CarCollector.utilities;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import is.ru.app.CarCollector.cars.models.Car;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Debugger {
 
 
     public static void resetDatabase(Context context) {
+        Log.i("Debugger", "Resetting the database...");
         DbHelper dbHelper = new DbHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         dbHelper.resetDatabase(db);

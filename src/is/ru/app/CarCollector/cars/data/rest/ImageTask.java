@@ -43,27 +43,32 @@ class ImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
         // Setup request
         RestTemplate restTemplate = RestHelper.getJsonTemplate();
         HttpEntity entity = new HttpEntity(setHeaders());
+        List<Bitmap> bMap = new ArrayList<Bitmap>();
 
-        // Send google image api request
-        Log.i("ImageTask", "Before Exchange.");
-            HttpEntity<String> response = restTemplate.exchange( url, HttpMethod.GET, entity, String.class );
-        Log.i("ImageTask", "After Exchange.");
+        try {
+            // Send google image api request
+            Log.i("ImageTask", "Before Exchange.");
+            HttpEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+            Log.i("ImageTask", "After Exchange.");
 
-        // Convert the request to UTF8
-        String json = RestHelper.toUTF8(response.getBody());
+            // Convert the request to UTF8
+            String json = RestHelper.toUTF8(response.getBody());
 
-        // Get the img urls from the json
-        List<String> urls = getUrls(json);
+            // Get the img urls from the json
+            List<String> urls = getUrls(json);
 
-        // Setup image request
-        RestTemplate restTemplateImg = RestHelper.getImgTemplate();
+            // Setup image request
+            RestTemplate restTemplateImg = RestHelper.getImgTemplate();
 
-		List<Bitmap> bMap = new ArrayList<Bitmap>();
+            // Get the image in bitmap form
+            for (int i = 0; i < urls.size(); i++) {
+                bMap.add(urlToBitmap(restTemplateImg, entity, urls.get(i)));
+            }
+        } catch (Exception e) {
+            String msg = "Failed receiving image from: " + url + ". NestedException is: " + e.getMessage();
+            exception = new RestQueryException(msg, e);
+        }
 
-        // Get the image in bitmap form
-		for(int i = 0; i < urls.size(); i++) {
-			bMap.add(urlToBitmap(restTemplateImg, entity, urls.get(i)));
-		}
         return bMap;
     }
 

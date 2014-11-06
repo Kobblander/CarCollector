@@ -265,13 +265,12 @@ public class MainActivity extends Activity implements RestCallback {
     private void displayImages(List<Bitmap> bmap) {
 		myGallery = (LinearLayout)findViewById(R.id.mygallery);
 
-        /*
-        carImage.setImageDrawable(null);
-        carImage.setImageBitmap(map);
+        //carImage.setImageDrawable(null);
+        //carImage.setImageBitmap(map);
 
         RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
         carView.setVisibility(View.VISIBLE);
-        */
+
 		for(Bitmap map : bmap) {
 			myGallery.addView(insertPhoto(map));
 		}
