@@ -16,7 +16,6 @@ import is.ru.app.CarCollector.cars.data.rest.RestCallback;
 import is.ru.app.CarCollector.cars.data.rest.RestQuery;
 import is.ru.app.CarCollector.cars.data.rest.RestQueryException;
 import is.ru.app.CarCollector.cars.models.Car;
-import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
 import is.ru.app.CarCollector.game.models.Player;
@@ -238,7 +237,10 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
         exception.printStackTrace();
-		//spinner.setVisibility(View.GONE);
+
+        if(spinner != null)
+		    spinner.setVisibility(View.GONE);
+
         this.cancelExecute();
         if (exception.getClass() == RestQueryException.class) {
             Log.i("MainActivity", "Showing errorDialog.");

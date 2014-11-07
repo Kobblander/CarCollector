@@ -1,5 +1,6 @@
 package is.ru.app.CarCollector.game.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public class Statistics {
     private List<TypeStats> typeStats;
 
     public Statistics() {
+        typeStats = new ArrayList<TypeStats>();
     }
 
     public Statistics(Player player, List<TypeStats>  typeStats) {

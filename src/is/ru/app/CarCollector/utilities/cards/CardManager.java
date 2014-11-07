@@ -179,8 +179,4 @@ public class CardManager {
         String stats = Integer.toString ((int) carType.getLevelXpCur()) + "/" + Integer.toString((int) carType.getXpForNextLevelCur());
         lvlStats.setText(stats);
     }
-
-    private void setMargin() {
-
-    }
 }

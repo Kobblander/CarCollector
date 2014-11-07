@@ -2,7 +2,6 @@ package is.ru.app.CarCollector.game.data;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import is.ru.app.CarCollector.game.models.CarSubType;
 import is.ru.app.CarCollector.game.models.CarType;
 import is.ru.app.CarCollector.game.models.Player;
