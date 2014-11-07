@@ -3,13 +3,8 @@ package is.ru.app.CarCollector.utilities.cards;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.*;
 import android.widget.*;
 import is.ru.app.CarCollector.R;
@@ -125,8 +120,10 @@ public class CardManager {
 		ProgressBar lvlBar = (ProgressBar) innerCard.getChildAt(0);
 		TextView lvlStats = (TextView) innerCard.getChildAt(1);
 
-		subName.setText(subType.getSubTypeName());
+        String lvlText = Integer.toString(subType.getLevelCur());
+		subName.setText(subType.getSubTypeName() + " (" + lvlText + ")");
 
+        lvlBar.setMax((int) subType.getXpForNextLevelCur());
 		lvlBar.setProgress((int) subType.getLevelXpCur());
 
 		// Set lvl stats text
