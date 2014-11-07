@@ -20,6 +20,7 @@
 
     <string name="action_check_updates">Update</string>
 
+    <!-- Error messages -->
     <string name="errorQueryTitle">Oops, something went wrong!</string>
     <string name="errorQueryMessage">Do you want to try and obtain the car again?</string>
     <string name="errorQueryCancel">Cancel</string>
@@ -28,7 +29,15 @@
     <string name="errorCarExistsMessage">You have already collected this car.</string>
     <string name="errorCarexistsClose">Close</string>
 
+    <string name="resetDatabaseTitle">Reset your collection?</string>
+    <string name="resetDatabaseMessage">You will lose all your cars!</string>
+    <string name="resetDatabaseErase">Reset</string>
+
     <string name="pollution">Pollution</string>
+
+    <!-- Toasts -->
+    <string name="carCollected">Car added to collection.</string>
+    <string name="carAlreadyCollected">Car already in collection.</string>
 
     <!-- About view -->
     <string name="authors">Authors</string>

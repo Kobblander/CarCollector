@@ -1,6 +1,7 @@
 package is.ru.app.CarCollector.activities;
 
 import android.app.*;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -23,6 +24,7 @@ import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
 import is.ru.app.CarCollector.game.service.GameServiceException;
 import is.ru.app.CarCollector.utilities.Debugger;
+import is.ru.app.CarCollector.utilities.dialog.AbstractDialog;
 import is.ru.app.CarCollector.utilities.dialog.CarExistsDialog;
 import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
 import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
@@ -30,7 +32,7 @@ import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity implements RestCallback, ErrorMessageDialog.ErrorDialogListener {
+public class MainActivity extends Activity implements RestCallback, AbstractDialog.ErrorDialogListener {
     private CarService carService = new CarServiceData(this);
     private GameService gameService = new GameServiceData(this);
     private RestCallback restCallback = this;
@@ -42,6 +44,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 	private LinearLayout myGallery;
     private Player currentPlayer;
 	private ProgressBar spinner;
+    private Context context = (Context) this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         setContentView(R.layout.main);
 
         Player player = new Player("Captain America");
-
         try {
             currentPlayer = gameService.addPlayer(player);
         } catch (GameServiceException e) {}
@@ -89,6 +91,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Remove keyboard
+                RestQuery.getInstance().cancelImageTask();
                 currentQuery = query;
                 searchView.setVisibility(View.INVISIBLE);
                 searchView.setVisibility(View.VISIBLE);
@@ -111,9 +114,10 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 carView.setVisibility(View.INVISIBLE);
 
 				// Strip spaces
-				query.replaceAll("\\s","");
+				query = query.replaceAll("\\s","");
 
                 // Get car
+                query = query.toUpperCase();
                 getCar(query);
 
                 return true;
@@ -130,9 +134,13 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
     private void getCar(String query) {
         try {
-            carService.addCar(query, restCallback);
-        } catch (CarExistsException e1) {
-            showCarExistsDialog();
+            Car car = carService.addCar(query, restCallback);
+            if (car != null) {
+                isCollectable = false;
+                showCarScreen(car);
+                int resId = R.string.carAlreadyCollected;
+                Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -199,14 +207,12 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
             if (response.getClass() == Car.class) {
                 Car car = (Car) response;
-                carService.addCarCallback(car);
                 Car test = carService.getCarByRegistryNumber(car.getRegistryNumber());
+                carService.addCarCallback(car);
                 gameService.updateStats(car, currentPlayer);
-                displayCar(car);
-				spinner = (ProgressBar)findViewById(R.id.progressbar_loading);
-				spinner.setVisibility(View.VISIBLE);
-                carService.addImage(car.getType(), car.getSubType(), car.getColor(), car.getRegisteredAt(), restCallback);
-                this.hideProgressDialog();
+                showCarScreen(car);
+                int resId = R.string.carCollected;
+                Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
 
                 Log.i("MainActivity", "postExecute - displaying car");
             }
@@ -221,6 +227,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
             Log.i("MainActivity", "postExecute - adding car");
         } catch (Exception e) {
             e.printStackTrace();
+            hideProgressDialog();
             if(spinner != null)
 			    spinner.setVisibility(View.GONE);
         }
@@ -249,6 +256,14 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
     public void cancelExecute() {
         RestQuery.getInstance().cancelCarTask();
         RestQuery.getInstance().cancelImageTask();
+    }
+
+    public void showCarScreen(Car car) {
+        displayCar(car);
+        spinner = (ProgressBar)findViewById(R.id.progressbar_loading);
+        spinner.setVisibility(View.VISIBLE);
+        carService.addImage(car.getType(), car.getSubType(), car.getColor(), car.getRegisteredAt(), restCallback);
+        this.hideProgressDialog();
     }
 
     /**
@@ -365,17 +380,17 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 		builder.getWindow().setBackgroundDrawable(
 				new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-			@Override
-			public void onDismiss(DialogInterface dialogInterface) {
-				//nothing;
-			}
-		});
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //nothing;
+            }
+        });
 
 		ImageView imageView = new ImageView(this);
 		imageView.setImageBitmap(map);
 		builder.addContentView(imageView, new RelativeLayout.LayoutParams(
-				map.getWidth()*2,
-				map.getHeight()*2));
+                map.getWidth() * 2,
+                map.getHeight() * 2));
 
 		builder.show();
 	}
@@ -453,5 +468,10 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
     @Override
     public void onErrorDialogNegativeClick(DialogFragment dialog) {
         Log.i("Main activity", "ErrorDialog negative click.");
+    }
+
+    @Override
+    public void onResetDialogPositiveClick(DialogFragment dialog) {
+        Debugger.getInstance().resetDatabase(this);
     }
 }
