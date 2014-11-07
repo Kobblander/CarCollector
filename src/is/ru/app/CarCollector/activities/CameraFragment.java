@@ -1,14 +1,22 @@
 package is.ru.app.CarCollector.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import is.ru.app.CarCollector.R;
+import is.ru.app.CarCollector.cars.service.CarService;
+import is.ru.app.CarCollector.cars.service.CarServiceData;
+import is.ru.app.CarCollector.game.service.GameService;
+import is.ru.app.CarCollector.game.service.GameServiceData;
 
 import java.io.File;
 
@@ -18,25 +26,26 @@ import java.io.File;
  * Date : 11/1/2014
  * Time : 19:51
  */
-public class CameraActivity extends Activity {
+public class CameraFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
+	private View rootView;
+	private CarService carService;
+	private GameService gameService;
 
     /**
      * Called when the activity is first created.
      */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		rootView = inflater.inflate(R.layout.profile, container, false);
 
-        // Hide the action bar
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();
+		carService = new CarServiceData(rootView.getContext());
+		gameService = new GameServiceData(rootView.getContext());
 
-        setContentView(R.layout.camera);
-        dispatchTakePictureIntent();
-    }
+		return rootView;
+	}
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
@@ -117,13 +126,13 @@ public class CameraActivity extends Activity {
 			Toast toast = Toast.makeText(this, finalString, 20);
 			toast.show();
 			File file = new File(_path);
-			boolean deleted = file.delete();*/
+			boolean deleted = file.delete();
 			Intent myIntent = new Intent(this, MainActivity.class);
             startActivity(myIntent);
         }
-    }
+    }*/
 
-    private void dispatchTakePictureIntent() {
+    /*private void dispatchTakePictureIntent() {
 		String file = Environment.getExternalStorageDirectory().toString() + "/DCIM/Camera/numer.jpg";
 		Uri uriSavedImage = Uri.fromFile(new File(file));
 
@@ -132,7 +141,7 @@ public class CameraActivity extends Activity {
 			takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
-    }
+    }*/
 
     /** A safe way to get an instance of the Camera object. */
     public static Camera getCameraInstance(){

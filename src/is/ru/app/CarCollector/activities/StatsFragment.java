@@ -1,11 +1,18 @@
 package is.ru.app.CarCollector.activities;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
@@ -57,4 +64,5 @@ public class StatsFragment extends Fragment {
         CardManager manager = new CardManager(rootView, stats);
         manager.spawnTypeCars(R.id.carContainer);
     }
+
 }
