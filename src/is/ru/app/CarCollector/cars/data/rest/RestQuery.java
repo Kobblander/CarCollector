@@ -56,7 +56,11 @@ public class RestQuery {
      */
     public void queryImage(String type, String subType, String color, String registered,  RestCallback c) {
         Log.i("RestQuery", "queryImage.");
-		String year = registered.substring(registered.length() - 4);
+		String year;
+		if(registered != null && !registered.isEmpty())
+			year = registered.substring(registered.length() - 4);
+		else
+			year = "";
         final String url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + type + " " + subType + " " + year;
 
         imageTask = new ImageTask(url, c);

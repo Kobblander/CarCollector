@@ -90,18 +90,19 @@ public class GameAdapter {
 
     public long insertCarSubType(CarSubType cst) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( subTypesCols[1], cst.getTypeName());
-        contentValues.put( subTypesCols[2], cst.getSubTypeName());
-        contentValues.put( subTypesCols[3], ((Integer)cst.getLevelCur()).toString());
-        contentValues.put( subTypesCols[4], ((Integer)cst.getLevelOld()).toString());
-        contentValues.put( subTypesCols[5], ((Double)cst.getXpForNextLevelCur()).toString());
-        contentValues.put( subTypesCols[6], ((Double)cst.getXpForNextLevelOld()).toString());
-        contentValues.put( subTypesCols[7], ((Double)cst.getLevelXpCur()).toString());
-        contentValues.put( subTypesCols[8], ((Double)cst.getLevelXpOld()).toString());
-        contentValues.put( subTypesCols[9], ((Double)cst.getTotalXpCur()).toString());
-        contentValues.put( subTypesCols[10], ((Double)cst.getTotalXpOld()).toString());
-        contentValues.put( subTypesCols[11], ((Integer)cst.getTotalCarsCur()).toString());
-        contentValues.put( subTypesCols[12], ((Integer)cst.getTotalCarsOld()).toString());
+        contentValues.put( subTypesCols[1], cst.getPlayerName());
+        contentValues.put( subTypesCols[2], cst.getTypeName());
+        contentValues.put( subTypesCols[3], cst.getSubTypeName());
+        contentValues.put( subTypesCols[4], ((Integer)cst.getLevelCur()).toString());
+        contentValues.put( subTypesCols[5], ((Integer)cst.getLevelOld()).toString());
+        contentValues.put( subTypesCols[6], ((Double)cst.getXpForNextLevelCur()).toString());
+        contentValues.put( subTypesCols[7], ((Double)cst.getXpForNextLevelOld()).toString());
+        contentValues.put( subTypesCols[8], ((Double)cst.getLevelXpCur()).toString());
+        contentValues.put( subTypesCols[9], ((Double)cst.getLevelXpOld()).toString());
+        contentValues.put( subTypesCols[10], ((Double)cst.getTotalXpCur()).toString());
+        contentValues.put( subTypesCols[11], ((Double)cst.getTotalXpOld()).toString());
+        contentValues.put( subTypesCols[12], ((Integer)cst.getTotalCarsCur()).toString());
+        contentValues.put( subTypesCols[13], ((Integer)cst.getTotalCarsOld()).toString());
         openToWrite();
         long value = db.insert(tableCarSubTypes, null, contentValues );
         close();
@@ -146,18 +147,19 @@ public class GameAdapter {
 
     public long updateCarSubType(CarSubType cst) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put( subTypesCols[1], cst.getTypeName());
-        contentValues.put( subTypesCols[2], cst.getSubTypeName());
-        contentValues.put( subTypesCols[3], ((Integer)cst.getLevelCur()).toString());
-        contentValues.put( subTypesCols[4], ((Integer)cst.getLevelOld()).toString());
-        contentValues.put( subTypesCols[5], ((Double)cst.getXpForNextLevelCur()).toString());
-        contentValues.put( subTypesCols[6], ((Double)cst.getXpForNextLevelOld()).toString());
-        contentValues.put( subTypesCols[7], ((Double)cst.getLevelXpCur()).toString());
-        contentValues.put( subTypesCols[8], ((Double)cst.getLevelXpOld()).toString());
-        contentValues.put( subTypesCols[9], ((Double)cst.getTotalXpCur()).toString());
-        contentValues.put( subTypesCols[10], ((Double)cst.getTotalXpOld()).toString());
-        contentValues.put( subTypesCols[11], ((Integer)cst.getTotalCarsCur()).toString());
-        contentValues.put( subTypesCols[12], ((Integer)cst.getTotalCarsOld()).toString());
+        contentValues.put( subTypesCols[1], cst.getPlayerName());
+        contentValues.put( subTypesCols[2], cst.getTypeName());
+        contentValues.put( subTypesCols[3], cst.getSubTypeName());
+        contentValues.put( subTypesCols[4], ((Integer)cst.getLevelCur()).toString());
+        contentValues.put( subTypesCols[5], ((Integer)cst.getLevelOld()).toString());
+        contentValues.put( subTypesCols[6], ((Double)cst.getXpForNextLevelCur()).toString());
+        contentValues.put( subTypesCols[7], ((Double)cst.getXpForNextLevelOld()).toString());
+        contentValues.put( subTypesCols[8], ((Double)cst.getLevelXpCur()).toString());
+        contentValues.put( subTypesCols[9], ((Double)cst.getLevelXpOld()).toString());
+        contentValues.put( subTypesCols[10], ((Double)cst.getTotalXpCur()).toString());
+        contentValues.put( subTypesCols[11], ((Double)cst.getTotalXpOld()).toString());
+        contentValues.put( subTypesCols[12], ((Integer)cst.getTotalCarsCur()).toString());
+        contentValues.put( subTypesCols[13], ((Integer)cst.getTotalCarsOld()).toString());
         openToWrite();
         long value = db.update(tableCarSubTypes, contentValues, subTypesCols[0] = "=" + cst.get_id(), null);
         close();
@@ -193,7 +195,7 @@ public class GameAdapter {
     public Cursor queryCarTypesByTypeNameAndPlayerName(String carTypeName, String playerName) {
         openToRead();
         Cursor cursor;
-        String query = "select * from "+tableCarTypes+" where carTypeName = ? && playerName = ?";
+        String query = "select * from "+tableCarTypes+" where carTypeName = ? AND playerName = ?";
         try {
             cursor = db.rawQuery(query, new String[] {carTypeName, playerName});
         } catch(Exception e) {
@@ -273,7 +275,7 @@ public class GameAdapter {
     public Cursor queryCarSubTypesByTypeNameAndPlayerName(String carSubTypeName, String playerName) {
         openToRead();
         Cursor cursor;
-        String query = "select * from "+tableCarSubTypes+" where carSubTypeName = ? && playerName = ?";
+        String query = "select * from "+tableCarSubTypes+" where carSubTypeName = ? AND playerName = ?";
         try {
             cursor = db.rawQuery(query, new String[] {carSubTypeName, playerName});
         } catch(Exception e) {

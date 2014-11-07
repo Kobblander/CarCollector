@@ -24,7 +24,7 @@ public class XpCalculator {
     }
 
     // Starting baseXp and starting xpForLevel
-    private final double baseXpStart = 5;
+    private final double baseXpStart = 0;
     private final double basePlayerXpForLevel = 300;
     private final double baseCarTypeXpForLevel = 100;
 

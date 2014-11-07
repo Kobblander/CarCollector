@@ -18,8 +18,12 @@ import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.service.CarExistsException;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
+import is.ru.app.CarCollector.game.models.Player;
 import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
+import is.ru.app.CarCollector.game.service.GameServiceException;
+import is.ru.app.CarCollector.utilities.Debugger;
+import is.ru.app.CarCollector.utilities.dialog.CarExistsDialog;
 import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
 import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
 
@@ -36,6 +40,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
     private static AlertDialog errorDialog;
     private NavigationDrawer nav;
 	private LinearLayout myGallery;
+    private Player currentPlayer;
 	private ProgressBar spinner;
 
     @Override
@@ -43,7 +48,11 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // Debugger.getInstance().resetDatabase(this);
+        Player player = new Player("Captain America");
+
+        try {
+            currentPlayer = gameService.addPlayer(player);
+        } catch (GameServiceException e) {}
 
         nav = new NavigationDrawer(this);
         nav.setup();
@@ -123,7 +132,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         try {
             carService.addCar(query, restCallback);
         } catch (CarExistsException e1) {
-            isCollectable = false;
+            showCarExistsDialog();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,12 +159,21 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean navItemPressed = nav.onOptionsItemSelected(item);
-
+		switch (item.getItemId()) {
+			case R.id.action_about:
+				viewAbout();
+		}
         // If nav item was pressed we want to return true
         if(navItemPressed) return navItemPressed;
 
         return super.onOptionsItemSelected(item);
     }
+
+	public void viewAbout() {
+		Fragment fragment = new AboutFragment();
+		FragmentManager fragmentManager = this.getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+	}
 
     public void camera(View view) {
         Intent myIntent = new Intent(this, ProfileListActivity.class);
@@ -182,7 +200,8 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
             if (response.getClass() == Car.class) {
                 Car car = (Car) response;
                 carService.addCarCallback(car);
-                gameService.updateStats(car);
+                Car test = carService.getCarByRegistryNumber(car.getRegistryNumber());
+                gameService.updateStats(car, currentPlayer);
                 displayCar(car);
 				spinner = (ProgressBar)findViewById(R.id.progressbar_loading);
 				spinner.setVisibility(View.VISIBLE);
@@ -329,10 +348,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 		imageView.setClickable(true);
 		imageView.setOnClickListener(new View.OnClickListener() {
 
-			/*@Override
-			public void onClick(View view) {
-				Toast.makeText(MainActivity.this, "Button Clicked", 5).show();
-			}*/
 			@Override
 			public void onClick(View view) {
 				showImageDialog(loadbm);
@@ -416,6 +431,12 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
 		progressDialog = null;
 	}
+
+    public void showCarExistsDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new CarExistsDialog();
+        dialog.show(getFragmentManager(), "CarExistsErrorDialog");
+    }
 
     public void showErrorDialog() {
         // Create an instance of the dialog fragment and show it

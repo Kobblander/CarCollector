@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Car Collector</string>
+    <string name="main_camera">Main Camera</string>
+    <string name="user_profile">User Profile</string>
+
+    <string name="action_settings">Stillingar</string>
+    <string name="action_profile">Profile</string>
+
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+
+
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="action_refresh">Endurnýja</string>
+    <string name="action_about">Um App</string>
+
+    <string name="action_check_updates">Uppfæra</string>
+
+    <string name="errorQueryTitle">Æji, eitthvað fór úrskeiðis!</string>
+    <string name="errorQueryMessage">Viltu reyna að sækja upplýsingar aftur??</string>
+    <string name="errorQueryCancel">Hætta við</string>
+    <string name="errorQueryRetry">Reyna aftur</string>
+
+    <!-- About view -->
+    <string name="authors">Höfundir</string>
+    <string name="theAuthors">Jakob Þórðarson, Ólafur Konráðsson, Steinar Eyþór Valsson</string>
+    <string name="about">Um</string>
+    <string name="aboutApp">Þetta app var hannað í Háskóla Reykjavíkur í áfanganum "Advanced Android".</string>
+    <string name="howTo">Virkni</string>
+    <string name="howToApp">Settu inn íslenskt bílnúmer til að sjá upplýsingar um bílinn sem það tilheyrir. safnaðu bílum til að fá stig.</string>
+
+    <!-- Car view -->
+    <string name="registered">Fyrst skráð</string>
+    <string name="weight">Eiginþyngd</string>
+    <string name="emission">CO2 losun</string>
+    <string name="type">Tegund</string>
+    <string name="subtype">undirtegund</string>
+
+</resources>

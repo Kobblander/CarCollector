@@ -17,28 +17,11 @@ import is.ru.app.CarCollector.R;
  * @author jakob
  * @version 1.1
  */
-public class ErrorMessageDialog extends DialogFragment {
+public class ErrorMessageDialog extends AbstractDialog {
 
     public interface ErrorDialogListener {
         public void onErrorDialogPositiveClick(DialogFragment dialog);
         public void onErrorDialogNegativeClick(DialogFragment dialog);
-    }
-
-    ErrorDialogListener errorDialogListener;
-
-    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        // Verify that the host activity implements the callback interface
-        try {
-            // Instantiate the NoticeDialogListener so we can send events to the host
-            errorDialogListener = (ErrorDialogListener) activity;
-        } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
-                    + " must implement NoticeDialogListener");
-        }
     }
 
     @Override
@@ -59,4 +42,5 @@ public class ErrorMessageDialog extends DialogFragment {
                 .setTitle(R.string.errorQueryTitle);
         // Create the AlertDialog object and return it
         return builder.create();
-    }}
+    }
+}

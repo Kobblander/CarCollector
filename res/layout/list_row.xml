@@ -38,7 +38,7 @@
             android:layout_marginLeft="75dip"
             android:layout_centerVertical="true"
             android:paddingBottom ="10dip"
-            android:text="@string/carType"
+            android:text="@string/type"
             android:textColor="#FFFFFF"
             android:textSize="25dip"
             android:textStyle="bold"
@@ -52,7 +52,7 @@
             android:layout_alignLeft="@+id/tvCity"
             android:paddingTop="5dip"
             android:layout_centerHorizontal="true"
-            android:text="@string/subType"
+            android:text="@string/subtype"
             android:textColor="#F0F0F0"
             android:textSize="15dip" />
 </RelativeLayout>
