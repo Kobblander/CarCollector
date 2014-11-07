@@ -1,8 +1,7 @@
 package is.ru.app.CarCollector.utilities.cards;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.game.models.CarType;
@@ -20,6 +19,7 @@ import java.util.List;
 public class CardManager {
     private View view;
     private Statistics stats;
+    private Display screen;
     private List<Integer> ids = new ArrayList<Integer>();
 
     public CardManager(View rootView, Statistics stats) {
@@ -28,6 +28,9 @@ public class CardManager {
 
         // Set the init id
         ids.add(0);
+
+        WindowManager wm = (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
+        screen = wm.getDefaultDisplay();
     }
 
     public void spawnTypeCars(int containerID) {
@@ -42,8 +45,7 @@ public class CardManager {
             int cardId = aboveId + 1;
             card = (LinearLayout) inflater.inflate(R.layout.temp_card, null);
 
-            if(aboveId > 0)
-                setCardPos(card, aboveId);
+            setCardPos(card, aboveId);
 
             card.setId(cardId);
             ids.add(cardId);
@@ -55,22 +57,23 @@ public class CardManager {
     }
 
     private void setCardPos(LinearLayout card, int id) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams paramsCard = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
 
-        params.addRule(RelativeLayout.BELOW, id);
+        if(id > 0)
+            paramsCard.addRule(RelativeLayout.BELOW, id);
 
-        card.setLayoutParams(params);
+        card.setLayoutParams(paramsCard);
     }
 
     private void setCardInfo(CarType carType, LinearLayout card) {
-        RelativeLayout innerCard = (RelativeLayout) card.getChildAt(0);
+        HorizontalScrollView scroll = (HorizontalScrollView) card.getChildAt(0);
+        RelativeLayout innerCard = (RelativeLayout) scroll.getChildAt(0);
 
-
-        TextView typeName = (TextView) innerCard.getChildAt(0);
-        ImageView logo = (ImageView) innerCard.getChildAt(1);
-        TextView lvl = (TextView) innerCard.getChildAt(3);
-        ProgressBar lvlBar = (ProgressBar) innerCard.getChildAt(4);
-        TextView lvlStats = (TextView) innerCard.getChildAt(5);
+        TextView typeName = (TextView) innerCard.getChildAt(3);
+        ImageView logo = (ImageView) innerCard.getChildAt(0);
+        TextView lvl = (TextView) innerCard.getChildAt(4);
+        ProgressBar lvlBar = (ProgressBar) innerCard.getChildAt(1);
+        TextView lvlStats = (TextView) innerCard.getChildAt(2);
 
         // Set Type name
         typeName.setText(carType.getTypeName());
@@ -93,5 +96,11 @@ public class CardManager {
         String stats = Integer.toString ((int) carType.getLevelXpCur()) + "/" + Integer.toString((int) carType.getXpForNextLevelCur());
         lvlStats.setText(stats);
     }
+
+    private void setMargin() {
+
+    }
+
+
 
 }
