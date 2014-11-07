@@ -16,7 +16,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Hello,"
+                android:text="@string/homeWelcome"
                 android:id="@+id/welcome_text" android:textSize="95dp"
                 android:layout_weight="1.14" android:typeface="normal"
                 />
@@ -28,10 +28,12 @@
             android:weightSum="1" android:paddingRight="20dp" android:paddingLeft="10dp" android:paddingTop="15dp"
             >
         <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="303dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Search for a car number."
-                android:id="@+id/textView" android:textSize="30dp"/>
+                android:id="@+id/textView" android:layout_gravity="center"
+                android:typeface="normal" android:textSize="30dp" android:layout_weight="0.05"
+                android:paddingTop="25dp"/>
     </LinearLayout>
 </LinearLayout>
