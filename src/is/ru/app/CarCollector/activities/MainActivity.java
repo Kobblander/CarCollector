@@ -237,7 +237,10 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
         exception.printStackTrace();
-		spinner.setVisibility(View.GONE);
+
+        if(spinner != null)
+		    spinner.setVisibility(View.GONE);
+
         this.cancelExecute();
         if (exception.getClass() == RestQueryException.class) {
             Log.i("MainActivity", "Showing errorDialog.");
