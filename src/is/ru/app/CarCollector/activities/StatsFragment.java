@@ -53,8 +53,8 @@ public class StatsFragment extends Fragment {
         Statistics stats = new Statistics();
         List<CarType> carTypes = new ArrayList<CarType>();
         final ListView listview = (ListView) rootView.findViewById(R.id.carList);
-        TextView playerLevel = (TextView) rootView.findViewById(R.id.playerXp);
-        playerLevel.setText("0");
+        //TextView playerLevel = (TextView) rootView.findViewById(R.id.playerXp);
+        //playerLevel.setText("0");
 
         try {
             //cars = carService.getCars(null);
