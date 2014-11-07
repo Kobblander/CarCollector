@@ -20,6 +20,7 @@
                     android:layout_marginBottom="25dp"
                     android:padding="10dp"
                     android:baselineAligned="true"
+                    android:background="@drawable/container_dropshadow"
                     android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -31,21 +32,22 @@
                           android:text="@string/authors"
                           android:typeface="normal" android:textSize="35dp"
                           android:gravity="left"/>
-                <TextView android:layout_width="190dp" android:layout_height="wrap_content"
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:textAppearance="?android:attr/textAppearanceLarge"
                           android:layout_gravity="left"
                           android:gravity="left"
                           android:textColor="#aaa"
                           android:layout_margin="20dp"
                           android:text="@string/theAuthors"
-                          android:id="@+id/authors" android:typeface="normal" android:textSize="18dp"
-                          android:textStyle="bold"/>
+                          android:id="@+id/authors" android:typeface="normal" android:textSize="16dp"
+                          android:textStyle="italic" android:singleLine="false"/>
             </LinearLayout>
             <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="false"
                     android:id="@+id/aboutLayout"
+                    android:background="@drawable/container_dropshadow"
                     android:layout_marginBottom="25dp" android:padding="10dp" android:baselineAligned="true"
                     android:layout_below="@+id/authorLayout"
                     android:orientation="vertical">
@@ -59,7 +61,7 @@
                           android:text="@string/about"
                           android:typeface="normal" android:textSize="35dp"
                         />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                <TextView android:layout_width="230dp" android:layout_height="wrap_content"
                           android:textAppearance="?android:attr/textAppearanceMedium"
                           android:layout_gravity="right"
                           android:gravity="right"
@@ -72,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="false"
                     android:id="@+id/howToLayout"
+                    android:background="@drawable/container_dropshadow"
                     android:layout_marginBottom="25dp" android:padding="10dp" android:baselineAligned="true"
                     android:layout_below="@+id/aboutLayout"
                     android:orientation="vertical">
