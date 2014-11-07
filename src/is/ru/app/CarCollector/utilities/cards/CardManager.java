@@ -3,7 +3,9 @@ package is.ru.app.CarCollector.utilities.cards;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,17 +61,10 @@ public class CardManager {
             card.setId(cardId);
             ids.add(cardId);
 
-            setCardInfo(carType.getCarType(), card);
+            setCardInfo(carType, card);
 
             container.addView(card);
-			card.setClickable(true);
-			card.setOnClickListener(new View.OnClickListener() {
 
-				@Override
-				public void onClick(View view) {
-					showSubDialog(carType.getCarSubTypes());
-				}
-			});
         }
     }
 
@@ -92,13 +87,19 @@ public class CardManager {
 		sLay.setLayoutParams(params);
 		container.addView(sLay);
 
+		RelativeLayout.LayoutParams cardParama = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+		RelativeLayout cardHolder = new RelativeLayout(view.getContext());
+
+		sLay.addView(cardHolder);
+
 		LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout card = null;
 
 		for (CarSubType subType : subTypes) {
 			int aboveId = ids.get(ids.size() - 1);
 			int cardId = aboveId + 1;
-			card = (LinearLayout) inflater.inflate(R.layout.temp_card, null);
+			card = (LinearLayout) inflater.inflate(R.layout.temp_subcard, null);
 
 			if(aboveId > 0)
 				setCardPos(card, aboveId);
@@ -108,28 +109,23 @@ public class CardManager {
 
 			setCardSubInfo(subType, card);
 
-			container.addView(card);
+			cardHolder.addView(card);
 		}
 
-		builder.addContentView(container, params);
+		builder.addContentView(container, cardParama);
 
 		builder.show();
 	}
 
 	private void setCardSubInfo(CarSubType subType, LinearLayout card) {
-		RelativeLayout innerCard = (RelativeLayout) card.getChildAt(0);
+		HorizontalScrollView scroll = (HorizontalScrollView) card.getChildAt(0);
+		RelativeLayout innerCard = (RelativeLayout) scroll.getChildAt(0);
 
-
-		TextView subName = (TextView) innerCard.getChildAt(0);
-		ImageView logo = (ImageView) innerCard.getChildAt(1);
-		TextView lvl = (TextView) innerCard.getChildAt(3);
-		ProgressBar lvlBar = (ProgressBar) innerCard.getChildAt(4);
-		TextView lvlStats = (TextView) innerCard.getChildAt(5);
+		TextView subName = (TextView) innerCard.getChildAt(2);
+		ProgressBar lvlBar = (ProgressBar) innerCard.getChildAt(0);
+		TextView lvlStats = (TextView) innerCard.getChildAt(1);
 
 		subName.setText(subType.getSubTypeName());
-
-		String lvlText = Integer.toString(subType.getLevelCur());
-		lvl.setText(lvlText);
 
 		lvlBar.setProgress((int) subType.getLevelXpCur());
 
@@ -140,7 +136,14 @@ public class CardManager {
 
 
     private void setCardPos(LinearLayout card, int id) {
-        RelativeLayout.LayoutParams paramsCard = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		WindowManager windowManager = (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
+		windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+
+		int height = Math.round(125 * displayMetrics.density);
+
+        RelativeLayout.LayoutParams paramsCard = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, height);
 
         if(id > 0)
             paramsCard.addRule(RelativeLayout.BELOW, id);
@@ -148,9 +151,11 @@ public class CardManager {
         card.setLayoutParams(paramsCard);
     }
 
-    private void setCardInfo(CarType carType, LinearLayout card) {
+    private void setCardInfo(final TypeStats tStat, LinearLayout card) {
         HorizontalScrollView scroll = (HorizontalScrollView) card.getChildAt(0);
         RelativeLayout innerCard = (RelativeLayout) scroll.getChildAt(0);
+
+		CarType carType = tStat.getCarType();
 
         TextView typeName = (TextView) innerCard.getChildAt(3);
         ImageView logo = (ImageView) innerCard.getChildAt(0);
@@ -178,5 +183,15 @@ public class CardManager {
         // Set lvl stats text
         String stats = Integer.toString ((int) carType.getLevelXpCur()) + "/" + Integer.toString((int) carType.getXpForNextLevelCur());
         lvlStats.setText(stats);
+
+		logo.setClickable(true);
+		logo.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				showSubDialog(tStat.getCarSubTypes());
+			}
+		});
+
     }
 }
