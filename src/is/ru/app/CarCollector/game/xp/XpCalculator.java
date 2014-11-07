@@ -24,12 +24,13 @@ public class XpCalculator {
     }
 
     // Starting baseXp and starting xpForLevel
+    private final int baseLevel = 1;
     private final double baseXpStart = 0;
-    private final double basePlayerXpForLevel = 300;
+    private final double basePlayerXpForLevel = 200;
     private final double baseCarTypeXpForLevel = 100;
 
     // Min amount of xp you can gain
-    private final double xpMin = 20;
+    private final double xpMin = 40;
 
     // Factor which xpForLevel will be increased each levelUp
     private final double carTypeLevelFactor = 0.2;
@@ -106,8 +107,8 @@ public class XpCalculator {
     }
 
     public void initPlayer(Player player) {
-        player.setLevelCur(0);
-        player.setLevelOld(0);
+        player.setLevelCur(baseLevel);
+        player.setLevelOld(baseLevel);
         player.setLevelXpCur(baseXpStart);
         player.setLevelXpOld(baseXpStart);
         player.setTotalXpCur(baseXpStart);
@@ -117,8 +118,8 @@ public class XpCalculator {
     }
 
     public void initCarType(CarType carType) {
-        carType.setLevelCur(0);
-        carType.setLevelOld(0);
+        carType.setLevelCur(baseLevel);
+        carType.setLevelOld(baseLevel);
         carType.setLevelXpCur(baseXpStart);
         carType.setLevelXpOld(baseXpStart);
         carType.setTotalXpCur(baseXpStart);
@@ -128,8 +129,8 @@ public class XpCalculator {
     }
 
     public void initCarSubType(CarSubType carSubType) {
-        carSubType.setLevelCur(0);
-        carSubType.setLevelOld(0);
+        carSubType.setLevelCur(baseLevel);
+        carSubType.setLevelOld(baseLevel);
         carSubType.setLevelXpCur(baseXpStart);
         carSubType.setLevelXpOld(baseXpStart);
         carSubType.setTotalXpCur(baseXpStart);
