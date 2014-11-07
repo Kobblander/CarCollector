@@ -23,6 +23,7 @@ public abstract class AbstractDialog extends DialogFragment {
     public interface ErrorDialogListener {
         public void onErrorDialogPositiveClick(DialogFragment dialog);
         public void onErrorDialogNegativeClick(DialogFragment dialog);
+        public void onResetDialogPositiveClick(DialogFragment dialog);
     }
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener

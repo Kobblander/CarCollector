@@ -1,10 +1,13 @@
 package is.ru.app.CarCollector.utilities.navbar;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -13,9 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import is.ru.app.CarCollector.R;
+import is.ru.app.CarCollector.activities.MainActivity;
 import is.ru.app.CarCollector.activities.MainFragment;
 import is.ru.app.CarCollector.activities.StatsFragment;
+import is.ru.app.CarCollector.utilities.dialog.ResetDatabaseDialog;
 
 import java.util.ArrayList;
 
@@ -43,7 +49,7 @@ public class NavigationDrawer {
         // Get string list of nav items
         mNavList = activity.getResources().getStringArray(R.array.nav_drawer_items);
 
-       navMenuIcons = activity.getResources().obtainTypedArray(R.array.nav_drawer_icons);
+        navMenuIcons = activity.getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
         // Get draw layout widget
         mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
@@ -147,7 +153,7 @@ public class NavigationDrawer {
                 // fragment = new StatsFragment();
                 break;
             case 3:
-                // fragment = new SettingsFragment();
+                showResetDatabaseDialog();
                 break;
             case 4:
                 // fragment = new CommunityFragment();
@@ -169,5 +175,11 @@ public class NavigationDrawer {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
         }
+    }
+
+    public void showResetDatabaseDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new ResetDatabaseDialog();
+        dialog.show(activity.getFragmentManager(), "ErrorDialog");
     }
 }

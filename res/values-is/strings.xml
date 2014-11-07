@@ -33,6 +33,14 @@
     <string name="howTo">Virkni</string>
     <string name="howToApp">Settu inn íslenskt bílnúmer til að sjá upplýsingar um bílinn sem það tilheyrir. safnaðu bílum til að fá stig.</string>
 
+    <string name="resetDatabaseTitle">Endursetja safnið þitt?</string>
+    <string name="resetDatabaseMessage">Þú munt glata öllum bílunum þínum!</string>
+    <string name="resetDatabaseErase">Endursetja</string>
+
+    <!-- Toasts -->
+    <string name="carCollected">Bíl bætt við safn.</string>
+    <string name="carAlreadyCollected">Bíll nú þegar í safni.</string>
+
     <!-- Car view -->
     <string name="registered">Fyrst skráð</string>
     <string name="weight">Eiginþyngd</string>

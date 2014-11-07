@@ -2,9 +2,9 @@
 <resources>
     <string-array name="nav_drawer_items">
         <item>Home</item>
-        <item>Stats</item>
+        <item>Collection</item>
         <item>Settings</item>
-        <item>Reset database</item>
+        <item>Reset collection</item>
     </string-array>
 
 

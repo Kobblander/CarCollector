@@ -1,6 +1,7 @@
 package is.ru.app.CarCollector.activities;
 
 import android.app.*;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -43,13 +44,13 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
 	private LinearLayout myGallery;
     private Player currentPlayer;
 	private ProgressBar spinner;
+    private Context context = (Context) this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         Player player = new Player("Captain America");
-        Debugger.getInstance().resetDatabase(this);
         try {
             currentPlayer = gameService.addPlayer(player);
         } catch (GameServiceException e) {
@@ -139,7 +140,8 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
             if (car != null) {
                 isCollectable = false;
                 showCarScreen(car);
-                showCarExistsDialog();
+                int resId = R.string.carAlreadyCollected;
+                Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,6 +213,8 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
                 carService.addCarCallback(car);
                 gameService.updateStats(car, currentPlayer);
                 showCarScreen(car);
+                int resId = R.string.carCollected;
+                Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
 
                 Log.i("MainActivity", "postExecute - displaying car");
             }
@@ -464,5 +468,10 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
     @Override
     public void onErrorDialogNegativeClick(DialogFragment dialog) {
         Log.i("Main activity", "ErrorDialog negative click.");
+    }
+
+    @Override
+    public void onResetDialogPositiveClick(DialogFragment dialog) {
+        Debugger.getInstance().resetDatabase(this);
     }
 }
