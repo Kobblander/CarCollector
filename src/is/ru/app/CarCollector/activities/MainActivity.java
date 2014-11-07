@@ -347,7 +347,7 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
 		spinner.setVisibility(View.GONE);
     }
 
-	View insertPhoto(Bitmap bm){
+	private View insertPhoto(Bitmap bm){
 
 		LinearLayout layout = new LinearLayout(getApplicationContext());
 
