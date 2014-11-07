@@ -33,7 +33,8 @@ public class XpCalculator {
     private final double xpMin = 40;
 
     // Factor which xpForLevel will be increased each levelUp
-    private final double carTypeLevelFactor = 0.2;
+    private final double carTypeLevelFactor = 0.1;
+    private final double carSubTypeLevelFactor = 0.1;
     private final double playerLevelFactor = 0.2;
 
     public void updatePlayer(Player player) {
@@ -101,6 +102,36 @@ public class XpCalculator {
     }
 
     public void updateCarSubType(CarSubType carSubType) {
+        // Get the current values
+        int level = carSubType.getLevelCur();
+        double levelXp = carSubType.getLevelXpCur();
+        double xpForNextLevel = carSubType.getXpForNextLevelCur();
+        double totalXp = carSubType.getTotalXpCur();
+
+        // Set the old values
+        carSubType.setLevelOld(level);
+        carSubType.setLevelXpOld(xpForNextLevel);
+        carSubType.setTotalXpOld(totalXp);
+        carSubType.setXpForNextLevelOld(xpForNextLevel);
+
+        // Calculate new xp values
+        levelXp += xpMin;
+        totalXp += xpMin;
+
+        // If level up, change some values.
+        if (xpForNextLevel < levelXp) {
+            levelXp -= xpForNextLevel;
+            level++;
+            xpForNextLevel += xpForNextLevel * carSubTypeLevelFactor;
+        }
+
+        // Set the new values
+        carSubType.setLevelCur(level);
+        carSubType.setLevelXpCur(levelXp);
+        carSubType.setTotalXpCur(totalXp);
+        carSubType.setXpForNextLevelCur(xpForNextLevel);
+
+
         int currentTotalCars = carSubType.getTotalCarsCur();
         carSubType.setTotalCarsCur(currentTotalCars + 1);
         carSubType.setTotalCarsOld(currentTotalCars);
