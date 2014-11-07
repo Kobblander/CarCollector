@@ -47,5 +47,7 @@
     <string name="emission">CO2 losun</string>
     <string name="type">Tegund</string>
     <string name="subtype">undirtegund</string>
+    <string name="hint1">Leitaðu að bílnúmeri</string>
+    <string name="hint2">Leitaðu að bíll með því að taka mynd</string>
 
 </resources>

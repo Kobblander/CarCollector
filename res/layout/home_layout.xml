@@ -13,7 +13,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Search for licnece plate numbers"
+                android:text="@string/hint1"
                 android:id="@+id/textView"
                 android:singleLine="false"
                 android:textColor="#A0A0A0" android:typeface="serif"
@@ -22,7 +22,7 @@
                 android:textStyle="italic" android:layout_alignParentTop="true"
                 android:layout_alignStart="@+id/textView3"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:textAppearance="?android:attr/textAppearanceMedium" android:text="Search for cars by taking a picture"
+                  android:textAppearance="?android:attr/textAppearanceMedium" android:text="@string/hint2"
                   android:id="@+id/textView3" android:singleLine="false" android:textColor="#A0A0A0"
                   android:typeface="serif" android:textSize="14dp"
                   android:textIsSelectable="true"

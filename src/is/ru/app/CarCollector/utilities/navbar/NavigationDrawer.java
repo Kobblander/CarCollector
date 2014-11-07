@@ -15,8 +15,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import is.ru.app.CarCollector.R;
-import is.ru.app.CarCollector.activities.HomeFragment;
 import is.ru.app.CarCollector.activities.CarFragment;
+import is.ru.app.CarCollector.activities.HomeFragment;
 import is.ru.app.CarCollector.activities.StatsFragment;
 import is.ru.app.CarCollector.utilities.dialog.ResetDatabaseDialog;
 
@@ -161,7 +161,7 @@ public class NavigationDrawer {
 
         if (fragment != null) {
             FragmentManager fragmentManager = activity.getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack( "tag" ).commit();
 
             if (fragment.getClass() != CarFragment.class) {
                 // update selected item and title, then close the drawer
