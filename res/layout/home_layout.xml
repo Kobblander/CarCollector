@@ -1,42 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent" android:weightSum="1">
-
-    <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:paddingTop="55dp" android:paddingLeft="35dp">
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="125dp" android:id="@+id/relativeLayout"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="1dp"
+                      android:background="#aaa" android:id="@+id/linearLayout2" android:layout_alignParentBottom="true"
+                      android:layout_alignParentStart="true"/>
         <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/homeWelcome"
-                android:id="@+id/welcome_text" android:textSize="95dp"
-                android:layout_weight="1.14" android:typeface="normal"
-                />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Search for licnece plate numbers"
+                android:id="@+id/textView"
+                android:singleLine="false"
+                android:textColor="#A0A0A0" android:typeface="serif"
+                android:textSize="14dp" android:textIsSelectable="true"
+                android:layout_marginTop="35dp"
+                android:textStyle="italic" android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/textView3"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceMedium" android:text="Search for cars by taking a picture"
+                  android:id="@+id/textView3" android:singleLine="false" android:textColor="#A0A0A0"
+                  android:typeface="serif" android:textSize="14dp"
+                  android:textIsSelectable="true"
+                  android:textStyle="italic" android:layout_below="@+id/textView" android:layout_centerHorizontal="true"
+                  android:layout_marginTop="24dp"/>
     </RelativeLayout>
-    <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="133dp" android:gravity="right">
-        <TextView
-                android:layout_width="303dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/homeMessage"
-                android:id="@+id/textView" android:layout_gravity="center"
-                android:typeface="normal" android:textSize="30dp" android:layout_weight="0.05"
-                android:paddingTop="40dp" android:layout_alignParentEnd="false" android:layout_alignParentStart="false"
-                />
-    </RelativeLayout>
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_gravity="center_horizontal" android:paddingLeft="35dp">
-        <TextView android:layout_width="303dp" android:layout_height="wrap_content"
-                  android:textAppearance="?android:attr/textAppearanceLarge" android:text="@string/homeSubMessage"
-                  android:id="@+id/textView4" android:layout_gravity="center" android:typeface="normal"
-                  android:textSize="30dp" android:layout_weight="0.05" android:paddingTop="40dp"
-                  android:layout_alignParentEnd="false" android:layout_alignParentStart="false"/>
-    </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

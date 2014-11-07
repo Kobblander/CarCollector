@@ -50,6 +50,8 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+		Debugger.getInstance().addDummyData(this);
+
         Player player = new Player("Captain America");
         try {
             currentPlayer = gameService.addPlayer(player);
@@ -347,7 +349,7 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
 		spinner.setVisibility(View.GONE);
     }
 
-	View insertPhoto(Bitmap bm){
+	private View insertPhoto(Bitmap bm){
 
 		LinearLayout layout = new LinearLayout(getApplicationContext());
 
