@@ -42,45 +42,50 @@
                             android:id="@+id/carInfo"
                             android:background="@drawable/container_dropshadow" android:layout_marginBottom="25dp"
                             >
-                        <RelativeLayout
+                        <HorizontalScrollView
                                 android:layout_width="fill_parent"
-                                android:layout_height="fill_parent" android:padding="10dp"
-                                android:layout_marginBottom="10dp">
-                            <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:text="Large Text"
-                                    android:id="@+id/type"
-                                    android:typeface="serif"
-                                    android:textStyle="italic"
-                                    android:layout_alignParentTop="true" android:layout_toRightOf="@+id/imageView4"
-                                    android:layout_marginLeft="20dp"/>
-                            <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:text="Small Text"
-                                    android:id="@+id/subtype"
-                                    android:textColor="#aaa" android:textStyle="italic" android:textSize="11dp"
-                                    android:layout_below="@+id/type" android:layout_alignStart="@+id/type"/>
-                            <ImageView android:layout_width="45dp" android:layout_height="45dp"
-                                       android:src="@drawable/ic_car" android:id="@+id/imageView4"
-                                       android:layout_centerVertical="true" android:layout_alignParentStart="true"
-                                       android:layout_marginLeft="20dp"/>
-                            <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:text="MF078"
-                                    android:id="@+id/platenumber"
-                                    android:textSize="11dp"
-                                    android:textStyle="italic" android:textColor="#aaa"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_alignStart="@+id/imageView4"
-                                    android:layout_alignEnd="@+id/imageView4" android:singleLine="true"
-                                    android:gravity="center_horizontal" android:layout_marginTop="15dp"/>
-                        </RelativeLayout>
+                                android:layout_height="fill_parent"
+                                android:id="@+id/horizontalScrollView">
+                            <RelativeLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent" android:padding="10dp"
+                                    android:layout_marginBottom="10dp">
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:text="MF078"
+                                        android:id="@+id/platenumber"
+                                        android:textSize="11dp"
+                                        android:textStyle="italic" android:textColor="#aaa"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_alignStart="@+id/imageView4"
+                                        android:layout_alignEnd="@+id/imageView4" android:singleLine="true"
+                                        android:gravity="center_horizontal" android:layout_marginTop="15dp"/>
+                                <ImageView android:layout_width="45dp" android:layout_height="45dp"
+                                           android:src="@drawable/ic_car" android:id="@+id/imageView4"
+                                           android:layout_centerVertical="true" android:layout_alignParentStart="true"
+                                           android:layout_marginLeft="20dp"/>
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:text="@string/subtype"
+                                        android:id="@+id/subtype"
+                                        android:textColor="#aaa" android:textStyle="italic" android:textSize="11dp"
+                                        android:layout_below="@+id/type" android:layout_alignStart="@+id/type"/>
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="?android:attr/textAppearanceLarge"
+                                        android:text="@string/type"
+                                        android:id="@+id/type"
+                                        android:typeface="serif"
+                                        android:textStyle="italic"
+                                        android:layout_alignParentTop="true" android:layout_toRightOf="@+id/imageView4"
+                                        android:layout_marginLeft="20dp"/>
+                            </RelativeLayout>
+                        </HorizontalScrollView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -89,23 +94,24 @@
                             android:id="@+id/carEnvironment"
                             android:background="@drawable/container_dropshadow"
                             android:layout_alignParentEnd="false" android:layout_below="@+id/carInfo"
-                            android:layout_marginBottom="25dp" android:padding="10dp">
+                            android:layout_marginBottom="25dp" android:padding="10dp" android:baselineAligned="true"
+                            android:visibility="gone">
                         <RelativeLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent" android:layout_marginBottom="10dp">
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" android:layout_marginBottom="10dp"
+                                android:visibility="gone">
                             <ImageView
                                     android:layout_width="45dp"
                                     android:layout_height="45dp"
                                     android:src="@drawable/ic_flower"
                                     android:id="@+id/imageView"
                                     android:layout_centerVertical="true" android:layout_alignParentStart="true"
-                                    android:layout_marginLeft="20dp"/>
+                                    android:layout_marginLeft="20dp" android:contentDescription="@string/pollution"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                                       android:textAppearance="?android:attr/textAppearanceLarge"
-                                      android:text="CO2 losun" android:id="@+id/textView"
+                                      android:text="@string/emission" android:id="@+id/textView"
                                       android:typeface="normal"
                                       android:textSize="18dp" android:textStyle="bold"
-                                      android:layout_above="@+id/pollutionAns"
                                       android:layout_centerHorizontal="true" android:layout_marginTop="5dp"/>
                             <TextView
                                     android:layout_width="wrap_content"
@@ -113,23 +119,26 @@
                                     android:textAppearance="?android:attr/textAppearanceMedium"
                                     android:id="@+id/pollutionAns"
                                     android:textSize="14dp"
-                                    android:layout_centerVertical="true" android:layout_alignStart="@+id/textView"/>
+                                    android:layout_marginTop="5dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignStart="@+id/textView"/>
                         </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="100dp"
-                            android:id="@+id/carStuff"
+                            android:id="@+id/carWeight"
                             android:background="@drawable/container_dropshadow"
                             android:layout_alignParentEnd="false" android:layout_below="@+id/carEnvironment"
-                            android:layout_marginBottom="25dp" android:padding="10dp">
+                            android:layout_marginBottom="25dp" android:padding="10dp"
+                            android:focusableInTouchMode="false">
                         <RelativeLayout
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent" android:layout_marginBottom="10dp">
 
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="Eiginþyngd"
+                                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="@string/weight"
                                       android:id="@+id/textView4" android:typeface="normal" android:textSize="18dp"
                                       android:textStyle="bold"
                                       android:layout_centerHorizontal="true" android:layout_marginTop="5dp"/>
@@ -143,28 +152,28 @@
                                       android:id="@+id/weightAns"
                                       android:textSize="14dp"
                                       android:layout_below="@+id/textView4"
-                                      android:layout_toRightOf="@+id/imageView2" android:layout_marginTop="5dp"/>
+                                      android:layout_toRightOf="@+id/imageView2" android:layout_marginTop="5dp"
+                                    />
                         </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="100dp"
-                            android:id="@+id/carStuffS"
+                            android:id="@+id/carRegisterd"
                             android:padding="10dp"
                             android:background="@drawable/container_dropshadow"
-                            android:layout_alignParentEnd="false" android:layout_below="@+id/carStuff"
+                            android:layout_alignParentEnd="false" android:layout_below="@+id/carWeight"
                             android:layout_marginBottom="25dp">
                         <RelativeLayout
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent">
 
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="Fyrst skráð"
+                                      android:textAppearance="?android:attr/textAppearanceLarge" android:text="@string/registered"
                                       android:id="@+id/textView5" android:typeface="normal" android:textSize="18dp"
                                       android:textStyle="bold"
-                                      android:layout_centerHorizontal="true" android:layout_marginTop="5dp"/>
-
+                            />
                             <ImageView android:layout_width="45dp" android:layout_height="45dp"
                                        android:src="@drawable/ic_date" android:id="@+id/imageView3"
                                        android:layout_centerVertical="true" android:layout_toLeftOf="@+id/textView5"
@@ -189,7 +198,6 @@
                       android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:orientation="vertical">
-
             <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
@@ -202,6 +210,13 @@
             </HorizontalScrollView>
 
         </LinearLayout>
+        <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:id="@+id/progressbar_loading"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0.5dp"
                       android:layout_above="@+id/bottombar" android:layout_centerHorizontal="true"
                       android:background="#aaa" android:id="@+id/linearLayout6"

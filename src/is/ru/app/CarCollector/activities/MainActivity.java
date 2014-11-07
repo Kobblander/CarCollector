@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
@@ -40,6 +41,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
     private NavigationDrawer nav;
 	private LinearLayout myGallery;
     private Player currentPlayer;
+	private ProgressBar spinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayShowTitleEnabled(false);
+
     }
 
     @Override
@@ -158,12 +161,21 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean navItemPressed = nav.onOptionsItemSelected(item);
-
+		switch (item.getItemId()) {
+			case R.id.action_about:
+				viewAbout();
+		}
         // If nav item was pressed we want to return true
         if(navItemPressed) return navItemPressed;
 
         return super.onOptionsItemSelected(item);
     }
+
+	public void viewAbout() {
+		Fragment fragment = new AboutFragment();
+		FragmentManager fragmentManager = this.getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+	}
 
     public void camera(View view) {
         Intent myIntent = new Intent(this, ProfileListActivity.class);
@@ -193,6 +205,8 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
                 Car test = carService.getCarByRegistryNumber(car.getRegistryNumber());
                 gameService.updateStats(car, currentPlayer);
                 displayCar(car);
+				spinner = (ProgressBar)findViewById(R.id.progressbar_loading);
+				spinner.setVisibility(View.VISIBLE);
                 carService.addImage(car.getType(), car.getSubType(), car.getColor(), car.getRegisteredAt(), restCallback);
                 this.hideProgressDialog();
 
@@ -209,6 +223,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
             Log.i("MainActivity", "postExecute - adding car");
         } catch (Exception e) {
             e.printStackTrace();
+			spinner.setVisibility(View.GONE);
         }
         currentQuery = "";
 
@@ -217,6 +232,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
     public void handleAsyncException(Throwable exception) {
         Log.i("MainActivity", "postExecuteExceptionMessage - " + exception.getMessage());
         exception.printStackTrace();
+		spinner.setVisibility(View.GONE);
         this.cancelExecute();
         if (exception.getClass() == RestQueryException.class) {
             Log.i("MainActivity", "Showing errorDialog.");
@@ -241,6 +257,8 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
      * @param response the car gotten from the api
      */
     public void displayCar(Car response) {
+        RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
+        carView.setVisibility(View.VISIBLE);
 
         // Set car type
         TextView type = (TextView) findViewById(R.id.type);
@@ -255,24 +273,49 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         plateNumber.setText(response.getNumber());
 
         // Set Pollution
-        TextView pollution = (TextView) findViewById(R.id.pollutionAns);
-        pollution.setText(response.getPollution() + " g/km");
+        String pollution = response.getPollution();
+        LinearLayout pollutionContainer = (LinearLayout) findViewById(R.id.carEnvironment);
+
+        if(!pollution.isEmpty()) {
+            pollutionContainer.setVisibility(View.VISIBLE);
+
+            TextView pollutionText = (TextView) findViewById(R.id.pollutionAns);
+            pollutionText.setText(response.getPollution() + " g/km");
+        } else {
+            pollutionContainer.setVisibility(View.GONE);
+        }
 
         // Set Weight
-        TextView weight = (TextView) findViewById(R.id.weightAns);
-        weight.setText(response.getWeight() + " kg");
+        String weight = response.getWeight();
+        LinearLayout weightContainer = (LinearLayout) findViewById(R.id.carWeight);
+
+        if(!weight.isEmpty()) {
+            weightContainer.setVisibility(View.VISIBLE);
+
+            TextView weightText = (TextView) findViewById(R.id.weightAns);
+            weightText.setText(weight + " kg");
+        } else {
+            weightContainer.setVisibility(View.GONE);
+        }
 
         // Set registered
-        TextView registered = (TextView) findViewById(R.id.registerdAns);
-        registered.setText(response.getRegisteredAt());
+        String registered = response.getRegisteredAt();
+        LinearLayout registeredContainer = (LinearLayout) findViewById(R.id.carRegisterd);
+
+        if(!registered.isEmpty()) {
+            registeredContainer.setVisibility(View.VISIBLE);
+
+            TextView registeredText = (TextView) findViewById(R.id.registerdAns);
+            registeredText.setText(registered);
+        } else {
+            registeredContainer.setVisibility(View.GONE);
+        }
+
         /*
         // Set Status
         TextView status = (TextView) findViewById(R.id.status);
         status.setText(response.getStatus());
         status.setTextColor(Color.GREEN);*/
-
-		RelativeLayout carView = (RelativeLayout) findViewById(R.id.main);
-		carView.setVisibility(View.VISIBLE);
     }
 
     private void displayImages(List<Bitmap> bmap) {
@@ -283,6 +326,8 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 			Log.i("Loading image", Integer.toString(bmap.size()));
 			myGallery.addView(insertPhoto(map));
 		}
+		spinner = (ProgressBar)findViewById(R.id.progressbar_loading);
+		spinner.setVisibility(View.GONE);
     }
 
 	View insertPhoto(Bitmap bm){
@@ -293,13 +338,46 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(bm.getWidth(), bm.getHeight());
 		params.setMargins(10, 20, 10, 30);
-		ImageView imageView = new ImageView(getApplicationContext());
+		final ImageView imageView = new ImageView(getApplicationContext());
 		imageView.setLayoutParams(params);
 		imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		imageView.setImageBitmap(bm);
 
+		final Bitmap loadbm = bm;
+
+		imageView.setClickable(true);
+		imageView.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				showImageDialog(loadbm);
+			}
+		});
+
+
 		layout.addView(imageView);
 		return layout;
+	}
+
+	void showImageDialog(Bitmap map) {
+		Dialog builder = new Dialog(MainActivity.this);
+		builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		builder.getWindow().setBackgroundDrawable(
+				new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+			@Override
+			public void onDismiss(DialogInterface dialogInterface) {
+				//nothing;
+			}
+		});
+
+		ImageView imageView = new ImageView(this);
+		imageView.setImageBitmap(map);
+		builder.addContentView(imageView, new RelativeLayout.LayoutParams(
+				map.getWidth()*2,
+				map.getHeight()*2));
+
+		builder.show();
 	}
 
 	/**

@@ -13,6 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -106,8 +107,13 @@ class ImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
      * @return image in bitmap form
      */
     private Bitmap urlToBitmap(RestTemplate rest, HttpEntity entity, String url) {
-        ResponseEntity<Resource> respond = rest.exchange(url, HttpMethod.GET, entity, Resource.class);
-        Bitmap map;
+		ResponseEntity<Resource> respond = null;
+		try {
+			respond = rest.exchange(url, HttpMethod.GET, entity, Resource.class);
+		} catch (Exception e) {
+			return null;
+		}
+		Bitmap map;
 		Bitmap scaledMap = null;
 		double scale;
 		int height;
