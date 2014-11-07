@@ -10,9 +10,6 @@
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
 
-
-
-
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="action_refresh">Refresh</string>
@@ -58,4 +55,6 @@
     <string name="homeWelcome">Hello,</string>
     <string name="homeMessage">Search for a car registration number.</string>
     <string name="homeSubMessage">You will receive info about that car and it will be added to your collection.</string>
+    <string name="hint1">Search for licence plate numbers</string>
+    <string name="hint2">Search for cars by taking a picture</string>
 </resources>
