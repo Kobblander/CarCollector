@@ -3,8 +3,8 @@
     <string-array name="nav_drawer_items">
         <item>Dom</item>
         <item>Statystyki</item>
-        <item>Ustawienia</item>
         <item>Usuń bazę</item>
+        <item>Ustawienia</item>
     </string-array>
 
 
