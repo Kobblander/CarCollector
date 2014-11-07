@@ -13,12 +13,13 @@
                   android:layout_marginLeft="43dp" android:layout_centerHorizontal="true"
                   android:layout_alignParentRight="false" android:layout_marginRight="10dp"/>
         <ImageView android:layout_width="75dp" android:layout_height="75dp"
-                   android:src="@drawable/ic_volkswagen" android:id="@+id/imageView"
-                   android:layout_centerVertical="true" android:layout_alignParentStart="true"/>
+                   android:src="@drawable/not_found" android:id="@+id/logoView"
+                   android:layout_centerVertical="true" android:layout_alignParentStart="true"
+                   android:focusableInTouchMode="true"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceMedium" android:id="@+id/textView5"
                   android:textSize="14dp" android:layout_below="@+id/textView3"
-                  android:layout_toRightOf="@+id/imageView" android:layout_marginTop="5dp"/>
+                  android:layout_toRightOf="@+id/logoView" android:layout_marginTop="5dp"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceMedium" android:text="4"
                   android:background="@drawable/circle_border" android:id="@+id/textView6" android:padding="10dp"
