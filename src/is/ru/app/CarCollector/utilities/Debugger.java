@@ -6,6 +6,7 @@ import android.util.Log;
 import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
+import is.ru.app.CarCollector.cars.service.CarServiceException;
 import is.ru.app.CarCollector.game.models.CarSubType;
 import is.ru.app.CarCollector.game.models.CarType;
 import is.ru.app.CarCollector.game.models.Player;
@@ -49,13 +50,18 @@ public class Debugger {
 		// SETTU DUMMY DATA HINGAÐ STEINAR
 		Car car1 = new Car();
 		car1.setNumber("MF078");
+		car1.setRegistryNumber("MF078");
 		car1.setType("SKODA");
 		car1.setSubType("SUPERB");
 		car1.setWeight("1480");
+		car1.setColor("Blar");
+		car1.setStatus("I lagi");
+		car1.setFactoryNumber("!dsda");
 		car1.setRegisteredAt("11.06.2004");
 
 		Car car2 = new Car();
 		car2.setNumber("LOLA");
+		car2.setRegistryNumber("LOLA");
 		car2.setType("SKODA");
 		car2.setSubType("OCTAVIA");
 		car2.setWeight("1480");
@@ -115,14 +121,20 @@ public class Debugger {
 		cars.add(car8);
 		cars.add(car9);
 
+		CarService carService = new CarServiceData(context);
         GameService gameService = new GameServiceData(context);
 		player = new Player("Captain America");
+
         for (Car car : cars) {
             try {
+				carService.addCarCallback(car);
                 gameService.updateStats(car, player);
             } catch (GameServiceException e) {
-            }
-        }
+            } catch (CarServiceException e) {
+				e.printStackTrace();
+			}
+		}
+
     }
 
     public static void resetDatabase(Context context) {

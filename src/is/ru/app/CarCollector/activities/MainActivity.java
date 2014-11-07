@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Camera;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -171,6 +172,8 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
 		switch (item.getItemId()) {
 			case R.id.action_about:
 				viewAbout();
+			case R.id.camera:
+				camera();
 		}
         // If nav item was pressed we want to return true
         if(navItemPressed) return navItemPressed;
@@ -184,9 +187,9 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
 		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 	}
 
-    public void camera(View view) {
-        Intent myIntent = new Intent(this, ProfileListActivity.class);
-        startActivity(myIntent);
+    public void camera() {
+        Intent myIntent = new Intent(this, CameraActivity.class);
+		startActivityForResult(myIntent, 1);
     }
 
     @Override
@@ -478,4 +481,16 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
     public void onResetDialogPositiveClick(DialogFragment dialog) {
         Debugger.getInstance().resetDatabase(this);
     }
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String finalString = data.getStringExtra("query");
+		if(finalString != null && !finalString.isEmpty()) {
+			getCar(finalString);
+		}
+		else {
+			Toast toast = Toast.makeText(this, "Error while analyzing photo", 6);
+			toast.show();
+		}
+	}
 }
