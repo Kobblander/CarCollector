@@ -2,7 +2,6 @@ package is.ru.app.CarCollector.game.data;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import is.ru.app.CarCollector.game.models.CarSubType;
 import is.ru.app.CarCollector.game.models.CarType;
 import is.ru.app.CarCollector.game.models.Player;
@@ -51,9 +50,25 @@ public class GameData implements GameDataGateway {
     }
 
     @Override
+    public Player getPlayer(String playerName) {
+        Cursor cursor = gameAdapter.queryPlayerByName(playerName);
+        List<Player> playerList = getPlayersFromCursor(cursor);
+        if (playerList.isEmpty()) {
+            return null;
+        }
+        return playerList.get(0);
+    }
+
+    @Override
     public List<CarType> getCarTypes() {
         Cursor cursor = gameAdapter.queryCarTypes();
         return getCarTypesFromCursor(cursor);
+    }
+
+    @Override
+    public List<CarSubType> getCarSubTypesByTypeName(String carTypeName) {
+        Cursor cursor = gameAdapter.queryCarSubTypesByTypeName(carTypeName);
+        return getCarSubTypesFromCursor(cursor);
     }
 
     @Override
@@ -184,18 +199,19 @@ public class GameData implements GameDataGateway {
             CarSubType ct = new CarSubType();
             // The Cursor is now set to the right position
             ct.set_id(cursor.getInt(0));
-            ct.setTypeName(String.valueOf(cursor.getInt(1)));
-            ct.setSubTypeName(cursor.getString(2));
-            ct.setLevelCur(cursor.getInt(3));
-            ct.setLevelOld(cursor.getInt(4));
-            ct.setXpForNextLevelCur(cursor.getFloat(5));
-            ct.setXpForNextLevelOld(cursor.getFloat(6));
-            ct.setLevelXpCur(cursor.getFloat(7));
-            ct.setLevelXpOld(cursor.getFloat(8));
-            ct.setTotalXpCur(cursor.getFloat(9));
-            ct.setTotalXpOld(cursor.getFloat(10));
-            ct.setTotalCarsCur(cursor.getInt(11));
-            ct.setTotalCarsOld(cursor.getInt(12));
+            ct.setPlayerName(String.valueOf(cursor.getString(1)));
+            ct.setTypeName(String.valueOf(cursor.getString(2)));
+            ct.setSubTypeName(cursor.getString(3));
+            ct.setLevelCur(cursor.getInt(4));
+            ct.setLevelOld(cursor.getInt(5));
+            ct.setXpForNextLevelCur(cursor.getFloat(6));
+            ct.setXpForNextLevelOld(cursor.getFloat(7));
+            ct.setLevelXpCur(cursor.getFloat(8));
+            ct.setLevelXpOld(cursor.getFloat(9));
+            ct.setTotalXpCur(cursor.getFloat(10));
+            ct.setTotalXpOld(cursor.getFloat(11));
+            ct.setTotalCarsCur(cursor.getInt(12));
+            ct.setTotalCarsOld(cursor.getInt(13));
 
             list.add(ct);
         }

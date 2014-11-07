@@ -103,7 +103,7 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
                 searchView.setIconified(true);
 
                 // Set the main fragment
-                nav.displayView(0);
+                nav.displayView(4);
 
                 // Load main fragment
                 FragmentManager fragmentManager = getFragmentManager();

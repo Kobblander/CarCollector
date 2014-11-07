@@ -54,4 +54,6 @@
     <string name="type">Type</string>
     <string name="subtype">SubType</string>
 
+    <!-- Home screen -->
+    <string name="homeWelcome">Hello,</string>
 </resources>
