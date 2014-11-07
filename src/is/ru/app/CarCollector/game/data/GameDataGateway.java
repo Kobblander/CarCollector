@@ -36,6 +36,10 @@ public interface GameDataGateway {
 
     public List<CarSubType> getCarSubTypesByNameAndPlayer(String carSubTypeName, String playerName);
 
+    public CarType getCarTypeByNameAndPlayer(String carTypeName, String playerName);
+
+    public CarSubType getCarSubTypeByNameAndPlayer(String carSubTypeName, String playerName);
+
     public List<CarSubType> getCarSubTypesByTypeId(int typeId);
 
     public Long updateCarType(CarType carType);

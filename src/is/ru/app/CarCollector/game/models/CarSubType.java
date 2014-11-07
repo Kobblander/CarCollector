@@ -12,6 +12,7 @@ package is.ru.app.CarCollector.game.models;
 public class CarSubType {
 
     private int _id;
+    private String playerName;
     private String typeName;
     private String subTypeName;
     private int levelCur;
@@ -28,7 +29,8 @@ public class CarSubType {
     public CarSubType() {
     }
 
-    public CarSubType(String typeName, String subTypeName) {
+    public CarSubType(String playerName, String typeName, String subTypeName) {
+        this.playerName = playerName;
         this.typeName = typeName;
         this.subTypeName = subTypeName;
     }
@@ -135,6 +137,14 @@ public class CarSubType {
 
     public void setTotalCarsOld(int totalCarsOld) {
         this.totalCarsOld = totalCarsOld;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     @Override

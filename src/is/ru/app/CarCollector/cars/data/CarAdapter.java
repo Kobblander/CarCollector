@@ -117,9 +117,9 @@ public class CarAdapter {
     public Cursor queryRegistryNumber(String registryNumber) {
         openToRead();
         Cursor cursor;
-        String query = "select * from cars where registryNumber =?";
+        String query = "select * from cars where registryNumber = ?";
         try {
-            cursor = db.rawQuery(query, new String[] {registryNumber});
+            cursor = db.rawQuery(query, new String[] { registryNumber });
         } catch(Exception e) {
             String msg = "No cars found with registry number: '" + registryNumber + "' in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapter - queryRegistryNumber", msg);
@@ -137,7 +137,7 @@ public class CarAdapter {
     public Cursor queryType(String type, String limit) {
         openToRead();
         Cursor cursor;
-        String query = "select * from cars where type =?";
+        String query = "select * from cars where type = ?";
         try {
             cursor = db.rawQuery(query, new String[] {type});
         } catch(Exception e) {

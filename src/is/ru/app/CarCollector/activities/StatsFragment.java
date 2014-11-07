@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
@@ -28,6 +29,7 @@ import java.util.List;
  * Time : 22:22
  */
 public class StatsFragment extends Fragment {
+    private View rootView;
     private CarService carService;
     private GameService gameService;
 
@@ -36,7 +38,7 @@ public class StatsFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.profile, container, false);
+        rootView = inflater.inflate(R.layout.profile, container, false);
 
         carService = new CarServiceData(rootView.getContext());
         gameService = new GameServiceData(rootView.getContext());
@@ -50,7 +52,9 @@ public class StatsFragment extends Fragment {
         //List<Car> cars = new ArrayList<Car>();
         Statistics stats = new Statistics();
         List<CarType> carTypes = new ArrayList<CarType>();
-        final ListView listview = (ListView) getView().findViewById(R.id.carList);
+        final ListView listview = (ListView) rootView.findViewById(R.id.carList);
+        TextView playerLevel = (TextView) rootView.findViewById(R.id.playerXp);
+        playerLevel.setText("0");
 
         try {
             //cars = carService.getCars(null);
@@ -68,9 +72,10 @@ public class StatsFragment extends Fragment {
         }
         */
         for (int i = 0; i < carTypes.size(); i++) {
-            list.add(carTypes.get(i).getTypeName());
+            list.add(carTypes.get(i).getTypeName() + "  XP :" + carTypes.get(i).getLevelXpCur() +
+                                                     "  LEVEL: " + carTypes.get(i).getLevelCur());
         }
-        final StableArrayAdapter adapter = new StableArrayAdapter(getView().getContext(), android.R.layout.simple_list_item_1, list);
+        final StableArrayAdapter adapter = new StableArrayAdapter(rootView.getContext(), android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
     }
 

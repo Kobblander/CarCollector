@@ -95,6 +95,26 @@ public class GameData implements GameDataGateway {
     }
 
     @Override
+    public CarType getCarTypeByNameAndPlayer(String carTypeName, String playerName) {
+        Cursor cursor = gameAdapter.queryCarTypesByTypeNameAndPlayerName(carTypeName, playerName);
+        List<CarType> carTypeList = getCarTypesFromCursor(cursor);
+        if (carTypeList.isEmpty()) {
+            return null;
+        }
+        return carTypeList.get(0);
+    }
+
+    @Override
+    public CarSubType getCarSubTypeByNameAndPlayer(String carSubTypeName, String playerName) {
+        Cursor cursor = gameAdapter.queryCarSubTypesByTypeNameAndPlayerName(carSubTypeName, playerName);
+        List<CarSubType> carSubTypeList = getCarSubTypesFromCursor(cursor);
+        if (carSubTypeList.isEmpty()) {
+            return null;
+        }
+        return carSubTypeList.get(0);
+    }
+
+    @Override
     public List<CarSubType> getCarSubTypesByTypeId(int typeId) {
         Cursor cursor = gameAdapter.queryCarSubTypesByTypeId(typeId);
         return getCarSubTypesFromCursor(cursor);

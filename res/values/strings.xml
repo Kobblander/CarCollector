@@ -26,4 +26,7 @@
     <string name="errorQueryMessage">Do you want to try and obtain the car again?</string>
     <string name="errorQueryCancel">Cancel</string>
     <string name="errorQueryRetry">Retry</string>
+
+    <string name="errorCarExistsMessage">You have already collected this car.</string>
+    <string name="errorCarexistsClose">Close</string>
 </resources>

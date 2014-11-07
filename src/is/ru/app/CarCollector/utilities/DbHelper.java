@@ -44,7 +44,7 @@ public class DbHelper extends SQLiteOpenHelper {
                                                        "levelXpCur",           "levelXpOld",
                                                        "totalXpCur",           "totalXpOld"};
 
-    public static final String[] TableCarSubTypesCols = { "_id",
+    public static final String[] TableCarSubTypesCols = { "_id",                "playerName",
                                                           "carTypeName",        "carSubTypeName",
                                                           "levelCur",           "levelOld",
                                                           "xpForNextLevelCur",  "xpForNextLevelOld",
@@ -65,7 +65,7 @@ public class DbHelper extends SQLiteOpenHelper {
                                                              "levelXpCur NUMERIC",         "levelXpOld NUMERIC",
                                                              "totalXpCur NUMERIC",         "totalXpOld NUMERIC"};
 
-    public static final String[] TableCarSubTypesColsCreate = { "_id INTEGER PRIMARY KEY AUTOINCREMENT",
+    public static final String[] TableCarSubTypesColsCreate = { "_id INTEGER PRIMARY KEY AUTOINCREMENT", "playerName TEXT",
                                                                 "carTypeName TEXT",             "carSubTypeName TEXT",
                                                                 "levelCur NUMERIC",             "levelOld NUMERIC",
                                                                 "xpForNextLevelCur NUMERIC",    "xpForNextLevelOld NUMERIC",
@@ -132,7 +132,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     " "+TableCarSubTypesColsCreate[9]+"," +
                     " "+TableCarSubTypesColsCreate[10]+"," +
                     " "+TableCarSubTypesColsCreate[11]+"," +
-                    " "+TableCarSubTypesColsCreate[12]+
+                    " "+TableCarSubTypesColsCreate[12]+"," +
+                    " "+TableCarSubTypesColsCreate[13]+
                     ");";
 
     private static final String sqlDropTableCars =

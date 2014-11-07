@@ -7,6 +7,7 @@ import is.ru.app.CarCollector.game.data.GameData;
 import is.ru.app.CarCollector.game.data.GameDataGateway;
 import is.ru.app.CarCollector.game.models.CarSubType;
 import is.ru.app.CarCollector.game.models.CarType;
+import is.ru.app.CarCollector.game.models.Player;
 import is.ru.app.CarCollector.game.models.Statistics;
 import is.ru.app.CarCollector.game.xp.XpCalculator;
 
@@ -29,29 +30,35 @@ public class GameServiceData implements GameService {
     }
 
     @Override
-    public void updateStats(Car car) throws GameServiceException {
+    public void updateStats(Car car, Player player) throws GameServiceException {
+        String playerName = player.getPlayerName();
         String typeName = car.getType();
         String subTypeName = car.getSubType();
         try {
 
-            CarType carType = gameDataGateway.getCarTypeByName(typeName);
-            CarSubType carSubType = gameDataGateway.getCarSubTypeByName(subTypeName);
+            CarType carType = gameDataGateway.getCarTypeByNameAndPlayer(typeName, playerName);
+            CarSubType carSubType = gameDataGateway.getCarSubTypeByNameAndPlayer(subTypeName, playerName);
             if (carType == null && carSubType == null) {
                 Log.i("GameServiceData", "Adding both Type and Subtype to database.");
-                carType = new CarType(typeName);
-                carSubType = new CarSubType(typeName, subTypeName);
+                carType = new CarType(playerName, typeName);
+                carSubType = new CarSubType(playerName, typeName, subTypeName);
 
                 xpCalculator.initCarType(carType);
                 xpCalculator.initCarSubType(carSubType);
+
+                xpCalculator.updateCarType(carType);
+                xpCalculator.updateCarSubType(carSubType);
 
                 gameDataGateway.addCarType(carType);
                 gameDataGateway.addCarSubType(carSubType);
             } else if (carSubType == null) {
                 Log.i("GameServiceData", "Updating carType and adding carSubType.");
-                carSubType = new CarSubType(typeName, subTypeName);
+                carSubType = new CarSubType(playerName, typeName, subTypeName);
+
+                xpCalculator.initCarSubType(carSubType);
 
                 xpCalculator.updateCarType(carType);
-                xpCalculator.initCarSubType(carSubType);
+                xpCalculator.updateCarSubType(carSubType);
 
                 gameDataGateway.updateCarType(carType);
                 gameDataGateway.addCarSubType(carSubType);
@@ -66,6 +73,7 @@ public class GameServiceData implements GameService {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             String msg = "Fatal error in GameService; Nested exception is: " + e.getMessage();
             throw new GameServiceException(msg, e);
         }
@@ -88,6 +96,18 @@ public class GameServiceData implements GameService {
     @Override
     public Statistics getLevelXpScreenData() {
         return null;
+    }
+
+    @Override
+    public Player addPlayer(Player player) throws GameServiceException {
+        try {
+            player = gameDataGateway.addPlayer(player);
+            xpCalculator.initPlayer(player);
+        } catch (Exception e) {
+            String msg = "Fatal error in GameService; Nested exception is: " + e.getMessage();
+            throw new GameServiceException(msg, e);
+        }
+        return player;
     }
 
 }
