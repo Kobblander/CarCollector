@@ -119,6 +119,7 @@ public class CameraActivity extends Activity {
 			File file = new File(_path);
 			boolean deleted = file.delete();*/
 			Intent myIntent = new Intent(this, MainActivity.class);
+			//myIntent.putExtra("query", finalString);
             startActivity(myIntent);
         }
     }
