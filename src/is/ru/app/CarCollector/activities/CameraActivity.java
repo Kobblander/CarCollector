@@ -10,7 +10,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Window;
 import is.ru.app.CarCollector.R;
-/*
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -19,7 +19,7 @@ import com.googlecode.tesseract.android.TessBaseAPI;
 import android.util.Log;
 import android.media.ExifInterface;
 import java.io.IOException;
-*/
+
 
 
 
@@ -57,7 +57,7 @@ public class CameraActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-       /* if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+       if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
 			String _path = Environment.getExternalStorageDirectory().toString() + "/DCIM/Camera/numer.jpg";
 
@@ -141,7 +141,7 @@ public class CameraActivity extends Activity {
 			myIntent.putExtra("query", finalString);
 			setResult(1, myIntent);
             finish();
-        }*/
+        }
     }
 
     private void dispatchTakePictureIntent() {

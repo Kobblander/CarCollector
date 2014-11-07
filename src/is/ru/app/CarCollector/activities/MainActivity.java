@@ -50,7 +50,7 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-		Debugger.getInstance().addDummyData(this);
+		// Debugger.getInstance().addDummyData(this);
 
         Player player = new Player("Captain America");
         try {
