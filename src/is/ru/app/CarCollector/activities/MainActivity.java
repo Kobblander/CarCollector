@@ -152,12 +152,21 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean navItemPressed = nav.onOptionsItemSelected(item);
-
+		switch (item.getItemId()) {
+			case R.id.action_about:
+				viewAbout();
+		}
         // If nav item was pressed we want to return true
         if(navItemPressed) return navItemPressed;
 
         return super.onOptionsItemSelected(item);
     }
+
+	public void viewAbout() {
+		Fragment fragment = new AboutFragment();
+		FragmentManager fragmentManager = this.getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+	}
 
     public void camera(View view) {
         Intent myIntent = new Intent(this, ProfileListActivity.class);
@@ -329,10 +338,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 		imageView.setClickable(true);
 		imageView.setOnClickListener(new View.OnClickListener() {
 
-			/*@Override
-			public void onClick(View view) {
-				Toast.makeText(MainActivity.this, "Button Clicked", 5).show();
-			}*/
 			@Override
 			public void onClick(View view) {
 				showImageDialog(loadbm);

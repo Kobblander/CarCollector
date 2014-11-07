@@ -16,10 +16,8 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="action_refresh">Refresh</string>
-    <string name="action_help">Help</string>
+    <string name="action_about">About</string>
 
-    <string name="carType">carType</string>
-    <string name="subType">subType</string>
     <string name="action_check_updates">Update</string>
 
     <string name="errorQueryTitle">Oops, something went wrong!</string>
@@ -27,4 +25,20 @@
     <string name="errorQueryCancel">Cancel</string>
     <string name="errorQueryRetry">Retry</string>
     <string name="pollution">Pollution</string>
+
+    <!-- About view -->
+    <string name="authors">Authors</string>
+    <string name="theAuthors">Jakob Þórðarson, Ólafur Konráðsson, Steinar Eyþór Valsson</string>
+    <string name="about">About</string>
+    <string name="aboutApp">This app was designed at Reykjavik University in the Advanced Android course.</string>
+    <string name="howTo">How To</string>
+    <string name="howToApp">Input an Icelandic license plate to view info on the matching car and collect the car for XP and levels</string>
+
+    <!-- Car view -->
+    <string name="registered">Registered at</string>
+    <string name="weight">Weight</string>
+    <string name="emission">CO2 emission</string>
+    <string name="type">Type</string>
+    <string name="subtype">SubType</string>
+
 </resources>
