@@ -3,8 +3,8 @@
     <string-array name="nav_drawer_items">
         <item>Heim</item>
         <item>Safn</item>
-        <item>Stillingar</item>
         <item>Endursetja safn</item>
+        <item>Stillingar</item>
     </string-array>
 
 

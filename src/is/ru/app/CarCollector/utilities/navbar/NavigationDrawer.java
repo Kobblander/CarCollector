@@ -96,10 +96,10 @@ public class NavigationDrawer {
         navDrawerItems.add(new NavItem(mNavList[1], navMenuIcons.getResourceId(1, -1)));
 
         // Settings
-        navDrawerItems.add(new NavItem(mNavList[2], navMenuIcons.getResourceId(2, -1)));
+        //navDrawerItems.add(new NavItem(mNavList[2], navMenuIcons.getResourceId(2, -1)));
 
         // Delete
-        navDrawerItems.add(new NavItem(mNavList[3], navMenuIcons.getResourceId(3, -1)));
+        navDrawerItems.add(new NavItem(mNavList[2], navMenuIcons.getResourceId(3, -1)));
 
         return new NavAdapter(activity.getApplicationContext(), navDrawerItems);
     }
@@ -147,10 +147,10 @@ public class NavigationDrawer {
                 fragment = new StatsFragment();
                 break;
             case 2:
+                showResetDatabaseDialog();
                 // fragment = new StatsFragment();
                 break;
             case 3:
-                showResetDatabaseDialog();
                 break;
             case 4:
                 fragment = new CarFragment();

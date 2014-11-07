@@ -22,10 +22,11 @@
         <menu>
 
             <!-- Refresh -->
+            <!--
             <item
                     android:id="@+id/action_refresh"
                     android:showAsAction="never"
-                    android:title="@string/action_refresh"/>
+                    android:title="@string/action_refresh"/> -->
 
             <!-- About -->
             <item
@@ -34,10 +35,11 @@
                     android:title="@string/action_about"/>
 
             <!-- Check updates -->
+            <!--
             <item
                     android:id="@+id/action_check_updates"
                     android:showAsAction="never"
-                    android:title="@string/action_check_updates"/>
+                    android:title="@string/action_check_updates"/> -->
         </menu>
     </item>
 </menu>
