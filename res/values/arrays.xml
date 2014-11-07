@@ -3,8 +3,8 @@
     <string-array name="nav_drawer_items">
         <item>Home</item>
         <item>Collection</item>
-        <item>Settings</item>
         <item>Reset collection</item>
+        <item>Settings</item>
     </string-array>
 
 
