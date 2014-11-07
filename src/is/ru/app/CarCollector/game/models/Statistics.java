@@ -49,4 +49,13 @@ public class Statistics {
     public void setCarTypes(List<CarType> carTypes) {
         this.carTypes = carTypes;
     }
+
+    @Override
+    public String toString() {
+        return "Statistics{" +
+                "player=" + player +
+                ", carSubTypes=" + carSubTypes +
+                ", carTypes=" + carTypes +
+                '}';
+    }
 }

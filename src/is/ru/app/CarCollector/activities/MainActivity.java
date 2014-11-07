@@ -47,13 +47,12 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
         Player player = new Player("Captain America");
-        Debugger.getInstance().resetDatabase(this);
+
         try {
             currentPlayer = gameService.addPlayer(player);
-        } catch (GameServiceException e) {
-        }
-
+        } catch (GameServiceException e) {}
 
         nav = new NavigationDrawer(this);
         nav.setup();
@@ -116,7 +115,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
                 // Get car
                 getCar(query);
-
 
                 return true;
             }
@@ -223,7 +221,8 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
             Log.i("MainActivity", "postExecute - adding car");
         } catch (Exception e) {
             e.printStackTrace();
-			spinner.setVisibility(View.GONE);
+            if(spinner != null)
+			    spinner.setVisibility(View.GONE);
         }
         currentQuery = "";
 
@@ -280,6 +279,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
             pollutionContainer.setVisibility(View.VISIBLE);
 
             TextView pollutionText = (TextView) findViewById(R.id.pollutionAns);
+            pollutionText.setVisibility(View.VISIBLE);
             pollutionText.setText(response.getPollution() + " g/km");
         } else {
             pollutionContainer.setVisibility(View.GONE);
