@@ -66,13 +66,13 @@ public class CardManager {
 
 				@Override
 				public void onClick(View view) {
-					showImageDialog(stats.getCarSubTypes());
+					showSubDialog(stats.getCarSubTypes());
 				}
 			});
         }
     }
 
-	void showImageDialog(List<CarSubType> subTypes) {
+	void showSubDialog(List<CarSubType> subTypes) {
 		Dialog builder = new Dialog(view.getContext());
 		builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		builder.getWindow().setBackgroundDrawable(
@@ -182,7 +182,4 @@ public class CardManager {
     private void setMargin() {
 
     }
-
-
-
 }
