@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.main_layout, container, false);
+        View rootView = inflater.inflate(R.layout.home_layout, container, false);
 
         carService = new CarServiceData(rootView.getContext());
         gameService = new GameServiceData(rootView.getContext());

@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import is.ru.app.CarCollector.R;
+import is.ru.app.CarCollector.activities.HomeFragment;
 import is.ru.app.CarCollector.activities.MainActivity;
 import is.ru.app.CarCollector.activities.MainFragment;
 import is.ru.app.CarCollector.activities.StatsFragment;
@@ -156,7 +157,7 @@ public class NavigationDrawer {
                 showResetDatabaseDialog();
                 break;
             case 4:
-                //fragment = new CommunityFragment();
+                fragment = new HomeFragment();
                 break;
             default:
                 break;
