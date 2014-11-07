@@ -16,14 +16,10 @@ import android.widget.RelativeLayout;
 import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
-import is.ru.app.CarCollector.game.models.CarType;
 import is.ru.app.CarCollector.game.models.Statistics;
 import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
 import is.ru.app.CarCollector.utilities.cards.CardManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA
@@ -47,12 +43,13 @@ public class StatsFragment extends Fragment {
         gameService = new GameServiceData(rootView.getContext());
         setCardlist();
 
+        System.out.println(rootView.getWidth());
+
         return rootView;
     }
 
     private void setCardlist() {
         Statistics stats = new Statistics();
-        List<CarType> carTypes = new ArrayList<CarType>();
 
         try {
             stats = gameService.getStats();

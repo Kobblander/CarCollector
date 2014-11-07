@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -16,10 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 import is.ru.app.CarCollector.R;
-import is.ru.app.CarCollector.activities.MainActivity;
-import is.ru.app.CarCollector.activities.MainFragment;
+import is.ru.app.CarCollector.activities.HomeFragment;
+import is.ru.app.CarCollector.activities.CarFragment;
 import is.ru.app.CarCollector.activities.StatsFragment;
 import is.ru.app.CarCollector.utilities.dialog.ResetDatabaseDialog;
 
@@ -144,7 +141,7 @@ public class NavigationDrawer {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new MainFragment();
+                fragment = new HomeFragment();
                 break;
             case 1:
                 fragment = new StatsFragment();
@@ -156,7 +153,7 @@ public class NavigationDrawer {
                 showResetDatabaseDialog();
                 break;
             case 4:
-                //fragment = new CommunityFragment();
+                fragment = new CarFragment();
                 break;
             default:
                 break;
@@ -166,11 +163,13 @@ public class NavigationDrawer {
             FragmentManager fragmentManager = activity.getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-            // update selected item and title, then close the drawer
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            activity.setTitle(mNavList[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
+            if (fragment.getClass() != CarFragment.class) {
+                // update selected item and title, then close the drawer
+                mDrawerList.setItemChecked(position, true);
+                mDrawerList.setSelection(position);
+                activity.setTitle(mNavList[position]);
+                mDrawerLayout.closeDrawer(mDrawerList);
+            }
         } else {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
