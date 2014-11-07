@@ -89,10 +89,11 @@ public class GameServiceData implements GameService {
 
 
             List<CarType> carTypeList = gameDataGateway.getCarTypes();
-            for (int i = 0; i < carTypeList.size(); i++) {
+            for (CarType aCarTypeList : carTypeList) {
                 TypeStats ts = new TypeStats();
-                ts.setCarType(carTypeList.get(i));
-                ts.setCarSubTypes(gameDataGateway.getCarSubTypesByTypeName(ts.getCarType().getTypeName()));
+                ts.setCarType(aCarTypeList);
+                String typeName = aCarTypeList.getTypeName();
+                ts.setCarSubTypes(gameDataGateway.getCarSubTypesByTypeName(typeName));
                 typeStats.add(ts);
             }
             stats.setTypeStats(typeStats);

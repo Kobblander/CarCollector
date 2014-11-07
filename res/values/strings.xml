@@ -56,4 +56,6 @@
 
     <!-- Home screen -->
     <string name="homeWelcome">Hello,</string>
+    <string name="homeMessage">Search for a car registration number.</string>
+    <string name="homeSubMessage">You will receive info about that car and it will be added to your collection.</string>
 </resources>

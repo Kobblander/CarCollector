@@ -383,7 +383,7 @@ public class GameAdapter {
     public Cursor queryCarSubTypesByTypeName(String carTypeName) {
         openToRead();
         Cursor cursor;
-        String query = "select * from "+tableCarSubTypes+" where typeName =?";
+        String query = "select * from "+tableCarSubTypes+" where carTypeName = ?";
         try {
             cursor = db.rawQuery(query, new String[] { carTypeName });
         } catch(Exception e) {
