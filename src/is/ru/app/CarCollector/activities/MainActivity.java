@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -484,12 +483,16 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		String finalString = data.getStringExtra("query");
+        String finalString = null;
+
+        if(data != null)
+		    finalString = data.getStringExtra("query");
+
 		if(finalString != null && !finalString.isEmpty()) {
 			getCar(finalString);
 		}
-		else {
-			Toast toast = Toast.makeText(this, "Error while analyzing photo", 6);
+		else if(data != null) {
+			Toast toast = Toast.makeText(this, "Error while analyzing photo", Toast.LENGTH_LONG);
 			toast.show();
 		}
 	}
