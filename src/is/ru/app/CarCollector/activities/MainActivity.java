@@ -22,7 +22,6 @@ import is.ru.app.CarCollector.game.models.Player;
 import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
 import is.ru.app.CarCollector.game.service.GameServiceException;
-import is.ru.app.CarCollector.utilities.Debugger;
 import is.ru.app.CarCollector.utilities.dialog.CarExistsDialog;
 import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
 import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
