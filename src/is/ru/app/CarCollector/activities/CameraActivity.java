@@ -1,5 +1,6 @@
 package is.ru.app.CarCollector.activities;
 
+import java.io.File;
 import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Camera;
@@ -9,8 +10,18 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Window;
 import is.ru.app.CarCollector.R;
+/*
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.widget.Toast;
+import com.googlecode.tesseract.android.TessBaseAPI;
+import android.util.Log;
+import android.media.ExifInterface;
+import java.io.IOException;
+*/
 
-import java.io.File;
+
 
 /**
  * Created with IntelliJ IDEA
@@ -21,12 +32,20 @@ import java.io.File;
 public class CameraActivity extends Activity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
+	private CameraCallback cameraCallback;
+
+	public interface CameraCallback {
+		public void getCarByImage(String searchString);
+	}
+
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+		Intent intent = getIntent();
 
         // Hide the action bar
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
@@ -38,9 +57,9 @@ public class CameraActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+       /* if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-			/*String _path = Environment.getExternalStorageDirectory().toString() + "/DCIM/Camera/numer.jpg";
+			String _path = Environment.getExternalStorageDirectory().toString() + "/DCIM/Camera/numer.jpg";
 
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -114,14 +133,15 @@ public class CameraActivity extends Activity {
 			}
 			String finalString = stringBuilder.toString();
 			Log.i("Camera reader", finalString);
-			Toast toast = Toast.makeText(this, finalString, 20);
+			Toast toast = Toast.makeText(this, "From camera: " + finalString, 20);
 			toast.show();
 			File file = new File(_path);
-			boolean deleted = file.delete();*/
-			Intent myIntent = new Intent(this, MainActivity.class);
-			//myIntent.putExtra("query", finalString);
-            startActivity(myIntent);
-        }
+			boolean deleted = file.delete();
+			Intent myIntent = new Intent(this, CameraActivity.class);
+			myIntent.putExtra("query", finalString);
+			setResult(1, myIntent);
+            finish();
+        }*/
     }
 
     private void dispatchTakePictureIntent() {
@@ -149,4 +169,5 @@ public class CameraActivity extends Activity {
 
         return c; // returns null if camera is unavailable
     }
+
 }
