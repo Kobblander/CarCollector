@@ -14,6 +14,7 @@ import is.ru.app.CarCollector.R;
 import is.ru.app.CarCollector.game.models.CarSubType;
 import is.ru.app.CarCollector.game.models.CarType;
 import is.ru.app.CarCollector.game.models.Statistics;
+import is.ru.app.CarCollector.game.models.TypeStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +47,9 @@ public class CardManager {
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout card = null;
 
-        List<CarType> carTypes = stats.getCarTypes();
+        final List<TypeStats> carTypes = stats.getTypeStats();
 
-        for (final CarType carType : carTypes) {
+        for (final TypeStats carType : carTypes) {
             int aboveId = ids.get(ids.size() - 1);
             int cardId = aboveId + 1;
             card = (LinearLayout) inflater.inflate(R.layout.temp_card, null);
@@ -58,7 +59,7 @@ public class CardManager {
             card.setId(cardId);
             ids.add(cardId);
 
-            setCardInfo(carType, card);
+            setCardInfo(carType.getCarType(), card);
 
             container.addView(card);
 			card.setClickable(true);
@@ -66,7 +67,7 @@ public class CardManager {
 
 				@Override
 				public void onClick(View view) {
-					showSubDialog(stats.getCarSubTypes());
+					showSubDialog(carType.getCarSubTypes());
 				}
 			});
         }
