@@ -161,7 +161,7 @@ public class GameAdapter {
         contentValues.put( subTypesCols[12], ((Integer)cst.getTotalCarsCur()).toString());
         contentValues.put( subTypesCols[13], ((Integer)cst.getTotalCarsOld()).toString());
         openToWrite();
-        long value = db.update(tableCarSubTypes, contentValues, subTypesCols[0] = "=" + cst.get_id(), null);
+        long value = db.update(tableCarSubTypes, contentValues, subTypesCols[0] + "=" + cst.get_id(), null);
         close();
         return value;
     }

@@ -157,9 +157,9 @@ public class CarAdapter {
     public Cursor querySubType(String subType, String limit) {
         openToRead();
         Cursor cursor;
-        String query = "select * from cars where subType =?";
+        String query = "select * from cars where subType = ?";
         try {
-            cursor = db.rawQuery(query, new String[] {subType});
+            cursor = db.rawQuery(query, new String[] { subType });
         } catch(Exception e) {
             String msg = "No cars found of car subType: '" + subType + "' in the database. Nested exception is: " + e.getMessage();
             Log.i("CarAdapterExceptionThrown", msg);

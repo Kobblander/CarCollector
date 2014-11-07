@@ -16,9 +16,14 @@ public abstract class AbstractDialog extends DialogFragment {
 
     protected ErrorDialogListener errorDialogListener;
 
+    /**
+     * If you want to add additional functions that the activities can handle.
+     * Simply add them to this interface.
+     */
     public interface ErrorDialogListener {
         public void onErrorDialogPositiveClick(DialogFragment dialog);
         public void onErrorDialogNegativeClick(DialogFragment dialog);
+        public void onResetDialogPositiveClick(DialogFragment dialog);
     }
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener

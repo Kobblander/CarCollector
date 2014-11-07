@@ -22,7 +22,7 @@ public interface CarService {
      * @param callback This is the activity that is supposed to be called back to.
      * @throws CarExistsException Is thrown when the car already exists in the database.
      */
-    public void addCar(String registryNumber, RestCallback callback) throws CarExistsException, CarServiceException;
+    public Car addCar(String registryNumber, RestCallback callback) throws CarExistsException, CarServiceException;
 
     /**
      * This function adds a single car to the database.

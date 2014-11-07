@@ -69,11 +69,11 @@ public class CardManager {
         HorizontalScrollView scroll = (HorizontalScrollView) card.getChildAt(0);
         RelativeLayout innerCard = (RelativeLayout) scroll.getChildAt(0);
 
-        TextView typeName = (TextView) innerCard.getChildAt(0);
-        ImageView logo = (ImageView) innerCard.getChildAt(1);
-        TextView lvl = (TextView) innerCard.getChildAt(5);
-        ProgressBar lvlBar = (ProgressBar) innerCard.getChildAt(3);
-        TextView lvlStats = (TextView) innerCard.getChildAt(4);
+        TextView typeName = (TextView) innerCard.getChildAt(3);
+        ImageView logo = (ImageView) innerCard.getChildAt(0);
+        TextView lvl = (TextView) innerCard.getChildAt(4);
+        ProgressBar lvlBar = (ProgressBar) innerCard.getChildAt(1);
+        TextView lvlStats = (TextView) innerCard.getChildAt(2);
 
         // Set Type name
         typeName.setText(carType.getTypeName());
@@ -85,9 +85,20 @@ public class CardManager {
         // Set lvl progress
         lvlBar.setProgress((int) carType.getLevelXpCur());
 
+		String toLower = carType.getTypeName().toLowerCase();
+
+		String mDrawableName = toLower.replace(" ", "_");
+		int resID = view.getContext().getResources().getIdentifier(mDrawableName , "drawable", view.getContext().getPackageName());
+
+		logo.setImageResource(resID);
+
         // Set lvl stats text
         String stats = Integer.toString ((int) carType.getLevelXpCur()) + "/" + Integer.toString((int) carType.getXpForNextLevelCur());
         lvlStats.setText(stats);
+    }
+
+    private void setMargin() {
+
     }
 
 

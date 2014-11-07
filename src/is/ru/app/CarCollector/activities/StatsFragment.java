@@ -36,6 +36,8 @@ public class StatsFragment extends Fragment {
         gameService = new GameServiceData(rootView.getContext());
         setCardlist();
 
+        System.out.println(rootView.getWidth());
+
         return rootView;
     }
 

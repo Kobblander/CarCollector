@@ -29,7 +29,7 @@ public class CarServiceData implements CarService {
     }
 
     @Override
-    public void addCar(String registryNumber, RestCallback callback) throws CarExistsException, CarServiceException {
+    public Car addCar(String registryNumber, RestCallback callback) throws CarExistsException, CarServiceException {
         // TODO: CHECK THE REGISTRY NUMBER STRING!!!
         try {
             Car car = carDataGateway.getCarByRegistryNumber(registryNumber);
@@ -37,7 +37,7 @@ public class CarServiceData implements CarService {
                 String msg = "The car with registry number: " + registryNumber + ", already " +
                         "exists in the database.";
                 Log.i("CarServiceData", msg);
-                throw new CarExistsException(msg);
+                return car;
             }
         } catch (SQLException e) {
             String msg = "Car not in database. Everything is OK. Nested exception is: " + e.getClass() + ": " + e.getMessage();
@@ -45,10 +45,14 @@ public class CarServiceData implements CarService {
             throw new CarServiceException(msg);
         }
         RestQuery.getInstance().getCar(registryNumber, callback);
+        return null;
     }
 
     @Override
     public void addCarCallback(Car car) throws CarServiceException {
+        if (car == null) {
+            throw new CarServiceException("Can't add a car which is null.");
+        }
         try {
             carDataGateway.addCar(car);
         } catch (SQLException e) {
