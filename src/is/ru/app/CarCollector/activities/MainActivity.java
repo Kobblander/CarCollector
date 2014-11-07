@@ -20,7 +20,6 @@ import is.ru.app.CarCollector.cars.service.CarService;
 import is.ru.app.CarCollector.cars.service.CarServiceData;
 import is.ru.app.CarCollector.game.service.GameService;
 import is.ru.app.CarCollector.game.service.GameServiceData;
-import is.ru.app.CarCollector.utilities.Debugger;
 import is.ru.app.CarCollector.utilities.dialog.ErrorMessageDialog;
 import is.ru.app.CarCollector.utilities.navbar.NavigationDrawer;
 
@@ -44,7 +43,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Debugger.getInstance().resetDatabase(this);
+        // Debugger.getInstance().resetDatabase(this);
 
         nav = new NavigationDrawer(this);
         nav.setup();
@@ -107,7 +106,6 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
 
                 // Get car
                 getCar(query);
-
 
                 return true;
             }
@@ -204,7 +202,8 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
             Log.i("MainActivity", "postExecute - adding car");
         } catch (Exception e) {
             e.printStackTrace();
-			spinner.setVisibility(View.GONE);
+            if(spinner != null)
+			    spinner.setVisibility(View.GONE);
         }
         currentQuery = "";
 
@@ -261,6 +260,7 @@ public class MainActivity extends Activity implements RestCallback, ErrorMessage
             pollutionContainer.setVisibility(View.VISIBLE);
 
             TextView pollutionText = (TextView) findViewById(R.id.pollutionAns);
+            pollutionText.setVisibility(View.VISIBLE);
             pollutionText.setText(response.getPollution() + " g/km");
         } else {
             pollutionContainer.setVisibility(View.GONE);
