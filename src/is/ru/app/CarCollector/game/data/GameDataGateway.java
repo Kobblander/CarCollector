@@ -24,7 +24,11 @@ public interface GameDataGateway {
 
     public CarSubType addCarSubType(CarSubType carSubType);
 
+    public Player getPlayer(String playerName);
+
     public List<CarType> getCarTypes();
+
+    public List<CarSubType> getCarSubTypesByTypeName(String typeName);
 
     public List<CarSubType> getCarSubTypes();
 

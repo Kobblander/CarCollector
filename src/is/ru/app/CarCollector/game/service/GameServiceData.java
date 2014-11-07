@@ -5,11 +5,11 @@ import android.util.Log;
 import is.ru.app.CarCollector.cars.models.Car;
 import is.ru.app.CarCollector.game.data.GameData;
 import is.ru.app.CarCollector.game.data.GameDataGateway;
-import is.ru.app.CarCollector.game.models.CarSubType;
-import is.ru.app.CarCollector.game.models.CarType;
-import is.ru.app.CarCollector.game.models.Player;
-import is.ru.app.CarCollector.game.models.Statistics;
+import is.ru.app.CarCollector.game.models.*;
 import is.ru.app.CarCollector.game.xp.XpCalculator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <h1>GameServiceData</h1>
@@ -82,10 +82,21 @@ public class GameServiceData implements GameService {
     @Override
     public Statistics getStats() throws GameServiceException {
         Statistics stats = new Statistics();
+        List<TypeStats> typeStats = new ArrayList<TypeStats>();
         try {
-            stats.setPlayer(null);
-            stats.setCarTypes(gameDataGateway.getCarTypes());
-            stats.setCarSubTypes(gameDataGateway.getCarSubTypes());
+            Player player = gameDataGateway.getPlayer("Captain America");
+            stats.setPlayer(player);
+
+
+            List<CarType> carTypeList = gameDataGateway.getCarTypes();
+            for (int i = 0; i < carTypeList.size(); i++) {
+                TypeStats ts = new TypeStats();
+                ts.setCarType(carTypeList.get(i));
+                ts.setCarSubTypes(gameDataGateway.getCarSubTypesByTypeName(ts.getCarType().getTypeName()));
+                typeStats.add(ts);
+            }
+            stats.setTypeStats(typeStats);
+
         } catch (Exception e) {
             String msg = "Fatal error in GameService; Nested exception is: " + e.getMessage();
             throw new GameServiceException(msg, e);

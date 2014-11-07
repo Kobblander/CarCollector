@@ -14,16 +14,14 @@ import java.util.List;
 public class Statistics {
 
     private Player player;
-    private List<CarSubType> carSubTypes;
-    private List<CarType> carTypes;
+    private List<TypeStats> typeStats;
 
     public Statistics() {
     }
 
-    public Statistics(Player player, List<CarSubType> carSubTypes, List<CarType> carTypes) {
+    public Statistics(Player player, List<TypeStats>  typeStats) {
         this.player = player;
-        this.carSubTypes = carSubTypes;
-        this.carTypes = carTypes;
+        this.typeStats = typeStats;
     }
 
     public Player getPlayer() {
@@ -34,28 +32,11 @@ public class Statistics {
         this.player = player;
     }
 
-    public List<CarSubType> getCarSubTypes() {
-        return carSubTypes;
+    public List<TypeStats> getTypeStats() {
+        return typeStats;
     }
 
-    public void setCarSubTypes(List<CarSubType> carSubTypes) {
-        this.carSubTypes = carSubTypes;
-    }
-
-    public List<CarType> getCarTypes() {
-        return carTypes;
-    }
-
-    public void setCarTypes(List<CarType> carTypes) {
-        this.carTypes = carTypes;
-    }
-
-    @Override
-    public String toString() {
-        return "Statistics{" +
-                "player=" + player +
-                ", carSubTypes=" + carSubTypes +
-                ", carTypes=" + carTypes +
-                '}';
+    public void setTypeStats(List<TypeStats> typeStats) {
+        this.typeStats = typeStats;
     }
 }
