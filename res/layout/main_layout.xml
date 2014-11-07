@@ -65,7 +65,7 @@
                                 <ImageView android:layout_width="45dp" android:layout_height="45dp"
                                            android:src="@drawable/ic_car" android:id="@+id/imageView4"
                                            android:layout_centerVertical="true" android:layout_alignParentStart="true"
-                                           android:layout_marginLeft="20dp"/>
+                                           android:layout_marginLeft="10dp"/>
                                 <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -141,12 +141,13 @@
                                       android:textAppearance="?android:attr/textAppearanceLarge" android:text="@string/weight"
                                       android:id="@+id/textView4" android:typeface="normal" android:textSize="18dp"
                                       android:textStyle="bold"
+                                      android:layout_marginLeft="20dp"
                                       android:layout_centerHorizontal="true" android:layout_marginTop="5dp"/>
 
                             <ImageView android:layout_width="45dp" android:layout_height="45dp"
                                        android:src="@drawable/ic_weight" android:id="@+id/imageView2"
                                        android:layout_centerVertical="true" android:layout_toLeftOf="@+id/textView4"
-                                       android:layout_marginRight="21dp"/>
+                                       android:layout_marginRight="26dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                                       android:textAppearance="?android:attr/textAppearanceMedium"
                                       android:id="@+id/weightAns"
@@ -173,6 +174,8 @@
                                       android:textAppearance="?android:attr/textAppearanceLarge" android:text="@string/registered"
                                       android:id="@+id/textView5" android:typeface="normal" android:textSize="18dp"
                                       android:textStyle="bold"
+                                      android:layout_centerHorizontal="true"
+                                      android:layout_marginTop="5dp"
                             />
                             <ImageView android:layout_width="45dp" android:layout_height="45dp"
                                        android:src="@drawable/ic_date" android:id="@+id/imageView3"
