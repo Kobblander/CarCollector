@@ -50,12 +50,11 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
         Player player = new Player("Captain America");
         try {
             currentPlayer = gameService.addPlayer(player);
-        } catch (GameServiceException e) {
-        }
-
+        } catch (GameServiceException e) {}
 
         nav = new NavigationDrawer(this);
         nav.setup();
@@ -120,7 +119,6 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
                 // Get car
                 query = query.toUpperCase();
                 getCar(query);
-
 
                 return true;
             }
@@ -230,7 +228,8 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
         } catch (Exception e) {
             e.printStackTrace();
             hideProgressDialog();
-			spinner.setVisibility(View.GONE);
+            if(spinner != null)
+			    spinner.setVisibility(View.GONE);
         }
         currentQuery = "";
 
@@ -295,6 +294,7 @@ public class MainActivity extends Activity implements RestCallback, AbstractDial
             pollutionContainer.setVisibility(View.VISIBLE);
 
             TextView pollutionText = (TextView) findViewById(R.id.pollutionAns);
+            pollutionText.setVisibility(View.VISIBLE);
             pollutionText.setText(response.getPollution() + " g/km");
         } else {
             pollutionContainer.setVisibility(View.GONE);

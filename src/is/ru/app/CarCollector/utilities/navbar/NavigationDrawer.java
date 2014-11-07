@@ -156,7 +156,7 @@ public class NavigationDrawer {
                 showResetDatabaseDialog();
                 break;
             case 4:
-                // fragment = new CommunityFragment();
+                //fragment = new CommunityFragment();
                 break;
             default:
                 break;
