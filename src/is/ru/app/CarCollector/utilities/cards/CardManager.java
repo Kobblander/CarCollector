@@ -82,6 +82,13 @@ public class CardManager {
         // Set lvl progress
         lvlBar.setProgress((int) carType.getLevelXpCur());
 
+		String toLower = carType.getTypeName().toLowerCase();
+
+		String mDrawableName = toLower.replace(" ", "_");
+		int resID = view.getContext().getResources().getIdentifier(mDrawableName , "drawable", view.getContext().getPackageName());
+
+		logo.setImageResource(resID);
+
         // Set lvl stats text
         String stats = Integer.toString ((int) carType.getLevelXpCur()) + "/" + Integer.toString((int) carType.getXpForNextLevelCur());
         lvlStats.setText(stats);
