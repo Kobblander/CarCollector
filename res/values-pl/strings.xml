@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Car Collector</string>
+    <string name="main_camera">Kamera</string>
+    <string name="user_profile">Profil użytkownika</string>
+
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_profile">Profil</string>
+
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+
+
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="action_refresh">Odśwież</string>
+    <string name="action_about">Informacje</string>
+
+    <string name="action_check_updates">Aktualizacja</string>
+
+    <string name="errorQueryTitle">Ups, coś poszło nie tak!</string>
+    <string name="errorQueryMessage">Czy chcesz spróbować ponownie pobrać dane?</string>
+    <string name="errorQueryCancel">Anulować</string>
+    <string name="errorQueryRetry">Spróbować ponownie</string>
+
+    <!-- About view -->
+    <string name="authors">Autorzy</string>
+    <string name="theAuthors">Jakob Þórðarson, Ólafur Konráðsson, Steinar Eyþór Valsson</string>
+    <string name="about">Dookola</string>
+    <string name="aboutApp">Ta aplikacja została zaprojektowana w Reykjaviku uniwersytecie w trakcie zaawansowane Android.</string>
+    <string name="howTo">Jak</string>
+    <string name="howToApp">Wejściean Islandzki tablicy rejestracyjnej, aby wyświetlić informacje na samochód i zbierać dopasowania samochodu do XP i poziomy</string>
+
+    <!-- Car view -->
+    <string name="registered">Zarejestrowana w</string>
+    <string name="weight">Waga</string>
+    <string name="emission">CO2 emisja</string>
+    <string name="type">Typ</string>
+    <string name="subtype">Podtyp</string>
+
+</resources>
